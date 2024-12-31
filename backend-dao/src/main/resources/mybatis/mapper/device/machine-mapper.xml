@@ -9,18 +9,13 @@
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
         <result property="machineCode" column="machine_code"/>
-        <result property="screenCode" column="screen_code"/>
-        <result property="elecBoardCode" column="elec_board_code"/>
-        <result property="modelCode" column="model_code"/>
+        <result property="machineGroupCode" column="machine_group_code"/>
         <result property="machineName" column="machine_name"/>
         <result property="state" column="state"/>
         <result property="onlineState" column="online_state"/>
-        <result property="validUntil" column="valid_until"/>
-        <result property="maintainUntil" column="maintain_until"/>
-        <result property="shopCode" column="shop_code"/>
-        <result property="tenantCode" column="tenant_code"/>
-        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="selectOne" resultMap="machinePOMap">
@@ -38,16 +33,8 @@
         SELECT * FROM machine
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            <if test="shopCode != null">
-                AND shop_code = #{shopCode}
-            </if>
-    </select>
-
-    <select id="countByModelCode" resultType="int">
-        SELECT COUNT(1) FROM machine
-        WHERE 1 = 1
-            <if test="modelCode != null">
-                AND model_code = #{modelCode}
+            <if test="machineGroupCode != null">
+                AND machine_group_code = #{machineGroupCode}
             </if>
     </select>
 
@@ -58,16 +45,10 @@
             <if test="machineCode != null">
                 AND machine_code = #{machineCode}
             </if>
-            <if test="screenCode != null">
-                AND screen_code = #{screenCode}
-            </if>
-            <if test="elecBoardCode != null">
-                AND elec_board_code = #{elecBoardCode}
-            </if>
-            <if test="shopCodeList != null and shopCodeList.size() > 0">
-                AND shop_code IN
-                <foreach item="shopCode" collection="shopCodeList" open="(" separator="," close=")">
-                    #{shopCode}
+            <if test="machineGroupCodeList != null and machineGroupCodeList.size() > 0">
+                AND machine_group_code IN
+                <foreach item="machineGroupCode" collection="machineGroupCodeList" open="(" separator="," close=")">
+                    #{machineGroupCode}
                 </foreach>
             </if>
     </select>
@@ -76,33 +57,23 @@
         INSERT INTO machine (
             gmt_created
             , gmt_modified
+            , tenant_code
+            , extra_info
             , machine_code
-            , screen_code
-            , elec_board_code
-            , model_code
+            , machine_group_code
             , machine_name
             , state
             , online_state
-            , valid_until
-            , maintain_until
-            , shop_code
-            , tenant_code
-            , extra_info
         ) VALUES (
             now()
             , now()
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             , #{machineCode}
-            , #{screenCode}
-            , #{elecBoardCode}
-            , #{modelCode}
+            , #{machineGroupCode}
             , #{machineName}
             , #{state}
             , #{onlineState}
-            , #{validUntil}
-            , #{maintainUntil}
-            , #{shopCode}
-            , #{tenantCode}
-            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
         )
     </insert>
 
@@ -110,14 +81,11 @@
         UPDATE machine
         SET
             gmt_modified = now()
-            <if test="screenCode != null">
-                ,screen_code = #{screenCode}
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             </if>
-            <if test="elecBoardCode != null">
-                , elec_board_code = #{elecBoardCode}
-            </if>
-            <if test="modelCode != null">
-                , model_code = #{modelCode}
+            <if test="machineGroupCode != null">
+                , machine_group_code = #{machineGroupCode}
             </if>
             <if test="machineName != null">
                 , machine_name = #{machineName}
@@ -127,18 +95,6 @@
             </if>
             <if test="onlineState != null">
                 , online_state = #{onlineState}
-            </if>
-            <if test="validUntil != null">
-                , valid_until = #{validUntil}
-            </if>
-            <if test="maintainUntil != null">
-                , maintain_until = #{maintainUntil}
-            </if>
-            <if test="shopCode != null">
-                , shop_code = #{shopCode}
-            </if>
-            <if test="extraInfo != null">
-                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             </if>
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
