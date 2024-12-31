@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.accessor;
 
-import com.langtuo.teamachine.dao.mapper.SummaryChartMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 

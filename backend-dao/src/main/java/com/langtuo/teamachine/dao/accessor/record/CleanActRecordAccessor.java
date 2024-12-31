@@ -2,8 +2,7 @@ package com.langtuo.teamachine.dao.accessor.record;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.langtuo.teamachine.dao.mapper.record.CleanActRecordMapper;
-import com.langtuo.teamachine.dao.query.record.CleanActRecordQuery;
+import com.langtuo.teamachine.dao.query.record.ActRecordQuery;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -22,9 +21,9 @@ public class CleanActRecordAccessor {
             int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        CleanActRecordQuery query = new CleanActRecordQuery();
+        ActRecordQuery query = new ActRecordQuery();
         query.setTenantCode(tenantCode);
-        query.addAllShopGroupCode(shopGroupCodeList);
+        query.addAllMachineGroupCode(shopGroupCodeList);
         List<CleanActRecordPO> list = mapper.search(query);
 
         PageInfo<CleanActRecordPO> pageInfo = new PageInfo(list);
@@ -35,7 +34,7 @@ public class CleanActRecordAccessor {
             int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        CleanActRecordQuery query = new CleanActRecordQuery();
+        ActRecordQuery query = new ActRecordQuery();
         query.setTenantCode(tenantCode);
         query.addAllShopCode(shopCodeList);
         List<CleanActRecordPO> list = mapper.search(query);

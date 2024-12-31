@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.accessor.rule;
 
-import com.langtuo.teamachine.dao.mapper.rule.DrainRuleDispatchMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

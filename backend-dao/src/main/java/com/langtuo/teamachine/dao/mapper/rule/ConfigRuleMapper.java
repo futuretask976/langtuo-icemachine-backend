@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.dao.mapper.rule;
 
 import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
-import com.langtuo.teamachine.dao.query.rule.CleanRuleQuery;
+import com.langtuo.teamachine.dao.query.rule.ConfigRuleQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,27 +10,27 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface CleanRuleMapper {
+public interface ConfigRuleMapper {
     /**
      *
      * @param tenantCode
-     * @param cleanRuleCode
+     * @param configRuleCode
      * @return
      */
-    ConfigRulePO selectOne(@Param("tenantCode") String tenantCode, @Param("cleanRuleCode") String cleanRuleCode);
+    ConfigRulePO selectOne(@Param("tenantCode") String tenantCode, @Param("configRuleCode") String configRuleCode);
 
     /**
      *
      * @return
      */
     List<ConfigRulePO> selectList(@Param("tenantCode") String tenantCode,
-                                  @Param("cleanRuleCodeList") List<String> cleanRuleCodeList);
+            @Param("configRuleCodeList") List<String> configRuleCodeList);
 
     /**
      *
      * @return
      */
-    List<ConfigRulePO> search(CleanRuleQuery query);
+    List<ConfigRulePO> search(ConfigRuleQuery query);
 
     /**
      *
@@ -49,8 +49,8 @@ public interface CleanRuleMapper {
     /**
      *
      * @param tenantCode
-     * @param cleanRuleCode
+     * @param configRuleCode
      * @return
      */
-    int delete(@Param("tenantCode") String tenantCode, @Param("cleanRuleCode") String cleanRuleCode);
+    int delete(@Param("tenantCode") String tenantCode, @Param("configRuleCode") String configRuleCode);
 }

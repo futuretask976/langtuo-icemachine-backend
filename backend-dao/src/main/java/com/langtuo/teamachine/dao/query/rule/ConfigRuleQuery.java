@@ -3,19 +3,19 @@ package com.langtuo.teamachine.dao.query.rule;
 import lombok.Data;
 
 @Data
-public class CleanRuleQuery {
+public class ConfigRuleQuery {
     /**
      * 租户编码
      */
     private String tenantCode;
 
     /**
-     * 菜单编码
+     * 配置规则编码
      */
-    private String cleanRuleCode;
+    private String configRuleCode;
 
     /**
-     * 菜单名称
+     * 配置规则名称
      */
-    private String cleanRuleName;
+    private String configRuleName;
 }

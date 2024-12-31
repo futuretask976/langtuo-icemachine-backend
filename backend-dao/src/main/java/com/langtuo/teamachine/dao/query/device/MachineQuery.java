@@ -7,9 +7,9 @@ import java.util.List;
 @Data
 public class MachineQuery {
     /**
-     * 屏幕编码
+     * 租户编码
      */
-    private String screenCode;
+    private String tenantCode;
 
     /**
      * 机器编码
@@ -17,17 +17,7 @@ public class MachineQuery {
     private String machineCode;
 
     /**
-     * 电控板编码
+     * 分组编码
      */
-    private String elecBoardCode;
-
-    /**
-     * 店铺编码
-     */
-    private List<String> shopCodeList;
-
-    /**
-     * 租户编码
-     */
-    private String tenantCode;
+    private List<String> machineGroupCodeList;
 }

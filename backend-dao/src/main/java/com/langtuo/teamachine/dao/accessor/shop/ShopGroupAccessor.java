@@ -3,9 +3,9 @@ package com.langtuo.teamachine.dao.accessor.shop;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
-import com.langtuo.teamachine.dao.mapper.shop.MachineGroupMapper;
+import com.langtuo.teamachine.dao.mapper.device.MachineGroupMapper;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
-import com.langtuo.teamachine.dao.query.shop.ShopGroupQuery;
+import com.langtuo.teamachine.dao.query.device.MachineGroupQuery;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -44,11 +44,11 @@ public class ShopGroupAccessor {
                                            List<String> orgNameList) {
         PageHelper.startPage(pageNum, pageSize);
 
-        ShopGroupQuery shopGroupQuery = new ShopGroupQuery();
-        shopGroupQuery.setTenantCode(tenantCode);
-        shopGroupQuery.setShopGroupName(StringUtils.isBlank(shopGroupName) ? null : shopGroupName);
-        shopGroupQuery.setOrgNameList(orgNameList);
-        List<MachineGroupPO> list = mapper.search(shopGroupQuery);
+        MachineGroupQuery machineGroupQuery = new MachineGroupQuery();
+        machineGroupQuery.setTenantCode(tenantCode);
+        machineGroupQuery.setMachineGroupName(StringUtils.isBlank(shopGroupName) ? null : shopGroupName);
+        machineGroupQuery.setOrgNameList(orgNameList);
+        List<MachineGroupPO> list = mapper.search(machineGroupQuery);
 
         PageInfo<MachineGroupPO> pageInfo = new PageInfo(list);
         return pageInfo;

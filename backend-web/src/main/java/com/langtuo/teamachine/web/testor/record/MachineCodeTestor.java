@@ -1,7 +1,6 @@
 package com.langtuo.teamachine.web.testor.record;
 
 import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
-import com.langtuo.teamachine.dao.mapper.record.MachineCodeSeqMapper;
 import org.apache.ibatis.session.SqlSession;
 
 public class MachineCodeTestor {

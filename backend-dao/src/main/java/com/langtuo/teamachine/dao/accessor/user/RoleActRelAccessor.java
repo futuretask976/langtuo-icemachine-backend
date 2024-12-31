@@ -2,7 +2,6 @@ package com.langtuo.teamachine.dao.accessor.user;
 
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
 import com.langtuo.teamachine.dao.constant.PermitActEnum;
-import com.langtuo.teamachine.dao.mapper.user.RoleActRelMapper;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Component;

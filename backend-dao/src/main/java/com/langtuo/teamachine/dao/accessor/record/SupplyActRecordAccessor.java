@@ -2,8 +2,6 @@ package com.langtuo.teamachine.dao.accessor.record;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.langtuo.teamachine.dao.mapper.record.SupplyActRecordMapper;
-import com.langtuo.teamachine.dao.query.record.SupplyActRecordQuery;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

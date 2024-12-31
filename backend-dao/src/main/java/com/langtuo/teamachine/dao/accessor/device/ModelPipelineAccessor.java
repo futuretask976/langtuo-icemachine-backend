@@ -1,7 +1,6 @@
 package com.langtuo.teamachine.dao.accessor.device;
 
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
-import com.langtuo.teamachine.dao.mapper.device.ModelPipelineMapper;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,6 @@ package com.langtuo.teamachine.dao.accessor.user;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.langtuo.teamachine.dao.mapper.user.OrgMapper;
 import com.langtuo.teamachine.dao.node.user.OrgNode;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;

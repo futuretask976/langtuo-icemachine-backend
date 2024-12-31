@@ -3,7 +3,6 @@ package com.langtuo.teamachine.web.testor.record;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
-import com.langtuo.teamachine.dao.mapper.record.SupplyActRecordMapper;
 import com.langtuo.teamachine.mqtt.request.record.SupplyActRecordPutRequest;
 import org.apache.ibatis.session.SqlSession;
 

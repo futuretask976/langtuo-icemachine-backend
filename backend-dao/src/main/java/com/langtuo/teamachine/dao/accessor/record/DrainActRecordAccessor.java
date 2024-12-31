@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.mapper.record.ActRecordMapper;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
-import com.langtuo.teamachine.dao.query.record.DrainActRecordQuery;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

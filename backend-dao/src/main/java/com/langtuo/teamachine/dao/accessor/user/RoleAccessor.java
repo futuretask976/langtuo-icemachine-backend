@@ -3,8 +3,6 @@ package com.langtuo.teamachine.dao.accessor.user;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
-import com.langtuo.teamachine.dao.mapper.user.RoleMapper;
-import com.langtuo.teamachine.dao.query.user.AdminRoleQuery;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

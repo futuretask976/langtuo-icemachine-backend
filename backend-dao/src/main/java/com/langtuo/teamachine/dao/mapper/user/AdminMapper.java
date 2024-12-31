@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.user;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
 import com.langtuo.teamachine.dao.query.user.AdminQuery;
 import org.apache.ibatis.annotations.Mapper;
@@ -64,20 +63,4 @@ public interface AdminMapper {
      * @return
      */
     int delete(@Param("tenantCode") String tenantCode, @Param("loginName") String loginName);
-
-    /**
-     *
-     * @param tenantCode
-     * @param roleCode
-     * @return
-     */
-    int countByRoleCode(@Param("tenantCode") String tenantCode, @Param("roleCode") String roleCode);
-
-    /**
-     *
-     * @param tenantCode
-     * @param orgName
-     * @return
-     */
-    int countByOrgName(@Param("tenantCode") String tenantCode, @Param("orgName") String orgName);
 }

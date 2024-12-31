@@ -15,14 +15,15 @@ public interface ConfigRuleDispatchMapper {
      * @return
      */
     List<ConfigRuleDispatchPO> selectList(@Param("tenantCode") String tenantCode,
-                                          @Param("cleanRuleCode") String cleanRuleCode, @Param("shopGroupCodeList") List<String> shopGroupCodeList);
+            @Param("configRuleCode") String configRuleCode,
+            @Param("machineGroupCodeList") List<String> machineGroupCodeList);
 
     /**
      *
      * @return
      */
     List<ConfigRuleDispatchPO> selectListByShopGroupCode(@Param("tenantCode") String tenantCode,
-                                                         @Param("shopGroupCode") String shopGroupCode);
+            @Param("machineGroupCode") String machineGroupCode);
 
     /**
      *
@@ -41,9 +42,9 @@ public interface ConfigRuleDispatchMapper {
     /**
      *
      * @param tenantCode
-     * @param cleanRuleCode
+     * @param configRuleCode
      * @return
      */
-    int delete(@Param("tenantCode") String tenantCode, @Param("cleanRuleCode") String cleanRuleCode,
-            @Param("shopGroupCodeList") List<String> shopGroupCodeList);
+    int delete(@Param("tenantCode") String tenantCode, @Param("configRuleCode") String configRuleCode,
+            @Param("machineGroupCodeList") List<String> machineGroupCodeList);
 }

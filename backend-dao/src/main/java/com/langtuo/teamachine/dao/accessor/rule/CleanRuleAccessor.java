@@ -3,9 +3,9 @@ package com.langtuo.teamachine.dao.accessor.rule;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
-import com.langtuo.teamachine.dao.mapper.rule.CleanRuleMapper;
+import com.langtuo.teamachine.dao.mapper.rule.ConfigRuleMapper;
 import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
-import com.langtuo.teamachine.dao.query.rule.CleanRuleQuery;
+import com.langtuo.teamachine.dao.query.rule.ConfigRuleQuery;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class CleanRuleAccessor {
     @Resource
-    private CleanRuleMapper mapper;
+    private ConfigRuleMapper mapper;
 
     @Resource
     private RedisManager4Accessor redisManager4Accessor;
@@ -56,10 +56,10 @@ public class CleanRuleAccessor {
                                          int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        CleanRuleQuery query = new CleanRuleQuery();
+        ConfigRuleQuery query = new ConfigRuleQuery();
         query.setTenantCode(tenantCode);
-        query.setCleanRuleCode(StringUtils.isBlank(cleanRuleCode) ? null : cleanRuleCode);
-        query.setCleanRuleName(StringUtils.isBlank(cleanRuleName) ? null : cleanRuleName);
+        query.setConfigRuleCode(StringUtils.isBlank(cleanRuleCode) ? null : cleanRuleCode);
+        query.setConfigRuleName(StringUtils.isBlank(cleanRuleName) ? null : cleanRuleName);
         List<ConfigRulePO> list = mapper.search(query);
 
         PageInfo<ConfigRulePO> pageInfo = new PageInfo(list);

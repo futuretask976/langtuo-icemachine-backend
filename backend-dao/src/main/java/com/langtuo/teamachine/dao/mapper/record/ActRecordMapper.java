@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.dao.mapper.record;
 
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
-import com.langtuo.teamachine.dao.query.record.DrainActRecordQuery;
+import com.langtuo.teamachine.dao.query.record.ActRecordQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,13 +18,13 @@ public interface ActRecordMapper {
      * @return
      */
     ActRecordPO selectOne(@Param("tenantCode") String tenantCode,
-                          @Param("idempotentMark") String idempotentMark);
+            @Param("idempotentMark") String idempotentMark);
 
     /**
      *
      * @return
      */
-    List<ActRecordPO> search(DrainActRecordQuery query);
+    List<ActRecordPO> search(ActRecordQuery query);
 
     /**
      *

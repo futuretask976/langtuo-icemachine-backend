@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.accessor.record;
 
-import com.langtuo.teamachine.dao.mapper.record.OrderSpecItemActRecordMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
