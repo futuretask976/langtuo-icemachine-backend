@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.rule;
 
-import com.langtuo.teamachine.dao.po.rule.CleanRuleExceptPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

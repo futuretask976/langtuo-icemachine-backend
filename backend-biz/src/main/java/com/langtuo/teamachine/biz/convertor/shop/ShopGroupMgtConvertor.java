@@ -3,7 +3,7 @@ package com.langtuo.teamachine.biz.convertor.shop;
 import com.langtuo.teamachine.api.model.shop.ShopGroupDTO;
 import com.langtuo.teamachine.api.request.shop.ShopGroupPutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -30,14 +30,14 @@ public class ShopGroupMgtConvertor {
         ShopGroupDTO dto = new ShopGroupDTO();
         dto.setGmtCreated(po.getGmtCreated());
         dto.setGmtModified(po.getGmtModified());
-        dto.setShopGroupCode(po.getShopGroupCode());
-        dto.setShopGroupName(po.getShopGroupName());
+        dto.setShopGroupCode(po.getMachineGroupCode());
+        dto.setShopGroupName(po.getMachineGroupName());
         dto.setComment(po.getComment());
         dto.setExtraInfo(po.getExtraInfo());
         dto.setOrgName(po.getOrgName());
 
         ShopAccessor shopAccessor = SpringAccessorUtils.getShopAccessor();
-        int shopCount = shopAccessor.countByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+        int shopCount = shopAccessor.countByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
         dto.setShopCount(shopCount);
 
         return dto;
@@ -49,8 +49,8 @@ public class ShopGroupMgtConvertor {
         }
 
         MachineGroupPO po = new MachineGroupPO();
-        po.setShopGroupName(request.getShopGroupName());
-        po.setShopGroupCode(request.getShopGroupCode());
+        po.setMachineGroupName(request.getShopGroupName());
+        po.setMachineGroupCode(request.getShopGroupCode());
         po.setComment(request.getComment());
         po.setTenantCode(request.getTenantCode());
         po.setExtraInfo(request.getExtraInfo());

@@ -1,7 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.user;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.user.OrgPO;
 import com.langtuo.teamachine.dao.query.user.OrgStrucQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

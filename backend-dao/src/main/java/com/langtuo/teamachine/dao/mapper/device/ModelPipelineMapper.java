@@ -1,7 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.device;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.device.ModelPipelinePO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

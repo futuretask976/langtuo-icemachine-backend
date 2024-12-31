@@ -1,7 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.user;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.user.RolePO;
 import com.langtuo.teamachine.dao.query.user.AdminRoleQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -2,7 +2,6 @@ package com.langtuo.teamachine.dao.accessor.rule;
 
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
 import com.langtuo.teamachine.dao.mapper.rule.DrainRuleExceptNewMapper;
-import com.langtuo.teamachine.dao.po.rule.DrainRuleExceptPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.springframework.stereotype.Component;
 

@@ -3,7 +3,6 @@ package com.langtuo.teamachine.dao.accessor.record;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.mapper.record.InvalidActRecordMapper;
-import com.langtuo.teamachine.dao.po.record.InvalidActRecordPO;
 import com.langtuo.teamachine.dao.query.record.InvalidActRecordQuery;
 import org.springframework.stereotype.Component;
 

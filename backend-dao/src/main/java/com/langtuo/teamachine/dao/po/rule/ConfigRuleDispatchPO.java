@@ -27,12 +27,12 @@ public class ConfigRuleDispatchPO {
     private String tenantCode;
 
     /**
-     * 清洁规则编码
+     * 配置规则编码
      */
-    private String cleanRuleCode;
+    private String configRuleCode;
 
     /**
-     * 店铺组编码
+     * 机器分组编码
      */
-    private String shopGroupCode;
+    private String machineGroupCode;
 }

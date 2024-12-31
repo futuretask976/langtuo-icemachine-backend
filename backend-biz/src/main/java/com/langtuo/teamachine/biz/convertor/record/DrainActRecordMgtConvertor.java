@@ -6,7 +6,7 @@ import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.ToppingPO;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +37,7 @@ public class DrainActRecordMgtConvertor {
         dto.setIdempotentMark(po.getIdempotentMark());
         dto.setMachineCode(po.getMachineCode());
         dto.setShopCode(po.getShopCode());
-        dto.setShopGroupCode(po.getShopGroupCode());
+        dto.setShopGroupCode(po.getMachineGroupCode());
         dto.setDrainStartTime(po.getDrainStartTime());
         dto.setDrainEndTime(po.getDrainEndTime());
         dto.setToppingCode(po.getToppingCode());
@@ -56,9 +56,9 @@ public class DrainActRecordMgtConvertor {
             }
 
             ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
             if (machineGroupPO != null) {
-                dto.setShopGroupName(machineGroupPO.getShopGroupName());
+                dto.setShopGroupName(machineGroupPO.getMachineGroupName());
             }
 
             ShopAccessor shopAccessor = SpringAccessorUtils.getShopAccessor();

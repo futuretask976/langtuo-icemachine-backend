@@ -11,8 +11,6 @@ import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.rule.DrainRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.DrainRuleAccessor;
-import com.langtuo.teamachine.dao.po.rule.DrainRuleDispatchPO;
-import com.langtuo.teamachine.dao.po.rule.DrainRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.mqtt.produce.MqttProducer;

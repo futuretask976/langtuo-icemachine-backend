@@ -9,7 +9,7 @@ import com.langtuo.teamachine.api.service.shop.ShopGroupMgtService;
 import com.langtuo.teamachine.biz.manager.OrgManager;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -100,7 +100,7 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doPutNew(MachineGroupPO po) {
         try {
-            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
             if (exist != null) {
                 return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_CODE_DUPLICATED));
             }
@@ -120,7 +120,7 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doPutUpdate(MachineGroupPO po) {
         try {
-            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
             if (exist == null) {
                 return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_NOT_FOUND));
             }

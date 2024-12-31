@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.langtuo.teamachine.api.utils.CollectionUtils;
 import com.langtuo.teamachine.dao.accessor.record.CleanActRecordAccessor;
-import com.langtuo.teamachine.dao.po.record.CleanActRecordPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.AliyunConsts;
 import com.langtuo.teamachine.internal.constant.CommonConsts;

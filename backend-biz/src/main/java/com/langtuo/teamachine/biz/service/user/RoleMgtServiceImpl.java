@@ -13,8 +13,6 @@ import com.langtuo.teamachine.dao.accessor.user.PermitActAccessor;
 import com.langtuo.teamachine.dao.accessor.user.RoleAccessor;
 import com.langtuo.teamachine.dao.accessor.user.RoleActRelAccessor;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
-import com.langtuo.teamachine.dao.po.user.RoleActRelPO;
-import com.langtuo.teamachine.dao.po.user.RolePO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;

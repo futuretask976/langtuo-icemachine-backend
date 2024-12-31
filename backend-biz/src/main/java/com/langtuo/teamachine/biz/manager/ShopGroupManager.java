@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.biz.manager;
 
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -30,7 +30,7 @@ public class ShopGroupManager {
         }
 
         List<String> shopGroupCodeList = machineGroupPOList.stream()
-                .map(MachineGroupPO::getShopGroupCode)
+                .map(MachineGroupPO::getMachineGroupCode)
                 .collect(Collectors.toList());
         return shopGroupCodeList;
     }

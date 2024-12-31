@@ -5,8 +5,7 @@ import com.langtuo.teamachine.dao.accessor.drink.*;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.*;
-import com.langtuo.teamachine.dao.po.record.SupplyActRecordPO;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
@@ -52,7 +51,7 @@ public class SupplyActRecordMgtConvertor {
             ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
             MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
             if (machineGroupPO != null) {
-                dto.setShopGroupName(machineGroupPO.getShopGroupName());
+                dto.setShopGroupName(machineGroupPO.getMachineGroupName());
             }
 
             ShopAccessor shopAccessor = SpringAccessorUtils.getShopAccessor();

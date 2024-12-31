@@ -1,7 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.rule;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.rule.WarningRulePO;
 import com.langtuo.teamachine.dao.query.rule.WarningRuleQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

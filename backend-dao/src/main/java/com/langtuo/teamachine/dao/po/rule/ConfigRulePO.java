@@ -1,4 +1,4 @@
-package com.langtuo.teamachine.dao.po.device;
+package com.langtuo.teamachine.dao.po.rule;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Data
-public class DeployPO {
+public class ConfigRulePO {
     /**
      * 数据表id
      */
@@ -33,27 +33,17 @@ public class DeployPO {
     private Map<String, String> extraInfo;
 
     /**
-     * 部署编码
+     * 备注
      */
-    private String deployCode;
+    private String comment;
 
     /**
-     * 机器编码
+     * 清洁规则编码
      */
-    private String machineCode;
+    private String configRuleCode;
 
     /**
-     * 型号编码
+     * 清洁规则名称
      */
-    private String modelCode;
-
-    /**
-     * 店铺编码
-     */
-    private String shopCode;
-
-    /**
-     * 部署状态，0：未部署，1：已部署
-     */
-    private int state;
+    private String configRuleName;
 }

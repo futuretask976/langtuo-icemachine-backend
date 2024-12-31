@@ -3,8 +3,6 @@ package com.langtuo.teamachine.biz.convertor.rule;
 import com.langtuo.teamachine.api.model.rule.WarningRuleDTO;
 import com.langtuo.teamachine.api.request.rule.WarningRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.WarningRulePutRequest;
-import com.langtuo.teamachine.dao.po.rule.WarningRuleDispatchPO;
-import com.langtuo.teamachine.dao.po.rule.WarningRulePO;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;

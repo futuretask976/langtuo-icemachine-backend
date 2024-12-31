@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.dao.mapper.rule;
 
-import com.langtuo.teamachine.dao.po.rule.DrainRulePO;
 import com.langtuo.teamachine.dao.query.rule.DrainRuleQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

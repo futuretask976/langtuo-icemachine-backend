@@ -6,7 +6,6 @@ import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
 import com.langtuo.teamachine.dao.mapper.record.ActRecordMapper;
 import com.langtuo.teamachine.dao.mapper.record.InvalidActRecordMapper;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
-import com.langtuo.teamachine.dao.po.record.InvalidActRecordPO;
 import com.langtuo.teamachine.mqtt.request.record.DrainActRecordPutRequest;
 import org.apache.ibatis.session.SqlSession;
 
@@ -76,7 +75,7 @@ public class DrainActRecordTestor {
         po.setIdempotentMark(request.getIdempotentMark());
         po.setMachineCode(request.getMachineCode());
         po.setShopCode(request.getShopCode());
-        po.setShopGroupCode(request.getShopGroupCode());
+        po.setMachineGroupCode(request.getShopGroupCode());
         po.setDrainStartTime(request.getDrainStartTime());
         po.setDrainEndTime(request.getDrainEndTime());
         po.setToppingCode(request.getToppingCode());

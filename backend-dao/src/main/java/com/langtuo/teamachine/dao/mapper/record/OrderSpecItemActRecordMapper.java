@@ -1,7 +1,6 @@
 package com.langtuo.teamachine.dao.mapper.record;
 
 import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.record.OrderSpecItemActRecordPO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

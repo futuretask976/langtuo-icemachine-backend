@@ -43,39 +43,14 @@ public class MachinePO {
     private String machineName;
 
     /**
-     * 屏幕编码
+     * 分组编码
      */
-    private String screenCode;
-
-    /**
-     * 电控板编码
-     */
-    private String elecBoardCode;
-
-    /**
-     * 型号编码
-     */
-    private String modelCode;
+    private String machineGroupCode;
 
     /**
      * 状态，0：禁用，1：启用
      */
     private int state;
-
-    /**
-     * 有效期
-     */
-    private Date validUntil;
-
-    /**
-     * 保修期
-     */
-    private Date maintainUntil;
-
-    /**
-     *　店铺编码
-     */
-    private String shopCode;
 
     /**
      * 在线状态，0：离线，1：在线

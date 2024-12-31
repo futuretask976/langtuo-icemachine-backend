@@ -1,7 +1,6 @@
 package com.langtuo.teamachine.dao.mapper.rule;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
 import com.langtuo.teamachine.dao.query.rule.CleanRuleQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,34 +17,34 @@ public interface CleanRuleMapper {
      * @param cleanRuleCode
      * @return
      */
-    CleanRulePO selectOne(@Param("tenantCode") String tenantCode, @Param("cleanRuleCode") String cleanRuleCode);
+    ConfigRulePO selectOne(@Param("tenantCode") String tenantCode, @Param("cleanRuleCode") String cleanRuleCode);
 
     /**
      *
      * @return
      */
-    List<CleanRulePO> selectList(@Param("tenantCode") String tenantCode,
-            @Param("cleanRuleCodeList") List<String> cleanRuleCodeList);
+    List<ConfigRulePO> selectList(@Param("tenantCode") String tenantCode,
+                                  @Param("cleanRuleCodeList") List<String> cleanRuleCodeList);
 
     /**
      *
      * @return
      */
-    List<CleanRulePO> search(CleanRuleQuery query);
+    List<ConfigRulePO> search(CleanRuleQuery query);
 
     /**
      *
-     * @param cleanRulePO
+     * @param configRulePO
      * @return
      */
-    int insert(CleanRulePO cleanRulePO);
+    int insert(ConfigRulePO configRulePO);
 
     /**
      *
-     * @param cleanRulePO
+     * @param configRulePO
      * @return
      */
-    int update(CleanRulePO cleanRulePO);
+    int update(ConfigRulePO configRulePO);
 
     /**
      *

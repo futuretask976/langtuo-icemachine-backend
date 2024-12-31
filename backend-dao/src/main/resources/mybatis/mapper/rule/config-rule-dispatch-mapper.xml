@@ -9,9 +9,9 @@
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
         <result property="configRuleCode" column="config_rule_code"/>
         <result property="machineGroupCode" column="machine_group_code"/>
-        <result property="tenantCode" column="tenant_code"/>
     </resultMap>
 
     <select id="selectList" resultMap="configRuleDispatchPOMap">

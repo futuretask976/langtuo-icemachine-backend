@@ -7,9 +7,7 @@ import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleExceptAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleStepAccessor;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleExceptPO;
-import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleStepPO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -18,7 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CleanRuleMgtConvertor {
-    public static List<CleanRuleDTO> convertToCleanRuleDTO(List<CleanRulePO> poList) {
+    public static List<CleanRuleDTO> convertToCleanRuleDTO(List<ConfigRulePO> poList) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
@@ -29,7 +27,7 @@ public class CleanRuleMgtConvertor {
         return list;
     }
 
-    public static CleanRuleDTO convertToCleanRuleStepDTO(CleanRulePO po) {
+    public static CleanRuleDTO convertToCleanRuleStepDTO(ConfigRulePO po) {
         if (po == null) {
             return null;
         }
@@ -38,8 +36,8 @@ public class CleanRuleMgtConvertor {
         dto.setGmtCreated(po.getGmtCreated());
         dto.setGmtModified(po.getGmtModified());
         dto.setExtraInfo(po.getExtraInfo());
-        dto.setCleanRuleCode(po.getCleanRuleCode());
-        dto.setCleanRuleName(po.getCleanRuleName());
+        dto.setCleanRuleCode(po.getConfigRuleCode());
+        dto.setCleanRuleName(po.getConfigRuleName());
         dto.setPermitBatch(po.getPermitBatch());
         dto.setPermitRemind(po.getPermitRemind());
 
@@ -89,16 +87,16 @@ public class CleanRuleMgtConvertor {
         return list;
     }
 
-    public static CleanRulePO convertToCleanRulePO(CleanRulePutRequest request) {
+    public static ConfigRulePO convertToCleanRulePO(CleanRulePutRequest request) {
         if (request == null) {
             return null;
         }
 
-        CleanRulePO po = new CleanRulePO();
+        ConfigRulePO po = new ConfigRulePO();
         po.setTenantCode(request.getTenantCode());
         po.setExtraInfo(request.getExtraInfo());
-        po.setCleanRuleCode(request.getCleanRuleCode());
-        po.setCleanRuleName(request.getCleanRuleName());
+        po.setConfigRuleCode(request.getCleanRuleCode());
+        po.setConfigRuleName(request.getCleanRuleName());
         po.setPermitBatch(request.getPermitBatch());
         po.setPermitRemind(request.getPermitRemind());
         return po;
@@ -140,8 +138,8 @@ public class CleanRuleMgtConvertor {
                 .map(shopGroupCode -> {
                     ConfigRuleDispatchPO po = new ConfigRuleDispatchPO();
                     po.setTenantCode(tenantCode);
-                    po.setCleanRuleCode(cleanRuleCode);
-                    po.setShopGroupCode(shopGroupCode);
+                    po.setConfigRuleCode(cleanRuleCode);
+                    po.setMachineGroupCode(shopGroupCode);
                     return po;
                 }).collect(Collectors.toList());
     }

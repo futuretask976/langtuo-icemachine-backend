@@ -4,8 +4,6 @@ import com.langtuo.teamachine.api.model.user.RoleDTO;
 import com.langtuo.teamachine.api.request.user.RolePutRequest;
 import com.langtuo.teamachine.dao.accessor.user.AdminAccessor;
 import com.langtuo.teamachine.dao.accessor.user.RoleActRelAccessor;
-import com.langtuo.teamachine.dao.po.user.RoleActRelPO;
-import com.langtuo.teamachine.dao.po.user.RolePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 

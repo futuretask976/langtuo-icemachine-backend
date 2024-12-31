@@ -1,11 +1,12 @@
-package com.langtuo.teamachine.dao.po.report;
+package com.langtuo.teamachine.dao.po.device;
 
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Map;
 
 @Data
-public class OrderToppingReportPO {
+public class MachineGroupPO {
     /**
      * 数据表id
      */
@@ -27,27 +28,22 @@ public class OrderToppingReportPO {
     private String tenantCode;
 
     /**
-     * 订单创建时间，例如 2024-09-20
+     * 额外信息，格式：a:b;c:d
      */
-    private String orderCreatedDay;
+    private Map<String, String> extraInfo;
 
     /**
-     * 店铺组编码
+     * 备注
      */
-    private String shopGroupCode;
+    private String comment;
 
     /**
-     * 店铺编码
+     * 分组编码
      */
-    private String shopCode;
+    private String machineGroupCode;
 
     /**
-     * 物料编码
+     * 分组名称
      */
-    private String toppingCode;
-
-    /**
-     * 数量
-     */
-    private int amount;
+    private String machineGroupName;
 }

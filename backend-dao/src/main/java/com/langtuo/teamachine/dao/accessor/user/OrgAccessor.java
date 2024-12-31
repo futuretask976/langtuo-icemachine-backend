@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.langtuo.teamachine.dao.mapper.user.OrgMapper;
 import com.langtuo.teamachine.dao.node.user.OrgNode;
-import com.langtuo.teamachine.dao.po.user.OrgPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;

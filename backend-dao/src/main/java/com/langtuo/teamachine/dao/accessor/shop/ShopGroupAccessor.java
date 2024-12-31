@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
 import com.langtuo.teamachine.dao.mapper.shop.MachineGroupMapper;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.query.shop.ShopGroupQuery;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
@@ -57,21 +57,21 @@ public class ShopGroupAccessor {
     public int insert(MachineGroupPO po) {
         int inserted = mapper.insert(po);
         if (inserted == CommonConsts.DB_INSERTED_ONE_ROW) {
-            deleteCacheOne(po.getTenantCode(), po.getShopGroupCode());
+            deleteCacheOne(po.getTenantCode(), po.getMachineGroupCode());
             deleteCacheCountByOrgName(po.getTenantCode(), po.getOrgName());
         }
         return inserted;
     }
 
     public int update(MachineGroupPO po) {
-        MachineGroupPO exist = mapper.selectOne(po.getTenantCode(), po.getShopGroupCode());
+        MachineGroupPO exist = mapper.selectOne(po.getTenantCode(), po.getMachineGroupCode());
         if (exist == null) {
             return CommonConsts.DB_UPDATED_ZERO_ROW;
         }
 
         int updated = mapper.update(po);
         if (updated == CommonConsts.DB_UPDATED_ONE_ROW) {
-            deleteCacheOne(po.getTenantCode(), po.getShopGroupCode());
+            deleteCacheOne(po.getTenantCode(), po.getMachineGroupCode());
             deleteCacheCountByOrgName(exist.getTenantCode(), exist.getOrgName());
             deleteCacheCountByOrgName(po.getTenantCode(), po.getOrgName());
         }
@@ -86,7 +86,7 @@ public class ShopGroupAccessor {
 
         int deleted = mapper.delete(tenantCode, shopGroupCode);
         if (deleted == CommonConsts.DB_DELETED_ONE_ROW) {
-            deleteCacheOne(tenantCode, po.getShopGroupCode());
+            deleteCacheOne(tenantCode, po.getMachineGroupCode());
             deleteCacheCountByOrgName(tenantCode, po.getOrgName());
         }
         return deleted;

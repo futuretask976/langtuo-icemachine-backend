@@ -5,9 +5,8 @@ import com.langtuo.teamachine.api.request.device.MachineActivatePutRequest;
 import com.langtuo.teamachine.api.request.device.MachineUpdatePutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.device.DeployPO;
 import com.langtuo.teamachine.dao.po.device.MachinePO;
-import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
+import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -58,8 +57,8 @@ public class MachineMgtConvertor {
         MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(),
                 shopPO.getShopGroupCode());
         if (machineGroupPO != null) {
-            dto.setShopGroupCode(machineGroupPO.getShopGroupCode());
-            dto.setShopGroupName(machineGroupPO.getShopGroupName());
+            dto.setShopGroupCode(machineGroupPO.getMachineGroupCode());
+            dto.setShopGroupName(machineGroupPO.getMachineGroupName());
         }
         return dto;
     }

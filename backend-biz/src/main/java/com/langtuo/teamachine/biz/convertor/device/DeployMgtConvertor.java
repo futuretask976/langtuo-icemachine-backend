@@ -3,7 +3,6 @@ package com.langtuo.teamachine.biz.convertor.device;
 import com.langtuo.teamachine.api.model.device.DeployDTO;
 import com.langtuo.teamachine.api.request.device.DeployPutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.po.device.DeployPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;

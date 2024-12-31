@@ -5,13 +5,13 @@
 
 <!-- 一个namespace对应一个Mapper类（原来的dao） -->
 <mapper namespace="com.langtuo.teamachine.dao.mapper.shop.MachineGroupMapper">
-    <resultMap type="com.langtuo.teamachine.dao.po.shop.MachineGroupPO" id="machineGroupPOMap">
+    <resultMap type="com.langtuo.teamachine.dao.po.device.MachineGroupPO" id="machineGroupPOMap">
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
         <result property="tenantCode" column="tenant_code"/>
-        <result property="comment" column="comment"/>
         <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="comment" column="comment"/>
         <result property="machineGroupCode" column="machine_group_code"/>
         <result property="machineGroupName" column="machine_group_name"/>
     </resultMap>
@@ -43,7 +43,7 @@
             </if>
     </select>
 
-    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.shop.MachineGroupPO">
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.device.MachineGroupPO">
         INSERT INTO machine_group (
             gmt_created
             , gmt_modified
@@ -63,7 +63,7 @@
         )
     </insert>
 
-    <update id="update" parameterType="com.langtuo.teamachine.dao.po.shop.MachineGroupPO">
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.device.MachineGroupPO">
         UPDATE machine_group
         SET
             gmt_modified = now()

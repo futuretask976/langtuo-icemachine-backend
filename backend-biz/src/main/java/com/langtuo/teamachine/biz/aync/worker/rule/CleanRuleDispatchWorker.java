@@ -12,7 +12,7 @@ import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
-import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.mqtt.produce.MqttProducer;
@@ -77,7 +77,7 @@ public class CleanRuleDispatchWorker implements Runnable {
 
     private JSONObject getDispatchCont() {
         CleanRuleAccessor cleanRuleAccessor = SpringAccessorUtils.getCleanRuleAccessor();
-        CleanRulePO po = cleanRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
+        ConfigRulePO po = cleanRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
         CleanRuleDTO dto = CleanRuleMgtConvertor.convertToCleanRuleStepDTO(po);
         if (dto == null) {
             log.error("getRule|error|tenantCode=" + tenantCode + ";cleanRuleCode=" + cleanRuleCode);
@@ -103,7 +103,7 @@ public class CleanRuleDispatchWorker implements Runnable {
         ShopManager shopManager = SpringManagerUtils.getShopManager();
         List<String> shopCodeList = shopManager.getShopCodeListByShopGroupCodeList(tenantCode,
                 configRuleDispatchPOList.stream()
-                        .map(ConfigRuleDispatchPO::getShopGroupCode)
+                        .map(ConfigRuleDispatchPO::getMachineGroupCode)
                         .collect(Collectors.toList()));
 
         MachineManager machineManager = SpringManagerUtils.getMachineManager();

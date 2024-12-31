@@ -6,7 +6,6 @@ import com.langtuo.teamachine.biz.convertor.device.ModelMgtConvertor;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.device.ModelAccessor;
-import com.langtuo.teamachine.dao.po.device.ModelPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.mqtt.produce.MqttProducer;

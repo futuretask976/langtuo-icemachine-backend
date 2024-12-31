@@ -43,47 +43,7 @@ public class ActRecordPO {
     private String machineCode;
 
     /**
-     * 店铺编码
+     * 分组编码
      */
-    private String shopCode;
-
-    /**
-     * 店铺组编码
-     */
-    private String shopGroupCode;
-
-    /**
-     * 清洗开始时间
-     */
-    private Date drainStartTime;
-
-    /**
-     * 清洗结束时间
-     */
-    private Date drainEndTime;
-
-    /**
-     * 物料名称
-     */
-    private String toppingCode;
-
-    /**
-     * 管道序号
-     */
-    private int pipelineNum;
-
-    /**
-     * 清洗方式，0：排空规则排空，1：手动排空
-     */
-    private int drainType;
-
-    /**
-     * 开业规则编码
-     */
-    private String drainRuleCode;
-
-    /**
-     * 排空时间（单位：秒）
-     */
-    private int flushSec;
+    private String machineGroupCode;
 }

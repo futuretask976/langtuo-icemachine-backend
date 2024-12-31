@@ -3,7 +3,6 @@ package com.langtuo.teamachine.web.testor.user;
 import com.google.common.collect.Maps;
 import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
 import com.langtuo.teamachine.dao.mapper.user.OrgMapper;
-import com.langtuo.teamachine.dao.po.user.OrgPO;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;

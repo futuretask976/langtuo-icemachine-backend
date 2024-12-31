@@ -95,7 +95,7 @@ public class DrainActRecordWorker implements Runnable {
         po.setIdempotentMark(request.getIdempotentMark());
         po.setMachineCode(request.getMachineCode());
         po.setShopCode(request.getShopCode());
-        po.setShopGroupCode(request.getShopGroupCode());
+        po.setMachineGroupCode(request.getShopGroupCode());
         po.setDrainStartTime(request.getDrainStartTime());
         po.setDrainEndTime(request.getDrainEndTime());
         po.setToppingCode(request.getToppingCode());

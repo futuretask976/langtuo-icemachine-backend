@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
 import com.langtuo.teamachine.dao.mapper.record.CleanActRecordMapper;
 import com.langtuo.teamachine.dao.mapper.record.InvalidActRecordMapper;
-import com.langtuo.teamachine.dao.po.record.CleanActRecordPO;
-import com.langtuo.teamachine.dao.po.record.InvalidActRecordPO;
 import com.langtuo.teamachine.mqtt.request.record.CleanActRecordPutRequest;
 import org.apache.ibatis.session.SqlSession;
 

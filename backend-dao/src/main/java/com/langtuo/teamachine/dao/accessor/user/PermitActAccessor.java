@@ -4,8 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.langtuo.teamachine.dao.constant.PermitActEnum;
 import com.langtuo.teamachine.dao.constant.PermitActGroupEnum;
-import com.langtuo.teamachine.dao.po.user.PermitActGroupPO;
-import com.langtuo.teamachine.dao.po.user.PermitActPO;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
