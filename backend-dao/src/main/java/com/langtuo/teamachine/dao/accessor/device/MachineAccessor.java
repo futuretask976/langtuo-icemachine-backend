@@ -22,62 +22,28 @@ public class MachineAccessor {
     private RedisManager4Accessor redisManager4Accessor;
 
     public MachinePO getByMachineCode(String tenantCode, String machineCode) {
-        // 首先访问缓存
-        MachinePO cached = getCache(tenantCode, machineCode);
-        if (cached != null) {
-            return cached;
-        }
-
         MachinePO po = mapper.selectOne(tenantCode, machineCode);
-
-        // 设置缓存
-        setCache(tenantCode, machineCode, po);
         return po;
     }
 
     public List<MachinePO> list(String tenantCode) {
-        // 首先访问缓存
-        List<MachinePO> cachedList = getCacheList(tenantCode, null);
-        if (cachedList != null) {
-            return cachedList;
-        }
-
         List<MachinePO> list = mapper.selectList(tenantCode, null);
-
-        // 设置缓存
-        setCacheList(tenantCode, null, list);
         return list;
     }
 
     public List<MachinePO> listByShopCode(String tenantCode, String shopCode) {
-        // 首先访问缓存
-        List<MachinePO> cachedList = getCacheList(tenantCode, shopCode);
-        if (cachedList != null) {
-            return cachedList;
-        }
-
         List<MachinePO> list = mapper.selectList(tenantCode, shopCode);
-
-        // 设置缓存
-        setCacheList(tenantCode, shopCode, list);
         return list;
     }
 
-    public int countByModelCode(String modelCode) {
-        int count = mapper.countByModelCode(modelCode);
-        return count;
-    }
-
-    public PageInfo<MachinePO> search(String tenantCode, String machineCode, String screenCode, String elecBoardCode,
-            List<String> shopCodeList, int pageNum, int pageSize) {
+    public PageInfo<MachinePO> search(String tenantCode, String machineCode, List<String> machineGroupCodeList,
+                                      int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         MachineQuery machineQuery = new MachineQuery();
         machineQuery.setTenantCode(tenantCode);
         machineQuery.setMachineCode(StringUtils.isBlank(machineCode) ? null : machineCode);
-        machineQuery.setScreenCode(StringUtils.isBlank(screenCode) ? null : screenCode);
-        machineQuery.setElecBoardCode(StringUtils.isBlank(elecBoardCode) ? null : elecBoardCode);
-        machineQuery.setShopCodeList(shopCodeList);
+        machineQuery.setMachineGroupCodeList(machineGroupCodeList);
         List<MachinePO> list = mapper.search(machineQuery);
 
         PageInfo<MachinePO> pageInfo = new PageInfo(list);
@@ -86,10 +52,6 @@ public class MachineAccessor {
 
     public int insert(MachinePO po) {
         int inserted = mapper.insert(po);
-        if (inserted == CommonConsts.DB_INSERTED_ONE_ROW) {
-            deleteCacheList(po.getTenantCode(), po.getShopCode());
-            deleteCacheCountByModelCode(po.getModelCode());
-        }
         return inserted;
     }
 
@@ -100,12 +62,6 @@ public class MachineAccessor {
         }
 
         int updated = mapper.update(po);
-        if (updated == CommonConsts.DB_UPDATED_ONE_ROW) {
-            deleteCacheOne(po.getTenantCode(), po.getMachineCode());
-            deleteCacheList(po.getTenantCode(), po.getShopCode());
-            deleteCacheCountByModelCode(exist.getModelCode());
-            deleteCacheCountByModelCode(po.getModelCode());
-        }
         return updated;
     }
 
@@ -116,11 +72,6 @@ public class MachineAccessor {
         }
 
         int deleted = mapper.delete(tenantCode, machineCode);
-        if (deleted == CommonConsts.DB_DELETED_ONE_ROW) {
-            deleteCacheOne(tenantCode, machineCode);
-            deleteCacheList(tenantCode, po.getShopCode());
-            deleteCacheCountByModelCode(po.getModelCode());
-        }
         return deleted;
     }
 
@@ -131,72 +82,6 @@ public class MachineAccessor {
         }
 
         int updated = mapper.updateOnlineStateByMachineCode(machineCode, onlineState);
-        if (updated == CommonConsts.DB_UPDATED_ONE_ROW) {
-            deleteCacheOne(po.getTenantCode(), machineCode);
-            deleteCacheList(po.getTenantCode(), po.getShopCode());
-            deleteCacheCountByModelCode(po.getModelCode());
-        }
         return updated;
-    }
-
-    private String getCacheKey(String tenantCode, String machineCode) {
-        return "machineAcc-" + tenantCode + "-" + machineCode;
-    }
-
-    private String getCacheListKey(String tenantCode, String shopCode) {
-        return "machineAcc-" + tenantCode + "-" + shopCode;
-    }
-
-    private String getCacheCountKeyByModelCode(String modelCode) {
-        return "machineAcc-cnt-" + modelCode;
-    }
-
-    private MachinePO getCache(String tenantCode, String machineCode) {
-        String key = getCacheKey(tenantCode, machineCode);
-        Object cached = redisManager4Accessor.getValue(key);
-        MachinePO po = (MachinePO) cached;
-        return po;
-    }
-
-    private List<MachinePO> getCacheList(String tenantCode, String shopCode) {
-        String key = getCacheListKey(tenantCode, shopCode);
-        Object cached = redisManager4Accessor.getValue(key);
-        List<MachinePO> poList = (List<MachinePO>) cached;
-        return poList;
-    }
-
-    private void setCacheList(String tenantCode, String shopCode, List<MachinePO> poList) {
-        String key = getCacheListKey(tenantCode, shopCode);
-        redisManager4Accessor.setValue(key, poList);
-    }
-
-    private void setCache(String tenantCode, String machineCode, MachinePO po) {
-        String key = getCacheKey(tenantCode, machineCode);
-        redisManager4Accessor.setValue(key, po);
-    }
-
-    private Integer getCacheCountByModelCode(String modelCode) {
-        String key = getCacheCountKeyByModelCode(modelCode);
-        Object cached = redisManager4Accessor.getValue(key);
-        Integer count = (Integer) cached;
-        return count;
-    }
-
-    private void setCacheCount(String modelCode, Integer count) {
-        String key = getCacheCountKeyByModelCode(modelCode);
-        redisManager4Accessor.setValue(key, count);
-    }
-
-    private void deleteCacheOne(String tenantCode, String machineCode) {
-        redisManager4Accessor.deleteKey(getCacheKey(tenantCode, machineCode));
-    }
-
-    private void deleteCacheList(String tenantCode, String shopCode) {
-        redisManager4Accessor.deleteKey(getCacheListKey(tenantCode, shopCode));
-        redisManager4Accessor.deleteKey(getCacheListKey(tenantCode, null));
-    }
-
-    private void deleteCacheCountByModelCode(String modelCode) {
-        redisManager4Accessor.deleteKey(getCacheCountKeyByModelCode(modelCode));
     }
 }

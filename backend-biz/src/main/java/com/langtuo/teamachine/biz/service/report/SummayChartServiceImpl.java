@@ -3,7 +3,6 @@ package com.langtuo.teamachine.biz.service.report;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.report.SummaryChartService;
 import com.langtuo.teamachine.api.utils.CollectionUtils;
-import com.langtuo.teamachine.dao.accessor.SummaryChartAccessor;
 import com.langtuo.teamachine.dao.accessor.drink.SpecItemAccessor;
 import com.langtuo.teamachine.dao.accessor.drink.TeaAccessor;
 import com.langtuo.teamachine.dao.accessor.drink.ToppingAccessor;

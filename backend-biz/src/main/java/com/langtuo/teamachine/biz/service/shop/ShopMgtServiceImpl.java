@@ -12,9 +12,8 @@ import com.langtuo.teamachine.biz.manager.OrgManager;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.accessor.user.AdminAccessor;
-import com.langtuo.teamachine.dao.accessor.user.OrgAccessor;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
@@ -43,7 +42,7 @@ public class ShopMgtServiceImpl implements ShopMgtService {
     private OrgAccessor orgAccessor;
 
     @Resource
-    private ShopGroupAccessor shopGroupAccessor;
+    private MachineGroupAccessor machineGroupAccessor;
 
     @Override
     @Transactional(readOnly = true)

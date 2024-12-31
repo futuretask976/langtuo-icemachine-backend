@@ -4,7 +4,7 @@ import com.langtuo.teamachine.api.model.device.MachineDTO;
 import com.langtuo.teamachine.api.request.device.MachineActivatePutRequest;
 import com.langtuo.teamachine.api.request.device.MachineUpdatePutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.device.MachinePO;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
@@ -53,8 +53,8 @@ public class MachineMgtConvertor {
             dto.setShopName(shopPO.getShopName());
         }
 
-        ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-        MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(),
+        MachineGroupAccessor machineGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
+        MachineGroupPO machineGroupPO = machineGroupAccessor.getByShopGroupCode(po.getTenantCode(),
                 shopPO.getShopGroupCode());
         if (machineGroupPO != null) {
             dto.setShopGroupCode(machineGroupPO.getMachineGroupCode());

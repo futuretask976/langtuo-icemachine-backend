@@ -1,6 +1,5 @@
 package com.langtuo.teamachine.biz.manager;
 
-import com.langtuo.teamachine.dao.accessor.user.OrgAccessor;
 import com.langtuo.teamachine.dao.node.user.OrgNode;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
 import org.springframework.stereotype.Component;

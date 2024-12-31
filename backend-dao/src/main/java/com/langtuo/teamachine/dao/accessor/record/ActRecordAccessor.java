@@ -4,13 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.mapper.record.ActRecordMapper;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
+import com.langtuo.teamachine.dao.query.record.ActRecordQuery;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class DrainActRecordAccessor {
+public class ActRecordAccessor {
     @Resource
     private ActRecordMapper mapper;
 
@@ -19,25 +20,25 @@ public class DrainActRecordAccessor {
     }
 
     public PageInfo<ActRecordPO> searchByShopGroupCodeList(String tenantCode, List<String> shopGroupCodeList,
-                                                           int pageNum, int pageSize) {
+            int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        DrainActRecordQuery query = new DrainActRecordQuery();
+        ActRecordQuery query = new ActRecordQuery();
         query.setTenantCode(tenantCode);
-        query.addAllShopGroupCode(shopGroupCodeList);
+        query.addAllMachineGroupCode(shopGroupCodeList);
         List<ActRecordPO> list = mapper.search(query);
 
         PageInfo<ActRecordPO> pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
-    public PageInfo<ActRecordPO> searchByShopCodeList(String tenantCode, List<String> shopCodeList,
-                                                      int pageNum, int pageSize) {
+    public PageInfo<ActRecordPO> searchByShopCodeList(String tenantCode, List<String> machineGroupCodeList,
+            int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
-        DrainActRecordQuery query = new DrainActRecordQuery();
+        ActRecordQuery query = new ActRecordQuery();
         query.setTenantCode(tenantCode);
-        query.addAllShopCode(shopCodeList);
+        query.addAllMachineGroupCode(machineGroupCodeList);
         List<ActRecordPO> list = mapper.search(query);
 
         PageInfo<ActRecordPO> pageInfo = new PageInfo(list);

@@ -12,8 +12,6 @@ import com.langtuo.teamachine.api.service.rule.WarningRuleMgtService;
 import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
 import com.langtuo.teamachine.biz.manager.AdminManager;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.rule.WarningRuleAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.WarningRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;

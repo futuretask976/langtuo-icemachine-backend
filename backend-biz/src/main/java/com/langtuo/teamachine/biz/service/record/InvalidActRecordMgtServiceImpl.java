@@ -6,7 +6,6 @@ import com.langtuo.teamachine.api.model.record.InvalidActRecordDTO;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.record.InvalidActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.record.InvalidActRecordAccessor;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;

@@ -7,7 +7,7 @@ import com.langtuo.teamachine.dao.accessor.menu.*;
 import com.langtuo.teamachine.dao.accessor.record.*;
 import com.langtuo.teamachine.dao.accessor.rule.*;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.accessor.user.*;
 import org.springframework.context.ApplicationContext;
 
@@ -48,9 +48,9 @@ public class SpringAccessorUtils {
         return accessor;
     }
 
-    public static CleanRuleDispatchAccessor getCleanRuleDispatchAccessor() {
+    public static ConfigRuleDispatchAccessor getCleanRuleDispatchAccessor() {
         ApplicationContext appContext = SpringUtil.getApplicationContext();
-        CleanRuleDispatchAccessor accessor = appContext.getBean(CleanRuleDispatchAccessor.class);
+        ConfigRuleDispatchAccessor accessor = appContext.getBean(ConfigRuleDispatchAccessor.class);
         return accessor;
     }
 
@@ -114,9 +114,9 @@ public class SpringAccessorUtils {
         return accessor;
     }
 
-    public static CleanActRecordAccessor getCleanActRecordAccessor() {
+    public static ActRecordAccessor getCleanActRecordAccessor() {
         ApplicationContext appContext = SpringUtil.getApplicationContext();
-        CleanActRecordAccessor accessor = appContext.getBean(CleanActRecordAccessor.class);
+        ActRecordAccessor accessor = appContext.getBean(ActRecordAccessor.class);
         return accessor;
     }
 
@@ -150,9 +150,9 @@ public class SpringAccessorUtils {
         return accessor;
     }
 
-    public static ShopGroupAccessor getShopGroupAccessor() {
+    public static MachineGroupAccessor getShopGroupAccessor() {
         ApplicationContext appContext = SpringUtil.getApplicationContext();
-        ShopGroupAccessor accessor = appContext.getBean(ShopGroupAccessor.class);
+        MachineGroupAccessor accessor = appContext.getBean(MachineGroupAccessor.class);
         return accessor;
     }
 
@@ -234,9 +234,9 @@ public class SpringAccessorUtils {
         return accessor;
     }
 
-    public static CleanRuleAccessor getCleanRuleAccessor() {
+    public static ConfigRuleAccessor getCleanRuleAccessor() {
         ApplicationContext appContext = SpringUtil.getApplicationContext();
-        CleanRuleAccessor accessor = appContext.getBean(CleanRuleAccessor.class);
+        ConfigRuleAccessor accessor = appContext.getBean(ConfigRuleAccessor.class);
         return accessor;
     }
 

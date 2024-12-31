@@ -3,7 +3,6 @@ package com.langtuo.teamachine.biz.convertor.rule;
 import com.langtuo.teamachine.api.model.rule.DrainRuleNewDTO;
 import com.langtuo.teamachine.api.request.rule.DrainRuleDispatchNewPutRequest;
 import com.langtuo.teamachine.api.request.rule.DrainRuleNewPutRequest;
-import com.langtuo.teamachine.dao.accessor.rule.DrainRuleExceptAccessor;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 

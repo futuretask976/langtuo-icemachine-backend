@@ -3,7 +3,7 @@ package com.langtuo.teamachine.biz.convertor.record;
 import com.langtuo.teamachine.api.model.record.InvalidActRecordDTO;
 import com.langtuo.teamachine.dao.accessor.drink.ToppingAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.ToppingPO;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
@@ -49,8 +49,8 @@ public class InvalidActRecordMgtConvertor {
                 dto.setToppingName(toppingPO.getToppingName());
             }
 
-            ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupAccessor machineGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
+            MachineGroupPO machineGroupPO = machineGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
             if (machineGroupPO != null) {
                 dto.setShopGroupName(machineGroupPO.getMachineGroupName());
             }

@@ -2,10 +2,6 @@ package com.langtuo.teamachine.biz.aync.worker.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.api.utils.CollectionUtils;
-import com.langtuo.teamachine.dao.accessor.user.OrgAccessor;
-import com.langtuo.teamachine.dao.accessor.user.PermitActAccessor;
-import com.langtuo.teamachine.dao.accessor.user.RoleAccessor;
-import com.langtuo.teamachine.dao.accessor.user.RoleActRelAccessor;
 import com.langtuo.teamachine.dao.node.user.OrgNode;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;

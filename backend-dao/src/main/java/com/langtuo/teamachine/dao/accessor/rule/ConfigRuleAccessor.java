@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class CleanRuleAccessor {
+public class ConfigRuleAccessor {
     @Resource
     private ConfigRuleMapper mapper;
 

@@ -40,8 +40,6 @@ public class AdminAccessor {
         AdminQuery adminQuery = new AdminQuery();
         adminQuery.setTenantCode(tenantCode);
         adminQuery.setLoginName(StringUtils.isBlank(loginName) ? null : loginName);
-        adminQuery.setRoleCode(StringUtils.isBlank(roleCode) ? null : roleCode);
-        adminQuery.setOrgNameList(orgNameList);
         List<AdminPO> list = mapper.search(adminQuery);
 
         PageInfo<AdminPO> pageInfo = new PageInfo(list);
@@ -73,16 +71,6 @@ public class AdminAccessor {
         return deleted;
     }
 
-    public int countByRoleCode(String tenantCode, String roleCode) {
-        int count = mapper.countByRoleCode(tenantCode, roleCode);
-        return count;
-    }
-
-    public int countByOrgName(String tenantCode, String orgName) {
-        int count = mapper.countByOrgName(tenantCode, orgName);
-        return count;
-    }
-
     private AdminPO getSysSuperAdmin(String tenantCode, String loginName) {
         if (!CommonConsts.ADMIN_SYS_SUPER_LOGIN_NAME.equals(loginName)) {
             return null;
@@ -92,8 +80,6 @@ public class AdminAccessor {
         po.setTenantCode(tenantCode);
         po.setLoginName(CommonConsts.ADMIN_SYS_SUPER_LOGIN_NAME);
         po.setLoginPass(CommonConsts.ADMIN_SYS_SUPER_PASSWORD);
-        po.setOrgName(CommonConsts.ORG_NAME_TOP);
-        po.setRoleCode(CommonConsts.ROLE_CODE_SYS_SUPER);
         return po;
     }
 }

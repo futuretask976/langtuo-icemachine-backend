@@ -4,10 +4,8 @@ import com.langtuo.teamachine.api.model.record.OrderActRecordDTO;
 import com.langtuo.teamachine.api.model.record.OrderSpecItemActRecordDTO;
 import com.langtuo.teamachine.api.model.record.OrderToppingActRecordDTO;
 import com.langtuo.teamachine.dao.accessor.drink.*;
-import com.langtuo.teamachine.dao.accessor.record.OrderSpecItemActRecordAccessor;
-import com.langtuo.teamachine.dao.accessor.record.OrderToppingActRecordAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.*;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
@@ -57,8 +55,8 @@ public class OrderActRecordMgtConvertor {
                 dto.setTeaTypeName(teaTypePO.getTeaTypeName());
             }
 
-            ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(
+            MachineGroupAccessor machineGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
+            MachineGroupPO machineGroupPO = machineGroupAccessor.getByShopGroupCode(
                     po.getTenantCode(), po.getShopGroupCode());
             if (machineGroupPO != null) {
                 dto.setShopGroupName(machineGroupPO.getMachineGroupName());

@@ -6,7 +6,6 @@ import com.langtuo.teamachine.api.model.record.DrainActRecordDTO;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.record.DrainActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.record.DrainActRecordAccessor;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;

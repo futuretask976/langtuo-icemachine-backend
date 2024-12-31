@@ -9,7 +9,6 @@ import com.langtuo.teamachine.api.service.device.DeployMgtService;
 import com.langtuo.teamachine.biz.excel.ExcelHandlerFactory;
 import com.langtuo.teamachine.biz.manager.ShopManager;
 import com.langtuo.teamachine.biz.util.BizUtils;
-import com.langtuo.teamachine.dao.accessor.device.DeployAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.user.TenantAccessor;
 import com.langtuo.teamachine.internal.constant.CommonConsts;

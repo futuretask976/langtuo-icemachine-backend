@@ -12,10 +12,8 @@ import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.rule.CleanRuleMgtService;
 import com.langtuo.teamachine.biz.manager.AdminManager;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleDispatchAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleExceptAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleStepAccessor;
+import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleAccessor;
+import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
@@ -46,13 +44,13 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     private ShopGroupManager shopGroupManager;
 
     @Resource
-    private CleanRuleAccessor cleanRuleAccessor;
+    private ConfigRuleAccessor configRuleAccessor;
 
     @Resource
     private CleanRuleStepAccessor cleanRuleStepAccessor;
 
     @Resource
-    private CleanRuleDispatchAccessor cleanRuleDispatchAccessor;
+    private ConfigRuleDispatchAccessor configRuleDispatchAccessor;
 
     @Resource
     private CleanRuleExceptAccessor cleanRuleExceptAccessor;
@@ -67,7 +65,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     @Transactional(readOnly = true)
     public TeaMachineResult<CleanRuleDTO> getByCleanRuleCode(String tenantCode, String cleanRuleCode) {
         try {
-            ConfigRulePO po = cleanRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
+            ConfigRulePO po = configRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
             CleanRuleDTO dto = convertToCleanRuleStepDTO(po);
             return TeaMachineResult.success(dto);
         } catch (Exception e) {
@@ -80,7 +78,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     @Transactional(readOnly = true)
     public TeaMachineResult<List<CleanRuleDTO>> list(String tenantCode) {
         try {
-            List<ConfigRulePO> poList = cleanRuleAccessor.selectList(tenantCode);
+            List<ConfigRulePO> poList = configRuleAccessor.selectList(tenantCode);
             List<CleanRuleDTO> dtoList = convertToCleanRuleDTO(poList);
 
             // 根据 gmtModified 倒排
@@ -105,7 +103,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
                 return TeaMachineResult.success();
             }
 
-            List<ConfigRuleDispatchPO> configRuleDispatchPOList = cleanRuleDispatchAccessor.listByShopGroupCode(
+            List<ConfigRuleDispatchPO> configRuleDispatchPOList = configRuleDispatchAccessor.listByShopGroupCode(
                     tenantCode, shopPO.getShopGroupCode());
             if (CollectionUtils.isEmpty(configRuleDispatchPOList)) {
                 return TeaMachineResult.success();
@@ -114,7 +112,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
             List<String> cleanRuleCodeList = configRuleDispatchPOList.stream()
                     .map(ConfigRuleDispatchPO::getConfigRuleCode)
                     .collect(Collectors.toList());
-            List<ConfigRulePO> configRulePOList = cleanRuleAccessor.selectListByCleanRuleCode(tenantCode,
+            List<ConfigRulePO> configRulePOList = configRuleAccessor.selectListByCleanRuleCode(tenantCode,
                     cleanRuleCodeList);
             List<CleanRuleDTO> cleanRuleDTOList = convertToCleanRuleDTO(configRulePOList);
             cleanRuleDTOList.sort((o1, o2) -> o1.getGmtModified().equals(o2.getGmtModified()) ?
@@ -134,7 +132,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
         try {
-            PageInfo<ConfigRulePO> pageInfo = cleanRuleAccessor.search(tenantCode, cleanRuleCode, cleanRuleName,
+            PageInfo<ConfigRulePO> pageInfo = configRuleAccessor.search(tenantCode, cleanRuleCode, cleanRuleName,
                     pageNum, pageSize);
             List<CleanRuleDTO> dtoList = convertToCleanRuleDTO(pageInfo.getList());
             return TeaMachineResult.success(new PageDTO<>(dtoList, pageInfo.getTotal(),
@@ -209,7 +207,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
             dto.setCleanRuleCode(cleanRuleCode);
 
             List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
-            List<ConfigRuleDispatchPO> poList = cleanRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
+            List<ConfigRuleDispatchPO> poList = configRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
                     shopGroupCodeList);
             if (!CollectionUtils.isEmpty(poList)) {
                 dto.setShopGroupCodeList(poList.stream()
@@ -226,12 +224,12 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doPutNew(ConfigRulePO po, List<CleanRuleStepPO> stepPOList,
                                             List<CleanRuleExceptPO> exceptPOList) {
-        ConfigRulePO exist = cleanRuleAccessor.getByCleanRuleCode(po.getTenantCode(), po.getConfigRuleCode());
+        ConfigRulePO exist = configRuleAccessor.getByCleanRuleCode(po.getTenantCode(), po.getConfigRuleCode());
         if (exist != null) {
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_CODE_DUPLICATED));
         }
 
-        int inserted = cleanRuleAccessor.insert(po);
+        int inserted = configRuleAccessor.insert(po);
         if (CommonConsts.DB_INSERTED_ONE_ROW != inserted) {
             log.error("doPutNew|error|" + inserted);
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
@@ -256,12 +254,12 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doPutUpdate(ConfigRulePO po, List<CleanRuleStepPO> stepPOList,
                                                List<CleanRuleExceptPO> exceptPOList) {
-        ConfigRulePO exist = cleanRuleAccessor.getByCleanRuleCode(po.getTenantCode(), po.getConfigRuleCode());
+        ConfigRulePO exist = configRuleAccessor.getByCleanRuleCode(po.getTenantCode(), po.getConfigRuleCode());
         if (exist == null) {
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_NOT_FOUND));
         }
 
-        int updated = cleanRuleAccessor.update(po);
+        int updated = configRuleAccessor.update(po);
         if (CommonConsts.DB_UPDATED_ONE_ROW != updated) {
             log.error("doPutUpdate|error|" + updated);
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
@@ -285,10 +283,10 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doDeleteByCleanRuleCode(String tenantCode, String cleanRuleCode) {
-        cleanRuleAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode);
+        configRuleAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode);
         cleanRuleStepAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode);
         cleanRuleExceptAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode);
-        cleanRuleDispatchAccessor.deleteAllByCleanRuleCode(tenantCode, cleanRuleCode);
+        configRuleDispatchAccessor.deleteAllByCleanRuleCode(tenantCode, cleanRuleCode);
 
         return TeaMachineResult.success();
     }
@@ -297,8 +295,8 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
     private TeaMachineResult<Void> doPutDispatch(String tenantCode, String cleanRuleCode,
             List<ConfigRuleDispatchPO> poList) {
         List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
-        cleanRuleDispatchAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode, shopGroupCodeList);
-        int inserted = cleanRuleDispatchAccessor.insertBatch(poList);
+        configRuleDispatchAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode, shopGroupCodeList);
+        int inserted = configRuleDispatchAccessor.insertBatch(poList);
         if (inserted != poList.size()) {
             log.error("doPutDispatch|error|" + inserted);
         }

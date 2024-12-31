@@ -6,7 +6,6 @@ import com.langtuo.teamachine.api.model.record.SupplyActRecordDTO;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.record.SupplyActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.record.SupplyActRecordAccessor;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;

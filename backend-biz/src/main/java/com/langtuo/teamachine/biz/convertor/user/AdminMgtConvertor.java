@@ -2,7 +2,6 @@ package com.langtuo.teamachine.biz.convertor.user;
 
 import com.langtuo.teamachine.api.model.user.AdminDTO;
 import com.langtuo.teamachine.api.request.user.AdminPutRequest;
-import com.langtuo.teamachine.dao.accessor.user.RoleAccessor;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;

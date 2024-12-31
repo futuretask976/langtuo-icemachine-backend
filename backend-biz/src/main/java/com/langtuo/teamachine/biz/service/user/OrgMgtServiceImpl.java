@@ -7,9 +7,8 @@ import com.langtuo.teamachine.api.request.user.OrgPutRequest;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.user.OrgMgtService;
 import com.langtuo.teamachine.biz.manager.AdminManager;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.accessor.user.AdminAccessor;
-import com.langtuo.teamachine.dao.accessor.user.OrgAccessor;
 import com.langtuo.teamachine.dao.node.user.OrgNode;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -40,7 +39,7 @@ public class OrgMgtServiceImpl implements OrgMgtService {
     private AdminAccessor adminAccessor;
 
     @Resource
-    private ShopGroupAccessor shopGroupAccessor;
+    private MachineGroupAccessor machineGroupAccessor;
 
     @Override
     @Transactional(readOnly = true)
@@ -186,7 +185,7 @@ public class OrgMgtServiceImpl implements OrgMgtService {
                         ErrorCodeEnum.BIZ_ERR_CANNOT_DELETE_USING_OBJECT));
             }
 
-            int count4ShopGroup = shopGroupAccessor.countByOrgName(tenantCode, orgName);
+            int count4ShopGroup = machineGroupAccessor.countByOrgName(tenantCode, orgName);
             if (count4ShopGroup > CommonConsts.DB_COUNT_RESULT_ZERO) {
                 log.error("delete|errorByShopGroup|count4ShopGroup=" + count4ShopGroup);
                 return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(

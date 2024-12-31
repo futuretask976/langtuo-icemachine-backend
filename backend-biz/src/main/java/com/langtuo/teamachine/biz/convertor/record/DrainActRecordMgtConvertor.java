@@ -3,7 +3,7 @@ package com.langtuo.teamachine.biz.convertor.record;
 import com.langtuo.teamachine.api.model.record.DrainActRecordDTO;
 import com.langtuo.teamachine.dao.accessor.drink.ToppingAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.ToppingPO;
 import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
@@ -55,8 +55,8 @@ public class DrainActRecordMgtConvertor {
                 }
             }
 
-            ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
+            MachineGroupAccessor machineGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
+            MachineGroupPO machineGroupPO = machineGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getMachineGroupCode());
             if (machineGroupPO != null) {
                 dto.setShopGroupName(machineGroupPO.getMachineGroupName());
             }

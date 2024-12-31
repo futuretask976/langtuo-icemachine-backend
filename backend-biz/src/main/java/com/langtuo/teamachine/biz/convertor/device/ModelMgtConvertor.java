@@ -4,7 +4,6 @@ import com.langtuo.teamachine.api.model.device.ModelDTO;
 import com.langtuo.teamachine.api.model.device.ModelPipelineDTO;
 import com.langtuo.teamachine.api.request.device.ModelPipelinePutRequest;
 import com.langtuo.teamachine.api.request.device.ModelPutRequest;
-import com.langtuo.teamachine.dao.accessor.device.ModelPipelineAccessor;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.util.CollectionUtils;

@@ -6,7 +6,7 @@ import com.langtuo.teamachine.api.model.record.CleanActRecordDTO;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.record.CleanActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.dao.accessor.record.CleanActRecordAccessor;
+import com.langtuo.teamachine.dao.accessor.record.ActRecordAccessor;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -29,13 +29,13 @@ public class CleanActRecordMgtServiceImpl implements CleanActRecordMgtService {
     private ShopGroupManager shopGroupManager;
 
     @Resource
-    private CleanActRecordAccessor cleanActRecordAccessor;
+    private ActRecordAccessor actRecordAccessor;
 
     @Override
     @Transactional(readOnly = true)
     public TeaMachineResult<CleanActRecordDTO> get(String tenantCode, String idempotentMark) {
         try {
-            CleanActRecordPO po = cleanActRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
+            CleanActRecordPO po = actRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
             return TeaMachineResult.success(convertToCleanActRecordDTO(po, true));
         } catch (Exception e) {
             log.error("get|fatal|e=" + e.getMessage(), e);
@@ -53,14 +53,14 @@ public class CleanActRecordMgtServiceImpl implements CleanActRecordMgtService {
         try {
             PageInfo<CleanActRecordPO> pageInfo = null;
             if (!StringUtils.isBlank(shopCode)) {
-                pageInfo = cleanActRecordAccessor.searchByShopCodeList(tenantCode, Lists.newArrayList(shopCode),
+                pageInfo = actRecordAccessor.searchByShopCodeList(tenantCode, Lists.newArrayList(shopCode),
                         pageNum, pageSize);
             } else if (!StringUtils.isBlank(shopGroupCode)) {
-                pageInfo = cleanActRecordAccessor.searchByShopGroupCodeList(tenantCode, Lists.newArrayList(shopGroupCode),
+                pageInfo = actRecordAccessor.searchByShopGroupCodeList(tenantCode, Lists.newArrayList(shopGroupCode),
                         pageNum, pageSize);
             } else {
                 List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
-                pageInfo = cleanActRecordAccessor.searchByShopGroupCodeList(tenantCode, shopGroupCodeList,
+                pageInfo = actRecordAccessor.searchByShopGroupCodeList(tenantCode, shopGroupCodeList,
                         pageNum, pageSize);
             }
 
@@ -86,7 +86,7 @@ public class CleanActRecordMgtServiceImpl implements CleanActRecordMgtService {
         }
         
         try {
-            cleanActRecordAccessor.delete(tenantCode, idempotentMark);
+            actRecordAccessor.delete(tenantCode, idempotentMark);
             return TeaMachineResult.success();
         } catch (Exception e) {
             log.error("delete|fatal|e=" + e.getMessage(), e);

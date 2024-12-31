@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Component
-public class CleanRuleDispatchAccessor {
+public class ConfigRuleDispatchAccessor {
     @Resource
     private ConfigRuleDispatchMapper mapper;
 

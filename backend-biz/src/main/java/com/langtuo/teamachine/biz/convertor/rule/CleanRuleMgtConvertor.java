@@ -4,8 +4,6 @@ import com.langtuo.teamachine.api.model.rule.CleanRuleDTO;
 import com.langtuo.teamachine.api.model.rule.CleanRuleStepDTO;
 import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleExceptAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleStepAccessor;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;

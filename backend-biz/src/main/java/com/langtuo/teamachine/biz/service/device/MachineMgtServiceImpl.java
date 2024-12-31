@@ -10,11 +10,9 @@ import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.device.MachineMgtService;
 import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
 import com.langtuo.teamachine.biz.manager.ShopManager;
-import com.langtuo.teamachine.dao.accessor.device.DeployAccessor;
 import com.langtuo.teamachine.dao.accessor.device.MachineAccessor;
-import com.langtuo.teamachine.dao.accessor.device.ModelAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
+import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.device.MachinePO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
@@ -48,7 +46,7 @@ public class MachineMgtServiceImpl implements MachineMgtService {
     private ShopAccessor shopAccessor;
 
     @Resource
-    private ShopGroupAccessor shopGroupAccessor;
+    private MachineGroupAccessor machineGroupAccessor;
 
     @Resource
     private ModelAccessor modelAccessor;

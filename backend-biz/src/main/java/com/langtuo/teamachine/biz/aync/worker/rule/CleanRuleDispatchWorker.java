@@ -9,8 +9,8 @@ import com.langtuo.teamachine.biz.manager.ShopGroupManager;
 import com.langtuo.teamachine.biz.manager.ShopManager;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleAccessor;
-import com.langtuo.teamachine.dao.accessor.rule.CleanRuleDispatchAccessor;
+import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleAccessor;
+import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.ConfigRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
@@ -76,8 +76,8 @@ public class CleanRuleDispatchWorker implements Runnable {
     }
 
     private JSONObject getDispatchCont() {
-        CleanRuleAccessor cleanRuleAccessor = SpringAccessorUtils.getCleanRuleAccessor();
-        ConfigRulePO po = cleanRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
+        ConfigRuleAccessor configRuleAccessor = SpringAccessorUtils.getCleanRuleAccessor();
+        ConfigRulePO po = configRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
         CleanRuleDTO dto = CleanRuleMgtConvertor.convertToCleanRuleStepDTO(po);
         if (dto == null) {
             log.error("getRule|error|tenantCode=" + tenantCode + ";cleanRuleCode=" + cleanRuleCode);
@@ -92,8 +92,8 @@ public class CleanRuleDispatchWorker implements Runnable {
         ShopGroupManager shopGroupManager = SpringManagerUtils.getShopGroupManager();
         List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginName(tenantCode, loginName);
 
-        CleanRuleDispatchAccessor cleanRuleDispatchAccessor = SpringAccessorUtils.getCleanRuleDispatchAccessor();
-        List<ConfigRuleDispatchPO> configRuleDispatchPOList = cleanRuleDispatchAccessor.listByCleanRuleCode(
+        ConfigRuleDispatchAccessor configRuleDispatchAccessor = SpringAccessorUtils.getCleanRuleDispatchAccessor();
+        List<ConfigRuleDispatchPO> configRuleDispatchPOList = configRuleDispatchAccessor.listByCleanRuleCode(
                 tenantCode, cleanRuleCode, shopGroupCodeList);
         if (CollectionUtils.isEmpty(configRuleDispatchPOList)) {
             log.error("getDispatchPOList|error|tenantCode=" + tenantCode + ";cleanRuleCode=" + cleanRuleCode);

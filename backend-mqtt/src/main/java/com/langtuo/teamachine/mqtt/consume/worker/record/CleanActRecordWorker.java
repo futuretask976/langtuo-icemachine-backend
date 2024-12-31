@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.langtuo.teamachine.api.utils.CollectionUtils;
-import com.langtuo.teamachine.dao.accessor.record.CleanActRecordAccessor;
+import com.langtuo.teamachine.dao.accessor.record.ActRecordAccessor;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.AliyunConsts;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -65,11 +65,11 @@ public class CleanActRecordWorker implements Runnable {
             @Override
             public Void doInTransaction(TransactionStatus status) {
                 try {
-                    CleanActRecordAccessor cleanActRecordAccessor = SpringAccessorUtils.getCleanActRecordAccessor();
-                    CleanActRecordPO exist = cleanActRecordAccessor.getByIdempotentMark(po.getTenantCode(),
+                    ActRecordAccessor actRecordAccessor = SpringAccessorUtils.getCleanActRecordAccessor();
+                    CleanActRecordPO exist = actRecordAccessor.getByIdempotentMark(po.getTenantCode(),
                             po.getIdempotentMark());
                     if (exist == null) {
-                        int inserted = cleanActRecordAccessor.insert(po);
+                        int inserted = actRecordAccessor.insert(po);
                         if (CommonConsts.DB_INSERTED_ONE_ROW != inserted) {
                             log.error("insertActRecord|error|inserted=" + inserted + ";po=" + JSON.toJSONString(po));
                         }

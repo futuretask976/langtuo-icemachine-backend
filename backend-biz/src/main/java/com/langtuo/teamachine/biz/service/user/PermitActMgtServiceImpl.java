@@ -4,7 +4,6 @@ import com.langtuo.teamachine.api.model.user.PermitActDTO;
 import com.langtuo.teamachine.api.model.user.PermitActGroupDTO;
 import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.user.PermitActMgtService;
-import com.langtuo.teamachine.dao.accessor.user.PermitActAccessor;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
 import org.assertj.core.util.Lists;
 import org.springframework.stereotype.Component;
