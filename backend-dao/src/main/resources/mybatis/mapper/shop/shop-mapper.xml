@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.shop.ShopMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.shop.ShopPO" id="shopPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="shopCode" column="shop_code"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="shopType" column="shop_type"/>
+        <result property="shopGroupCode" column="shop_group_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="comment" column="comment"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectOne" resultMap="shopPOMap">
+        SELECT * FROM shop
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopCode != null">
+                AND shop_code = #{shopCode}
+            </if>
+    </select>
+
+    <select id="selectListByShopGroupCodeList" resultMap="shopPOMap">
+        SELECT * FROM shop
+        WHERE 1 = 1
+        AND tenant_code = #{tenantCode}
+        <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+            AND shop_group_code IN
+            <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                #{shopGroupCode}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="search" resultMap="shopPOMap">
+        SELECT * FROM shop
+        WHERE 1 = 1
+            <if test="shopName != null">
+                AND shop_name = #{shopName}
+            </if>
+            <if test="tenantCode != null">
+                AND tenant_code = #{tenantCode}
+            </if>
+            <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+                AND shop_group_code IN
+                <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                    #{shopGroupCode}
+                </foreach>
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.shop.ShopPO">
+        INSERT INTO shop (
+            gmt_created
+            , gmt_modified
+            , shop_code
+            , shop_name
+            , shop_type
+            , shop_group_code
+            , tenant_code
+            , comment
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{shopCode}
+            , #{shopName}
+            , #{shopType}
+            , #{shopGroupCode}
+            , #{tenantCode}
+            , #{comment}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.shop.ShopPO">
+        UPDATE shop
+        SET
+            gmt_modified = now()
+            <if test="shopName != null">
+                , shop_name = #{shopName}
+            </if>
+            <if test="shopType != null">
+                , shop_type = #{shopType}
+            </if>
+            <if test="shopGroupCode != null">
+                , shop_group_code = #{shopGroupCode}
+            </if>
+            <if test="comment != null">
+                , comment = #{comment}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            and tenant_code = #{tenantCode}
+            and shop_code = #{shopCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM shop
+        WHERE 1 = 1
+            and tenant_code = #{tenantCode}
+            and shop_code = #{shopCode}
+    </delete>
+
+    <select id="countByShopGroupCode" resultType="int">
+        SELECT COUNT(1) FROM shop
+        WHERE 1 = 1
+        AND tenant_code = #{tenantCode}
+        <if test="shopGroupCode != null">
+            AND shop_group_code = #{shopGroupCode}
+        </if>
+    </select>
+</mapper>

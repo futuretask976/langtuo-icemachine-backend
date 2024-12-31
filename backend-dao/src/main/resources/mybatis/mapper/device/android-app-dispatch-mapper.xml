@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.device.AndroidAppDispatchMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.device.AndroidAppDispatchPO" id="androidAppDispatchPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="version" column="version"/>
+        <result property="shopGroupCode" column="shop_group_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="androidAppDispatchPOMap">
+        SELECT * FROM android_app_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+            <if test="shopGroupCode != null">
+                AND shop_group_code = #{shopGroupCode}
+            </if>
+    </select>
+
+    <select id="selectListByVersion" resultMap="androidAppDispatchPOMap">
+        SELECT * FROM android_app_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+    </select>
+
+    <select id="selectListByShopGroupCode" resultMap="androidAppDispatchPOMap">
+        SELECT * FROM android_app_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopGroupCode != null">
+                AND shop_group_code = #{shopGroupCode}
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.device.AndroidAppDispatchPO">
+        INSERT INTO android_app_dispatch (
+            gmt_created
+            , gmt_modified
+            , version
+            , shop_group_code
+            , tenant_code
+        ) VALUES (
+            now()
+            , now()
+            , #{version}
+            , #{shopGroupCode}
+            , #{tenantCode}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM android_app_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND version = #{version}
+    </delete>
+</mapper>

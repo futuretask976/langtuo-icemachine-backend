@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.rule.DrainRuleDispatchMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.rule.DrainRuleDispatchPO" id="drainRuleDispatchPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="drainRuleCode" column="drain_rule_code"/>
+        <result property="shopGroupCode" column="shop_group_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="drainRuleDispatchPOMap">
+        SELECT * FROM drain_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="drainRuleCode != null">
+                AND drain_rule_code = #{drainRuleCode}
+            </if>
+            <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+                AND shop_group_code IN
+                <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                    #{shopGroupCode}
+                </foreach>
+            </if>
+    </select>
+
+    <select id="selectListByShopGroupCode" resultMap="drainRuleDispatchPOMap">
+        SELECT * FROM drain_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopGroupCode != null">
+                AND shop_group_code = #{shopGroupCode}
+            </if>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO drain_rule_dispatch (
+            gmt_created
+            , gmt_modified
+            , drain_rule_code
+            , shop_group_code
+            , tenant_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.drainRuleCode}
+                , #{po.shopGroupCode}
+                , #{po.tenantCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM drain_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="drainRuleCode != null">
+                AND drain_rule_code = #{drainRuleCode}
+            </if>
+            <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+                AND shop_group_code IN
+                <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                    #{shopGroupCode}
+                </foreach>
+            </if>
+    </delete>
+</mapper>

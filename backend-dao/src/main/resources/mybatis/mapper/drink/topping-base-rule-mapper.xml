@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.drink.ToppingBaseRuleMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.drink.ToppingBaseRulePO" id="teaToppingBasePOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="teaCode" column="tea_code"/>
+        <result property="stepIndex" column="step_index"/>
+        <result property="toppingCode" column="topping_code"/>
+        <result property="baseAmount" column="base_amount"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="teaToppingBasePOMap">
+        SELECT * FROM topping_base_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="teaCode != null">
+                AND tea_code = #{teaCode}
+            </if>
+            <if test="stepIndex != null">
+                AND step_index = #{stepIndex}
+            </if>
+            <if test="toppingCode != null">
+                AND topping_code = #{toppingCode}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="teaToppingBasePOMap">
+        SELECT * FROM topping_base_rule
+        WHERE 1 = 1
+        AND tenant_code = #{tenantCode}
+            <if test="teaCode != null">
+                AND tea_code = #{teaCode}
+            </if>
+    </select>
+
+    <select id="countByToppingCode" resultType="int">
+        SELECT COUNT(1) FROM topping_base_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="toppingCode != null">
+                AND topping_code = #{toppingCode}
+            </if>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO topping_base_rule (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , tea_code
+            , step_index
+            , topping_code
+            , base_amount
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.tenantCode}
+                , #{po.teaCode}
+                , #{po.stepIndex}
+                , #{po.toppingCode}
+                , #{po.baseAmount}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM topping_base_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+    </delete>
+</mapper>

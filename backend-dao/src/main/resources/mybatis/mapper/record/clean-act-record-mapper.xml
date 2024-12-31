@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.record.CleanActRecordMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.record.CleanActRecordPO" id="cleanActRecordPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="idempotentMark" column="idempotent_mark"/>
+        <result property="machineCode" column="machine_code"/>
+        <result property="shopCode" column="shop_code"/>
+        <result property="shopGroupCode" column="shop_group_code"/>
+        <result property="cleanStartTime" column="clean_start_time"/>
+        <result property="cleanEndTime" column="clean_end_time"/>
+        <result property="toppingCode" column="topping_code"/>
+        <result property="pipelineNum" column="pipeline_num"/>
+        <result property="cleanType" column="clean_type"/>
+        <result property="cleanRuleCode" column="clean_rule_code"/>
+        <result property="cleanContent" column="clean_content"/>
+        <result property="washSec" column="wash_sec"/>
+        <result property="soakMin" column="soak_min"/>
+        <result property="flushIntervalMin" column="flush_interval_min"/>
+        <result property="flushSec" column="flush_sec"/>
+        <result property="recycleSec" column="recycle_sec"/>
+        <result property="cleanContent" column="clean_content"/>
+        <result property="cleanAgentType" column="clean_agent_type"/>
+        <result property="stepIndex" column="step_index"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="cleanActRecordPOMap">
+        SELECT * FROM clean_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </select>
+
+    <select id="selectList" resultMap="cleanActRecordPOMap">
+        SELECT * FROM clean_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <select id="search" resultMap="cleanActRecordPOMap">
+        SELECT * FROM clean_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+                AND shop_group_code IN
+                <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                    #{shopGroupCode}
+                </foreach>
+            </if>
+            <if test="shopCodeList != null and shopCodeList.size() > 0">
+                AND shop_code IN
+                <foreach item="shopCode" collection="shopCodeList" open="(" separator="," close=")">
+                    #{shopCode}
+                </foreach>
+            </if>
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.record.CleanActRecordPO">
+        INSERT INTO clean_act_record (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , extra_info
+            , idempotent_mark
+            , machine_code
+            , shop_code
+            , shop_group_code
+            , clean_start_time
+            , clean_end_time
+            , topping_code
+            , pipeline_num
+            , clean_type
+            , clean_rule_code
+            , wash_sec
+            , soak_min
+            , flush_interval_min
+            , flush_sec
+            , recycle_sec
+            , clean_content
+            , clean_agent_type
+            , step_index
+        ) VALUES (
+            now()
+            , now()
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            , #{idempotentMark}
+            , #{machineCode}
+            , #{shopCode}
+            , #{shopGroupCode}
+            , #{cleanStartTime}
+            , #{cleanEndTime}
+            , #{toppingCode}
+            , #{pipelineNum}
+            , #{cleanType}
+            , #{cleanRuleCode}
+            , #{washSec}
+            , #{soakMin}
+            , #{flushIntervalMin}
+            , #{flushSec}
+            , #{recycleSec}
+            , #{cleanContent}
+            , #{cleanAgentType}
+            , #{stepIndex}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM clean_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </delete>
+</mapper>

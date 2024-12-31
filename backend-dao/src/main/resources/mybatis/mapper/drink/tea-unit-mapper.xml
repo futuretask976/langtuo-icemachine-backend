@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.drink.TeaUnitMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.drink.TeaUnitPO" id="teaUnitPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="teaCode" column="tea_code"/>
+        <result property="teaUnitCode" column="tea_unit_code"/>
+        <result property="teaUnitName" column="tea_unit_Name"/>
+        <result property="outerTeaUnitCode" column="outer_tea_unit_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="teaUnitPOMap">
+        SELECT * FROM tea_unit
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+            AND tea_unit_code = #{teaUnitCode}
+    </select>
+
+    <select id="selectListByTeaCode" resultMap="teaUnitPOMap">
+        SELECT * FROM tea_unit
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO tea_unit (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , tea_code
+            , tea_unit_code
+            , tea_unit_name
+            , outer_tea_unit_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.tenantCode}
+                , #{po.teaCode}
+                , #{po.teaUnitCode}
+                , #{po.teaUnitName}
+                , #{po.outerTeaUnitCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByTeaCode">
+        DELETE FROM tea_unit
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+    </delete>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.device.MachineMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.device.MachinePO" id="machinePOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="machineCode" column="machine_code"/>
+        <result property="screenCode" column="screen_code"/>
+        <result property="elecBoardCode" column="elec_board_code"/>
+        <result property="modelCode" column="model_code"/>
+        <result property="machineName" column="machine_name"/>
+        <result property="state" column="state"/>
+        <result property="onlineState" column="online_state"/>
+        <result property="validUntil" column="valid_until"/>
+        <result property="maintainUntil" column="maintain_until"/>
+        <result property="shopCode" column="shop_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectOne" resultMap="machinePOMap">
+        SELECT * FROM machine
+        WHERE 1 = 1
+            <if test="tenantCode != null">
+                AND tenant_code = #{tenantCode}
+            </if>
+            <if test="machineCode != null">
+                AND machine_code = #{machineCode}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="machinePOMap">
+        SELECT * FROM machine
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopCode != null">
+                AND shop_code = #{shopCode}
+            </if>
+    </select>
+
+    <select id="countByModelCode" resultType="int">
+        SELECT COUNT(1) FROM machine
+        WHERE 1 = 1
+            <if test="modelCode != null">
+                AND model_code = #{modelCode}
+            </if>
+    </select>
+
+    <select id="search" resultMap="machinePOMap">
+        SELECT * FROM machine
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="machineCode != null">
+                AND machine_code = #{machineCode}
+            </if>
+            <if test="screenCode != null">
+                AND screen_code = #{screenCode}
+            </if>
+            <if test="elecBoardCode != null">
+                AND elec_board_code = #{elecBoardCode}
+            </if>
+            <if test="shopCodeList != null and shopCodeList.size() > 0">
+                AND shop_code IN
+                <foreach item="shopCode" collection="shopCodeList" open="(" separator="," close=")">
+                    #{shopCode}
+                </foreach>
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.device.MachinePO">
+        INSERT INTO machine (
+            gmt_created
+            , gmt_modified
+            , machine_code
+            , screen_code
+            , elec_board_code
+            , model_code
+            , machine_name
+            , state
+            , online_state
+            , valid_until
+            , maintain_until
+            , shop_code
+            , tenant_code
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{machineCode}
+            , #{screenCode}
+            , #{elecBoardCode}
+            , #{modelCode}
+            , #{machineName}
+            , #{state}
+            , #{onlineState}
+            , #{validUntil}
+            , #{maintainUntil}
+            , #{shopCode}
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.device.MachinePO">
+        UPDATE machine
+        SET
+            gmt_modified = now()
+            <if test="screenCode != null">
+                ,screen_code = #{screenCode}
+            </if>
+            <if test="elecBoardCode != null">
+                , elec_board_code = #{elecBoardCode}
+            </if>
+            <if test="modelCode != null">
+                , model_code = #{modelCode}
+            </if>
+            <if test="machineName != null">
+                , machine_name = #{machineName}
+            </if>
+            <if test="state != null">
+                , state = #{state}
+            </if>
+            <if test="onlineState != null">
+                , online_state = #{onlineState}
+            </if>
+            <if test="validUntil != null">
+                , valid_until = #{validUntil}
+            </if>
+            <if test="maintainUntil != null">
+                , maintain_until = #{maintainUntil}
+            </if>
+            <if test="shopCode != null">
+                , shop_code = #{shopCode}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND machine_code = #{machineCode}
+    </update>
+
+    <update id="updateOnlineStateByMachineCode">
+        UPDATE machine
+        SET
+            gmt_modified = now()
+            <if test="onlineState != null">
+                , online_state = #{onlineState}
+            </if>
+        WHERE 1 = 1
+            AND machine_code = #{machineCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM machine
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND machine_code = #{machineCode}
+    </delete>
+</mapper>

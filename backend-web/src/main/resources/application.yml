@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: teamachine-backend
+  datasource:
+    url: jdbc:mysql://rm-cn-28t3ppz9e0001yho.rwlb.rds.aliyuncs.com:3306/gx_mysql_demo?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: miya
+    password: password@1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      max-lifetime: 1770000
+  locale: zh_CN
+  messages:
+    basename: messages
+    encoding: UTF-8
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true # 开启文件上传
+      max-file-size: 10MB # 限制文件上传大小为10M
+      max-request-size: 10MB # 设置请求的最大尺寸
+  security:
+    user:
+      name: root
+      password: root
+      role: admin
+  thymeleaf:
+    content-type: text/html
+    cache: false
+    mode: HTML
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  mapper-locations:
+    - classpath*:mybatis/mapper/**/*.xml
+  type-aliases-package: com.langtuo.teamachine.dao.typehandler
+
+
+
+

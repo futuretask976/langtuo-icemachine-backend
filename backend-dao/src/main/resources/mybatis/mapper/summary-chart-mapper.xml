@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.SummaryChartMapper">
+    <select id="select4TeaAmtByDayChart" resultType="java.util.HashMap">
+        SELECT
+            order_created_day AS orderCreatedDay,
+            tea_code AS teaCode,
+            SUM(amount) AS amount
+        FROM order_tea_report
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND order_created_day >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 14 DAY), '%Y-%m-%d')
+        GROUP BY order_created_day, tea_code
+        ORDER BY order_created_day DESC, tea_code ASC
+    </select>
+
+    <select id="select4OrgShopChart" resultType="java.util.HashMap">
+        SELECT
+            org_name AS orgName,
+            COUNT(1) AS amount
+        FROM shop_group
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        GROUP BY org_name
+        LIMIT 5
+    </select>
+
+    <select id="select4DeployChart" resultType="java.util.HashMap">
+        SELECT
+            state AS state,
+            COUNT(1) AS amount
+        FROM deploy
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        GROUP BY state
+    </select>
+
+    <select id="select4ShopMachineChart" resultType="java.util.HashMap">
+        SELECT
+            shop_code AS shopCode,
+            COUNT(1) AS amount
+        FROM machine
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        GROUP BY shop_code
+        LIMIT 5
+    </select>
+
+    <select id="select4OrderAmtChart" resultType="java.util.HashMap">
+        SELECT
+            order_created_day AS orderCreatedDay,
+            SUM(total) AS amount
+        FROM
+            (
+                SELECT
+                    order_created_day,
+                    SUM(amount) AS total
+                FROM order_tea_report
+                WHERE 1 = 1
+                    AND tenant_code = #{tenantCode}
+                GROUP BY order_created_day
+                ORDER BY order_created_day DESC
+                LIMIT 14
+            ) AS tmpTab
+        GROUP BY order_created_day DESC
+    </select>
+
+    <select id="select4TeaAmtChart" resultType="java.util.HashMap">
+        SELECT
+            tea_code AS teaCode,
+            SUM(amount) AS amount
+        FROM order_tea_report
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND order_created_day >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 14 DAY), '%Y-%m-%d')
+        GROUP BY tea_code
+        ORDER BY order_created_day DESC
+        LIMIT 5
+    </select>
+
+    <select id="select4ToppingAmtChart" resultType="java.util.HashMap">
+        SELECT
+            topping_code AS toppingCode,
+            SUM(amount) AS amount
+        FROM
+            order_topping_report
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND order_created_day >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 14 DAY), '%Y-%m-%d')
+        GROUP BY topping_code
+        ORDER BY amount DESC
+        LIMIT 5
+    </select>
+
+    <select id="select4SpecItemAmtChart" resultType="java.util.HashMap">
+        SELECT
+            spec_item_code AS specItemCode,
+            SUM(amount) AS amount
+        FROM
+            order_specitem_report
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND order_created_day >= DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 14 DAY), '%Y-%m-%d')
+        GROUP BY spec_item_code
+        ORDER BY amount DESC
+        LIMIT 5
+    </select>
+</mapper>

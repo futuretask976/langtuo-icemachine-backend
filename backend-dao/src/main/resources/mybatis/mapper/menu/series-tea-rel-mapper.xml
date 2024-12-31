@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.menu.SeriesTeaRelMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.menu.SeriesTeaRelPO" id="seriesTeaRelPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="seriesCode" column="series_code"/>
+        <result property="teaCode" column="tea_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="seriesTeaRelPOMap">
+        SELECT * FROM series_tea_rel
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="seriesCode != null">
+                AND series_code = #{seriesCode}
+            </if>
+            <if test="teaCode != null">
+                AND tea_code = #{teaCode}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="seriesTeaRelPOMap">
+        SELECT * FROM series_tea_rel
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND series_code = #{seriesCode}
+    </select>
+
+    <select id="countByTeaCode" resultType="int">
+        SELECT COUNT(1) FROM series_tea_rel
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="teaCode != null">
+                AND tea_code = #{teaCode}
+            </if>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO series_tea_rel (
+            gmt_created
+            , gmt_modified
+            , series_code
+            , tea_code
+            , tenant_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.seriesCode}
+                , #{po.teaCode}
+                , #{po.tenantCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM series_tea_rel
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND series_code = #{seriesCode}
+    </delete>
+</mapper>

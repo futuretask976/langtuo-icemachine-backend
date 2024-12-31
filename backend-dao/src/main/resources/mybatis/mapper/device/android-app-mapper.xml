@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.device.AndroidAppMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.device.AndroidAppPO" id="androidAppPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="version" column="version"/>
+        <result property="ossPath" column="oss_path"/>
+        <result property="comment" column="comment"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="listByLimit" resultMap="androidAppPOMap">
+        SELECT
+            *
+        FROM
+            android_app_version
+        ORDER BY gmt_created DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectOne" resultMap="androidAppPOMap">
+        SELECT
+            *
+        FROM
+            android_app_version
+        WHERE 1 = 1
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+    </select>
+
+    <select id="search" parameterType="com.langtuo.teamachine.dao.query.device.AndroidAppQuery" resultMap="androidAppPOMap">
+        SELECT
+            *
+        FROM android_app_version
+        WHERE 1 = 1
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.device.AndroidAppPO">
+        INSERT INTO android_app_version (
+            gmt_created
+            , gmt_modified
+            , version
+            , oss_path
+            , comment
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{version}
+            , #{ossPath}
+            , #{comment}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.device.AndroidAppPO">
+        UPDATE android_app_version
+        SET
+            gmt_modified = now()
+            <if test="ossPath != null">
+                , oss_path = #{ossPath}
+            </if>
+            <if test="comment != null">
+                , comment = #{comment}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM android_app_version
+        WHERE 1 = 1
+            AND version = #{version}
+    </delete>
+</mapper>

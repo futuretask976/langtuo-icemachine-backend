@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.record.MachineCodeSeqMapper">
+    <!-- 查询序列的下一个值 -->
+    <select id="getNextSeqValue" resultType="long">
+        SELECT machine_code_sequence.NEXTVAL FROM DUAL
+    </select>
+</mapper>

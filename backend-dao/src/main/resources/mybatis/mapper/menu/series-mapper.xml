@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.menu.SeriesMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.menu.SeriesPO" id="seriesPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="seriesCode" column="series_code"/>
+        <result property="seriesName" column="series_name"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="comment" column="comment"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectOne" resultMap="seriesPOMap">
+        SELECT * FROM series
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="seriesCode != null">
+                AND series_code = #{seriesCode}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="seriesPOMap">
+        SELECT * FROM series
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+    </select>
+
+    <select id="search" resultMap="seriesPOMap">
+        SELECT * FROM series
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="seriesCode != null">
+                AND series_code = #{seriesCode}
+            </if>
+            <if test="seriesName != null">
+                AND series_name = #{seriesName}
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.menu.SeriesPO">
+        INSERT INTO series (
+            gmt_created
+            , gmt_modified
+            , series_code
+            , series_name
+            , tenant_code
+            , comment
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{seriesCode}
+            , #{seriesName}
+            , #{tenantCode}
+            , #{comment}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.menu.SeriesPO">
+        UPDATE series
+        SET
+            gmt_modified = now()
+            <if test="seriesName != null">
+                , series_name = #{seriesName}
+            </if>
+            <if test="tenantCode != null">
+                , tenant_code = #{tenantCode}
+            </if>
+            <if test="comment != null">
+                , comment = #{comment}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND series_code = #{seriesCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM series
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND series_code = #{seriesCode}
+    </delete>
+</mapper>

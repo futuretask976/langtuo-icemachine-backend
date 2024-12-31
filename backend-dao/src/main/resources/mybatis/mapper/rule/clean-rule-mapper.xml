@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.rule.CleanRuleMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.rule.CleanRulePO" id="cleanRulePOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="cleanRuleCode" column="clean_rule_code"/>
+        <result property="cleanRuleName" column="clean_rule_name"/>
+        <result property="permitBatch" column="permit_batch"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="comment" column="comment"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectOne" resultMap="cleanRulePOMap">
+        SELECT * FROM clean_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="cleanRuleCode != null">
+                AND clean_rule_code = #{cleanRuleCode}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="cleanRulePOMap">
+        SELECT * FROM clean_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="cleanRuleCodeList != null and cleanRuleCodeList.size() > 0">
+                AND clean_rule_code IN
+                <foreach item="cleanRuleCode" collection="cleanRuleCodeList" open="(" separator="," close=")">
+                    #{cleanRuleCode}
+                </foreach>
+            </if>
+    </select>
+
+    <select id="search" resultMap="cleanRulePOMap">
+        SELECT * FROM clean_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="cleanRuleCode != null">
+                AND clean_rule_code = #{cleanRuleCode}
+            </if>
+            <if test="cleanRuleName != null">
+                AND clean_rule_name = #{cleanRuleName}
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.rule.CleanRulePO">
+        INSERT INTO clean_rule (
+            gmt_created
+            , gmt_modified
+            , clean_rule_code
+            , clean_rule_name
+            , permit_batch
+            , tenant_code
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{cleanRuleCode}
+            , #{cleanRuleName}
+            , #{permitBatch}
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.rule.CleanRulePO">
+        UPDATE clean_rule
+        SET
+            gmt_modified = now()
+            <if test="cleanRuleName != null">
+                , clean_rule_name = #{cleanRuleName}
+            </if>
+            <if test="permitBatch != null">
+                , permit_batch = #{permitBatch}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND clean_rule_code = #{cleanRuleCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM clean_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND clean_rule_code = #{cleanRuleCode}
+    </delete>
+</mapper>

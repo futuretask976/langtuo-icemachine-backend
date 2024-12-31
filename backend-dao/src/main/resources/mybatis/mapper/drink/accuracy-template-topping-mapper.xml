@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.drink.AccuracyTplToppingMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.drink.AccuracyTplToppingPO" id="accuracyTplToppingPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="templateCode" column="template_code"/>
+        <result property="toppingCode" column="topping_code"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="accuracyTplToppingPOMap">
+        SELECT * FROM accuracy_template_topping
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND template_code = #{templateCode}
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO accuracy_template_topping (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , template_code
+            , topping_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.tenantCode}
+                , #{po.templateCode}
+                , #{po.toppingCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM accuracy_template_topping
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND template_code = #{templateCode}
+    </delete>
+</mapper>

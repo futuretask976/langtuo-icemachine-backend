@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.drink.SpecItemRuleMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.drink.SpecItemRulePO" id="specItemRulePOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="teaCode" column="tea_code"/>
+        <result property="specCode" column="spec_code"/>
+        <result property="specItemCode" column="spec_item_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="specItemRulePOMap">
+        SELECT * FROM spec_item_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+            AND spec_item_code = #{specItemCode}
+    </select>
+
+    <select id="selectListByTeaCode" resultMap="specItemRulePOMap">
+        SELECT * FROM spec_item_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO spec_item_rule (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , tea_code
+            , spec_code
+            , spec_item_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.tenantCode}
+                , #{po.teaCode}
+                , #{po.specCode}
+                , #{po.specItemCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByTeaCode">
+        DELETE FROM spec_item_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND tea_code = #{teaCode}
+    </delete>
+
+    <select id="countBySpecItemCode" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM spec_item_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="specItemCodeList != null and specItemCodeList.size() > 0">
+                AND spec_item_code IN
+                <foreach item="specItemCode" collection="specItemCodeList" open="(" separator="," close=")">
+                    #{specItemCode}
+                </foreach>
+            </if>
+    </select>
+
+    <select id="countBySpecCode" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM spec_item_rule
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND spec_code = #{specCode}
+    </select>
+</mapper>

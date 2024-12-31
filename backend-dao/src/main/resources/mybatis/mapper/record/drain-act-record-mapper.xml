@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.record.DrainActRecordMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.record.DrainActRecordPO" id="drainActRecordPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="idempotentMark" column="idempotent_mark"/>
+        <result property="machineCode" column="machine_code"/>
+        <result property="shopCode" column="shop_code"/>
+        <result property="shopGroupCode" column="shop_group_code"/>
+        <result property="drainStartTime" column="drain_start_time"/>
+        <result property="drainEndTime" column="drain_end_time"/>
+        <result property="toppingCode" column="topping_code"/>
+        <result property="pipelineNum" column="pipeline_num"/>
+        <result property="drainType" column="drain_type"/>
+        <result property="drainRuleCode" column="drain_rule_code"/>
+        <result property="flushSec" column="flush_sec"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="drainActRecordPOMap">
+        SELECT * FROM drain_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </select>
+
+    <select id="selectList" resultMap="drainActRecordPOMap">
+        SELECT * FROM drain_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <select id="search" resultMap="drainActRecordPOMap">
+        SELECT * FROM drain_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="shopGroupCodeList != null and shopGroupCodeList.size() > 0">
+                AND shop_group_code IN
+                <foreach item="shopGroupCode" collection="shopGroupCodeList" open="(" separator="," close=")">
+                    #{shopGroupCode}
+                </foreach>
+            </if>
+            <if test="shopCodeList != null and shopCodeList.size() > 0">
+                AND shop_code IN
+                <foreach item="shopCode" collection="shopCodeList" open="(" separator="," close=")">
+                    #{shopCode}
+                </foreach>
+            </if>
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.record.DrainActRecordPO">
+        INSERT INTO drain_act_record (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , extra_info
+            , idempotent_mark
+            , machine_code
+            , shop_code
+            , shop_group_code
+            , drain_start_time
+            , drain_end_time
+            , topping_code
+            , pipeline_num
+            , drain_type
+            , drain_rule_code
+            , flush_sec
+        ) VALUES (
+            now()
+            , now()
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            , #{idempotentMark}
+            , #{machineCode}
+            , #{shopCode}
+            , #{shopGroupCode}
+            , #{drainStartTime}
+            , #{drainEndTime}
+            , #{toppingCode}
+            , #{pipelineNum}
+            , #{drainType}
+            , #{drainRuleCode}
+            , #{flushSec}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM drain_act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </delete>
+</mapper>

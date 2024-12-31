@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.drink.SpecItemMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.drink.SpecItemPO" id="specSubPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="specCode" column="spec_code"/>
+        <result property="specItemCode" column="spec_item_code"/>
+        <result property="specItemName" column="spec_item_name"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="specSubPOMap">
+        SELECT * FROM spec_item
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="specItemCode != null">
+                AND spec_item_code = #{specItemCode}
+            </if>
+            <if test="specItemName != null">
+                AND spec_item_name = #{specItemName}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="specSubPOMap">
+        SELECT * FROM spec_item
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="specCode != null">
+                AND spec_code = #{specCode}
+            </if>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO spec_item (
+            gmt_created
+            , gmt_modified
+            , spec_code
+            , spec_item_code
+            , spec_item_name
+            , tenant_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.specCode}
+                , #{po.specItemCode}
+                , #{po.specItemName}
+                , #{po.tenantCode}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.drink.SpecItemPO">
+        UPDATE spec_item
+        SET
+            gmt_modified = now()
+        <if test="specCode != null">
+            , spec_code = #{specCode}
+        </if>
+        <if test="specItemName != null">
+            , spec_item_name = #{specItemName}
+        </if>
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND spec_item_code = #{specItemCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM spec_item
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="specCode != null">
+                AND spec_code = #{specCode}
+            </if>
+    </delete>
+</mapper>

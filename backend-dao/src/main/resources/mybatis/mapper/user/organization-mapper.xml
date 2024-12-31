@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.user.OrgMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.user.OrgPO" id="orgStrucMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="orgName" column="org_name"/>
+        <result property="parentOrgName" column="parent_org_name"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="orgStrucMap">
+        SELECT * FROM organization
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND org_name = #{orgName}
+    </select>
+
+    <select id="selectList" resultMap="orgStrucMap">
+        SELECT * FROM organization
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+    </select>
+
+    <select id="search" parameterType="com.langtuo.teamachine.dao.query.user.OrgStrucQuery" resultMap="orgStrucMap">
+        SELECT *
+        FROM organization
+        WHERE 1 = 1
+        <if test="tenantCode != null">
+            AND tenant_code = #{tenantCode}
+        </if>
+        <if test="orgName != null">
+            AND org_name = #{orgName}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.user.OrgPO">
+        INSERT INTO organization (
+            gmt_created
+            , gmt_modified
+            , org_name
+            , parent_org_name
+            , tenant_code
+        ) VALUES (
+            now()
+            , now()
+            , #{orgName}
+            , #{parentOrgName}
+            , #{tenantCode}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.user.OrgPO">
+        UPDATE organization
+        SET
+            gmt_modified = now()
+            <if test="parentOrgName != null">
+                , parent_org_name = #{parentOrgName}
+            </if>
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND org_name = #{orgName}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM organization
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND org_name = #{orgName}
+    </delete>
+</mapper>

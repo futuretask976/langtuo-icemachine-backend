@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.user.RoleMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.user.RolePO" id="adminRolePOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="roleCode" column="role_code"/>
+        <result property="roleName" column="role_name"/>
+        <result property="sysReserved" column="sys_reserved"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="comment" column="comment"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectOne" resultMap="adminRolePOMap">
+        SELECT * FROM role
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="roleCode != null">
+                AND role_code = #{roleCode}
+            </if>
+            <if test="roleName != null">
+                AND role_name = #{roleName}
+            </if>
+    </select>
+
+    <select id="selectList" resultMap="adminRolePOMap">
+        SELECT *
+        FROM role
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+    </select>
+
+    <select id="search" resultMap="adminRolePOMap">
+        SELECT *
+        FROM role
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="roleName != null">
+                AND role_name = #{roleName}
+            </if>
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.user.RolePO">
+        INSERT INTO role (
+            gmt_created
+            , gmt_modified
+            , role_code
+            , role_name
+            , sys_reserved
+            , tenant_code
+            , comment
+            , extra_info
+        ) VALUES (
+            now()
+            , now()
+            , #{roleCode}
+            , #{roleName}
+            , #{sysReserved}
+            , #{tenantCode}
+            , #{comment}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.langtuo.teamachine.dao.po.user.RolePO">
+        UPDATE role
+        SET
+            gmt_modified = now()
+            <if test="roleName != null">
+                , role_name = #{roleName}
+            </if>
+            <if test="sysReserved != null">
+                , sys_reserved = #{sysReserved}
+            </if>
+            <if test="comment != null">
+                , comment = #{comment}
+            </if>
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
+        WHERE 1 = 1
+            and tenant_code = #{tenantCode}
+            and role_code = #{roleCode}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM role
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND role_code = #{roleCode}
+    </delete>
+</mapper>
