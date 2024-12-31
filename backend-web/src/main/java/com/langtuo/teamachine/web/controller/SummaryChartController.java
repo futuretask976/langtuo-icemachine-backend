@@ -1,6 +1,6 @@
 package com.langtuo.teamachine.web.controller;
 
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.report.SummaryChartService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +26,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/teaamtbyday")
-    public TeaMachineResult<List<Map<String, String>>> select4TeaAmtByDayChart(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4TeaAmtByDayChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> select4TeaAmtByDayChart(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4TeaAmtByDayChart(tenantCode);
         return rtn;
     }
 
@@ -37,8 +37,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/orgshop")
-    public TeaMachineResult<List<Map<String, String>>> orgShop(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4OrgShopChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> orgShop(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4OrgShopChart(tenantCode);
         return rtn;
     }
 
@@ -48,8 +48,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/deploy")
-    public TeaMachineResult<List<Map<String, String>>> deploy(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4DeployChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> deploy(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4DeployChart(tenantCode);
         return rtn;
     }
 
@@ -59,8 +59,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/shopmachine")
-    public TeaMachineResult<List<Map<String, String>>> shopMachine(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4ShopMachineChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> shopMachine(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4ShopMachineChart(tenantCode);
         return rtn;
     }
 
@@ -70,8 +70,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/orderamt")
-    public TeaMachineResult<List<Map<String, String>>> orderAmt(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4OrderAmtChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> orderAmt(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4OrderAmtChart(tenantCode);
         return rtn;
     }
 
@@ -81,8 +81,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/teaamt")
-    public TeaMachineResult<List<Map<String, String>>> teaAmt(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4TeaAmtChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> teaAmt(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4TeaAmtChart(tenantCode);
         return rtn;
     }
 
@@ -92,8 +92,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/toppingamt")
-    public TeaMachineResult<List<Map<String, String>>> toppingAmt(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4ToppingAmtChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> toppingAmt(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4ToppingAmtChart(tenantCode);
         return rtn;
     }
 
@@ -103,8 +103,8 @@ public class SummaryChartController {
      * @return
      */
     @GetMapping(value = "/specitemamt")
-    public TeaMachineResult<List<Map<String, String>>> specItemAmt(@RequestParam(name = "tenantCode") String tenantCode) {
-        TeaMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4SpecItemAmtChart(tenantCode);
+    public IceMachineResult<List<Map<String, String>>> specItemAmt(@RequestParam(name = "tenantCode") String tenantCode) {
+        IceMachineResult<List<Map<String, String>>> rtn = summaryChartService.select4SpecItemAmtChart(tenantCode);
         return rtn;
     }
 }

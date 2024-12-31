@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.biz.service.security;
 
 import com.langtuo.teamachine.api.model.security.OssTokenDTO;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.security.OssService;
 import com.langtuo.teamachine.dao.accessor.device.MachineAccessor;
 import com.langtuo.teamachine.dao.oss.OssUtils;
@@ -25,14 +25,14 @@ public class OssServiceImpl implements OssService {
     private MachineAccessor machineAccessor;
 
     @Override
-    public TeaMachineResult<OssTokenDTO> getOssTokenByMachineCode(String tenantCode, String machineCode) {
+    public IceMachineResult<OssTokenDTO> getOssTokenByMachineCode(String tenantCode, String machineCode) {
         MachinePO machinePO = machineAccessor.getByMachineCode(tenantCode, machineCode);
         if (machinePO == null) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(
                     ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
         if (CommonConsts.STATE_DISABLED == machinePO.getState()) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(
                     ErrorCodeEnum.BIZ_ERR_DISABLED_MACHINE_APPLY_TOKEN));
         }
 
@@ -45,11 +45,11 @@ public class OssServiceImpl implements OssService {
         dto.setSecurityToken(po.getSecurityToken());
         dto.setRequestId(po.getRequestId());
         dto.setExpiration(po.getExpiration());
-        return TeaMachineResult.success(dto);
+        return IceMachineResult.success(dto);
     }
 
     @Override
-    public TeaMachineResult<OssTokenDTO> getOssTokenByLoginName(String tenantCode, String loginName) {
+    public IceMachineResult<OssTokenDTO> getOssTokenByLoginName(String tenantCode, String loginName) {
         log.debug("getOssTokenByLoginName|entering|tenantCode=" + tenantCode + ";loginName=" + loginName);
 
         OssToken po = OssUtils.getSTS();
@@ -61,6 +61,6 @@ public class OssServiceImpl implements OssService {
         dto.setSecurityToken(po.getSecurityToken());
         dto.setRequestId(po.getRequestId());
         dto.setExpiration(po.getExpiration());
-        return TeaMachineResult.success(dto);
+        return IceMachineResult.success(dto);
     }
 }

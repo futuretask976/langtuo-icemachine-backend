@@ -3,7 +3,7 @@ package com.langtuo.teamachine.web.controller.drink;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.drink.TeaDTO;
 import com.langtuo.teamachine.api.request.drink.TeaPutRequest;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.drink.TeaMgtService;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import static com.langtuo.teamachine.api.result.TeaMachineResult.getModel;
+import static com.langtuo.teamachine.api.result.IceMachineResult.getModel;
 
 /**
  * @author Jiaqing
@@ -36,44 +36,44 @@ public class TeaController {
     private TeaMgtService service;
 
     @GetMapping(value = "/get")
-    public TeaMachineResult<TeaDTO> get(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("teaCode") String teaCode) {
-        TeaMachineResult<TeaDTO> rtn = service.getByTeaCode(tenantCode, teaCode);
+    public IceMachineResult<TeaDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                        @RequestParam("teaCode") String teaCode) {
+        IceMachineResult<TeaDTO> rtn = service.getByTeaCode(tenantCode, teaCode);
         return rtn;
     }
 
     @GetMapping(value = "/list")
-    public TeaMachineResult<List<TeaDTO>> list(@RequestParam("tenantCode") String tenantCode) {
-        TeaMachineResult<List<TeaDTO>> rtn = service.list(tenantCode);
+    public IceMachineResult<List<TeaDTO>> list(@RequestParam("tenantCode") String tenantCode) {
+        IceMachineResult<List<TeaDTO>> rtn = service.list(tenantCode);
         return rtn;
     }
 
     @GetMapping(value = "/search")
-    public TeaMachineResult<PageDTO<TeaDTO>> search(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam(name = "teaCode", required = false) String teaCode,
-            @RequestParam(name = "teaName", required = false) String teaName,
-            @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        TeaMachineResult<PageDTO<TeaDTO>> rtn = service.search(tenantCode, teaCode, teaName,
+    public IceMachineResult<PageDTO<TeaDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                    @RequestParam(name = "teaCode", required = false) String teaCode,
+                                                    @RequestParam(name = "teaName", required = false) String teaName,
+                                                    @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<TeaDTO>> rtn = service.search(tenantCode, teaCode, teaName,
                 pageNum, pageSize);
         return rtn;
     }
 
     @PutMapping(value = "/put")
-    public TeaMachineResult<Void> put(@RequestBody TeaPutRequest request) {
-        TeaMachineResult<Void> rtn = service.put(request);
+    public IceMachineResult<Void> put(@RequestBody TeaPutRequest request) {
+        IceMachineResult<Void> rtn = service.put(request);
         return rtn;
     }
 
     @DeleteMapping(value = "/delete")
-    public TeaMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("teaCode") String teaCode) {
-        TeaMachineResult<Void> rtn = service.deleteByTeaCode(tenantCode, teaCode);
+    public IceMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
+                                         @RequestParam("teaCode") String teaCode) {
+        IceMachineResult<Void> rtn = service.deleteByTeaCode(tenantCode, teaCode);
         return rtn;
     }
 
     @GetMapping("/export")
     public ResponseEntity<byte[]> exportExcel(@RequestParam("tenantCode") String tenantCode) {
-        TeaMachineResult<XSSFWorkbook> rtn = service.exportByExcel(tenantCode);
+        IceMachineResult<XSSFWorkbook> rtn = service.exportByExcel(tenantCode);
         XSSFWorkbook xssfWorkbook = getModel(rtn);
 
         // 导出Excel文件
@@ -96,10 +96,10 @@ public class TeaController {
     }
 
     @PostMapping("/upload")
-    public TeaMachineResult<Void> uploadExcel(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("file") MultipartFile file) {
+    public IceMachineResult<Void> uploadExcel(@RequestParam("tenantCode") String tenantCode,
+                                              @RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_UPLOAD_FILE_IS_EMPTY));
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_UPLOAD_FILE_IS_EMPTY));
         }
 
         // 获取文件的字节
@@ -107,7 +107,7 @@ public class TeaController {
         try {
             inputStream = new ByteArrayInputStream(file.getBytes());
             XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-            TeaMachineResult<Void> uploadResult = service.importByExcel(tenantCode, workbook);
+            IceMachineResult<Void> uploadResult = service.importByExcel(tenantCode, workbook);
             return uploadResult;
         } catch (IOException e) {
             log.error("uploadExcel|fatal|e=" + e.getMessage(), e);
@@ -120,6 +120,6 @@ public class TeaController {
                 }
             }
         }
-        return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_PARSE_UPLOAD_FILE_ERROR));
+        return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_PARSE_UPLOAD_FILE_ERROR));
     }
 }

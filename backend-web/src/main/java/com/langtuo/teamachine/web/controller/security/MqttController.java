@@ -1,10 +1,8 @@
 package com.langtuo.teamachine.web.controller.security;
 
 import com.langtuo.teamachine.api.model.security.MqttTokenDTO;
-import com.langtuo.teamachine.api.model.security.OssTokenDTO;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.security.MqttService;
-import com.langtuo.teamachine.api.service.security.OssService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +21,9 @@ public class MqttController {
      * @return
      */
     @GetMapping(value = "/token/getbymachinecode")
-    public TeaMachineResult<MqttTokenDTO> getMqttTokenByMachineCode(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("machineCode") String machineCode) {
-        TeaMachineResult<MqttTokenDTO> rtn = mqttService.getMqttToken(tenantCode, machineCode);
+    public IceMachineResult<MqttTokenDTO> getMqttTokenByMachineCode(@RequestParam("tenantCode") String tenantCode,
+                                                                    @RequestParam("machineCode") String machineCode) {
+        IceMachineResult<MqttTokenDTO> rtn = mqttService.getMqttToken(tenantCode, machineCode);
         return rtn;
     }
 }

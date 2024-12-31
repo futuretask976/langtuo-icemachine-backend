@@ -1,7 +1,5 @@
 package com.langtuo.teamachine.web.security.model;
 
-import com.langtuo.teamachine.api.model.device.DeployDTO;
-import com.langtuo.teamachine.api.model.device.MachineDTO;
 import org.assertj.core.util.Lists;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

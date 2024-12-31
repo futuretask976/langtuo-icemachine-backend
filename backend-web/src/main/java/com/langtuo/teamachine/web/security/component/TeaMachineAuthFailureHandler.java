@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.web.security.component;
 
 import com.alibaba.fastjson.JSON;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
 import com.langtuo.teamachine.web.constant.WebConsts;
@@ -27,7 +27,7 @@ public class TeaMachineAuthFailureHandler implements AuthenticationFailureHandle
         response.setHeader(WebConsts.RESP_HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS, WebConsts.RESP_HEADER_VAL_TRUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        TeaMachineResult<Void> result = TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.LOGIN_ERR_UNAUTHENTICATED));
+        IceMachineResult<Void> result = IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.LOGIN_ERR_UNAUTHENTICATED));
         response.getWriter().println(JSON.toJSONString(result));
         response.getWriter().flush();
     }

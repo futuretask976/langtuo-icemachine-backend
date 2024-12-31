@@ -1,8 +1,6 @@
 package com.langtuo.teamachine.biz.aync.worker.device;
 
 import com.alibaba.fastjson.JSONObject;
-import com.langtuo.teamachine.api.model.device.ModelDTO;
-import com.langtuo.teamachine.biz.convertor.device.ModelMgtConvertor;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;

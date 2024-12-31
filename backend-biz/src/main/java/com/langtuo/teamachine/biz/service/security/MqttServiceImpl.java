@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.biz.service.security;
 
 import com.langtuo.teamachine.api.model.security.MqttTokenDTO;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.security.MqttService;
 import com.langtuo.teamachine.dao.accessor.device.MachineAccessor;
 import com.langtuo.teamachine.dao.po.device.MachinePO;
@@ -20,14 +20,14 @@ public class MqttServiceImpl implements MqttService {
     private MachineAccessor machineAccessor;
 
     @Override
-    public TeaMachineResult<MqttTokenDTO> getMqttToken(String tenantCode, String machineCode) {
+    public IceMachineResult<MqttTokenDTO> getMqttToken(String tenantCode, String machineCode) {
         MachinePO po = machineAccessor.getByMachineCode(tenantCode, machineCode);
         if (po == null) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(
                     ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
         if (CommonConsts.STATE_DISABLED == po.getState()) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(
                     ErrorCodeEnum.BIZ_ERR_DISABLED_MACHINE_APPLY_TOKEN));
         }
 
@@ -36,6 +36,6 @@ public class MqttServiceImpl implements MqttService {
         dto.setAccessToken(mqttToken.getAccessToken());
         dto.setAccessKey(mqttToken.getAccessKey());
         dto.setExpiration(mqttToken.getExpiration());
-        return TeaMachineResult.success(dto);
+        return IceMachineResult.success(dto);
     }
 }

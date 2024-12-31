@@ -3,7 +3,7 @@ package com.langtuo.teamachine.web.controller.drink;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.drink.ToppingTypeDTO;
 import com.langtuo.teamachine.api.request.drink.ToppingTypePutRequest;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.drink.ToppingTypeMgtService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,38 +20,38 @@ public class ToppingTypeController {
     private ToppingTypeMgtService service;
 
     @GetMapping(value = "/get")
-    public TeaMachineResult<ToppingTypeDTO> get(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("toppingTypeCode") String toppingTypeCode) {
-        TeaMachineResult<ToppingTypeDTO> rtn = service.getByToppingTypeCode(tenantCode, toppingTypeCode);
+    public IceMachineResult<ToppingTypeDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                                @RequestParam("toppingTypeCode") String toppingTypeCode) {
+        IceMachineResult<ToppingTypeDTO> rtn = service.getByToppingTypeCode(tenantCode, toppingTypeCode);
         return rtn;
     }
 
     @GetMapping(value = "/list")
-    public TeaMachineResult<List<ToppingTypeDTO>> list(@RequestParam("tenantCode") String tenantCode) {
-        TeaMachineResult<List<ToppingTypeDTO>> rtn = service.list(tenantCode);
+    public IceMachineResult<List<ToppingTypeDTO>> list(@RequestParam("tenantCode") String tenantCode) {
+        IceMachineResult<List<ToppingTypeDTO>> rtn = service.list(tenantCode);
         return rtn;
     }
 
     @GetMapping(value = "/search")
-    public TeaMachineResult<PageDTO<ToppingTypeDTO>> search(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam(name = "toppingTypeCode", required = false) String toppingTypeCode,
-            @RequestParam(name = "toppingTypeName", required = false) String toppingTypeName,
-            @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        TeaMachineResult<PageDTO<ToppingTypeDTO>> rtn = service.search(tenantCode, toppingTypeCode, toppingTypeName,
+    public IceMachineResult<PageDTO<ToppingTypeDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                            @RequestParam(name = "toppingTypeCode", required = false) String toppingTypeCode,
+                                                            @RequestParam(name = "toppingTypeName", required = false) String toppingTypeName,
+                                                            @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<ToppingTypeDTO>> rtn = service.search(tenantCode, toppingTypeCode, toppingTypeName,
                 pageNum, pageSize);
         return rtn;
     }
 
     @PutMapping(value = "/put")
-    public TeaMachineResult<Void> put(@RequestBody ToppingTypePutRequest request) {
-        TeaMachineResult<Void> rtn = service.put(request);
+    public IceMachineResult<Void> put(@RequestBody ToppingTypePutRequest request) {
+        IceMachineResult<Void> rtn = service.put(request);
         return rtn;
     }
 
     @DeleteMapping(value = "/delete")
-    public TeaMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("toppingTypeCode") String toppingTypeCode) {
-        TeaMachineResult<Void> rtn = service.deleteByToppingTypeCode(tenantCode, toppingTypeCode);
+    public IceMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
+                                         @RequestParam("toppingTypeCode") String toppingTypeCode) {
+        IceMachineResult<Void> rtn = service.deleteByToppingTypeCode(tenantCode, toppingTypeCode);
         return rtn;
     }
 }

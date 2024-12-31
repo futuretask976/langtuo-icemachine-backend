@@ -1,8 +1,7 @@
 package com.langtuo.teamachine.web.security.component;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.web.constant.WebConsts;
 import com.langtuo.teamachine.web.model.LogoutSuccessDTO;
 import org.springframework.security.core.Authentication;
@@ -32,7 +31,7 @@ public class TeaMachineLogoutSuccessHandler implements LogoutSuccessHandler {
 
         // 如果是前后端分离项目，这里可以返回JSON字符串提示前端注销成功
         LogoutSuccessDTO dto = new LogoutSuccessDTO();
-        TeaMachineResult<LogoutSuccessDTO> result = TeaMachineResult.success(dto);
+        IceMachineResult<LogoutSuccessDTO> result = IceMachineResult.success(dto);
         response.getWriter().println(JSON.toJSONString(result));
         response.getWriter().flush();
     }

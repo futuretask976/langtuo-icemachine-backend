@@ -6,7 +6,7 @@ import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.user.TenantDTO;
 import com.langtuo.teamachine.api.request.user.TenantPutRequest;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.user.TenantMgtService;
 import com.langtuo.teamachine.biz.convertor.user.TenantMgtConvertor;
 import com.langtuo.teamachine.dao.accessor.user.TenantAccessor;
@@ -33,64 +33,64 @@ public class TenantMgtServiceImpl implements TenantMgtService {
     private AsyncDispatcher asyncDispatcher;
 
     @Override
-    public TeaMachineResult<List<TenantDTO>> list() {
-        TeaMachineResult<List<TenantDTO>> teaMachineResult;
+    public IceMachineResult<List<TenantDTO>> list() {
+        IceMachineResult<List<TenantDTO>> iceMachineResult;
         try {
             List<TenantPO> list = tenantAccessor.list();
             List<TenantDTO> dtoList = TenantMgtConvertor.convertToTenantDTO(list);
-            teaMachineResult = TeaMachineResult.success(dtoList);
+            iceMachineResult = IceMachineResult.success(dtoList);
         } catch (Exception e) {
             log.error("tenantMgtService|list|fatal|e=" + e.getMessage(), e);
-            teaMachineResult = TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
+            iceMachineResult = IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
         }
-        return teaMachineResult;
+        return iceMachineResult;
     }
 
     @Override
-    public TeaMachineResult<PageDTO<TenantDTO>> search(String tenantName, String contactPerson,
-            int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<TenantDTO>> search(String tenantName, String contactPerson,
+                                                       int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
-        TeaMachineResult<PageDTO<TenantDTO>> teaMachineResult;
+        IceMachineResult<PageDTO<TenantDTO>> iceMachineResult;
         try {
             PageInfo<TenantPO> pageInfo = tenantAccessor.search(tenantName, contactPerson, pageNum, pageSize);
             List<TenantDTO> dtoList = TenantMgtConvertor.convertToTenantDTO(pageInfo.getList());
-            teaMachineResult = TeaMachineResult.success(new PageDTO<>(dtoList, pageInfo.getTotal(),
+            iceMachineResult = IceMachineResult.success(new PageDTO<>(dtoList, pageInfo.getTotal(),
                     pageNum, pageSize));
         } catch (Exception e) {
             log.error("tenantMgtService|search|fatal|e=" + e.getMessage(), e);
-            teaMachineResult = TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
+            iceMachineResult = IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
         }
-        return teaMachineResult;
+        return iceMachineResult;
     }
 
     @Override
-    public TeaMachineResult<TenantDTO> get(String tenantCode) {
-        TeaMachineResult<TenantDTO> teaMachineResult;
+    public IceMachineResult<TenantDTO> get(String tenantCode) {
+        IceMachineResult<TenantDTO> iceMachineResult;
         try {
             TenantPO po = tenantAccessor.selectOneByTenantCode(tenantCode);
             TenantDTO dto = convertToTenantDTO(po);
-            teaMachineResult = TeaMachineResult.success(dto);
+            iceMachineResult = IceMachineResult.success(dto);
         } catch (Exception e) {
             log.error("tenantMgtService|get|fatal|e=" + e.getMessage(), e);
-            teaMachineResult = TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
+            iceMachineResult = IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
         }
-        return teaMachineResult;
+        return iceMachineResult;
     }
 
     @Override
-    public TeaMachineResult<Void> put(TenantPutRequest request) {
+    public IceMachineResult<Void> put(TenantPutRequest request) {
         if (request == null || !request.isValid()) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
         TenantPO po = convertToTenantPO(request);
-        TeaMachineResult<Void> teaMachineResult;
+        IceMachineResult<Void> iceMachineResult;
         if (request.isPutNew()) {
-            teaMachineResult = putNew(po);
+            iceMachineResult = putNew(po);
         } else {
-            teaMachineResult = putUpdate(po);
+            iceMachineResult = putUpdate(po);
         }
 
         // 异步发送消息准备添加超级租户管理角色和超级租户管理员
@@ -99,61 +99,61 @@ public class TenantMgtServiceImpl implements TenantMgtService {
         jsonPayload.put(CommonConsts.JSON_KEY_TENANT_CODE, request.getTenantCode());
         asyncDispatcher.dispatch(jsonPayload);
 
-        return teaMachineResult;
+        return iceMachineResult;
     }
 
-    private TeaMachineResult<Void> putNew(TenantPO po) {
+    private IceMachineResult<Void> putNew(TenantPO po) {
         try {
             TenantPO exist = tenantAccessor.selectOneByTenantCode(po.getTenantCode());
             if (exist != null) {
-                return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_CODE_DUPLICATED));
+                return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_CODE_DUPLICATED));
             }
 
             int inserted = tenantAccessor.insert(po);
             if (CommonConsts.DB_INSERTED_ONE_ROW != inserted) {
                 log.error("tenantMgtService|putNew|error|" + inserted);
-                return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
+                return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
             }
-            return TeaMachineResult.success();
+            return IceMachineResult.success();
         } catch (Exception e) {
             log.error("tenantMgtService|putNew|fatal|e=" + e.getMessage(), e);
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
         }
     }
 
-    private TeaMachineResult<Void> putUpdate(TenantPO po) {
+    private IceMachineResult<Void> putUpdate(TenantPO po) {
         try {
             TenantPO exist = tenantAccessor.selectOneByTenantCode(po.getTenantCode());
             if (exist == null) {
-                return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_NOT_FOUND));
+                return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_NOT_FOUND));
             }
 
             int updated = tenantAccessor.update(po);
             if (CommonConsts.DB_UPDATED_ONE_ROW != updated) {
                 log.error("tenantMgtService|putUpdate|error|" + updated);
-                return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
+                return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
             }
-            return TeaMachineResult.success();
+            return IceMachineResult.success();
         } catch (Exception e) {
             log.error("tenantMgtService|putUpdate|fatal|e=" + e.getMessage(), e);
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
         }
     }
 
     @Override
-    public TeaMachineResult<Void> delete(String tenantCode) {
+    public IceMachineResult<Void> delete(String tenantCode) {
         if (StringUtils.isEmpty(tenantCode)) {
-            return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
+            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
-        TeaMachineResult<Void> teaMachineResult;
+        IceMachineResult<Void> iceMachineResult;
         try {
             tenantAccessor.deleteByTenantCode(tenantCode);
-            teaMachineResult = TeaMachineResult.success();
+            iceMachineResult = IceMachineResult.success();
         } catch (Exception e) {
             log.error("tenantMgtService|delete|fatal|e=" + e.getMessage(), e);
-            teaMachineResult = TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
+            iceMachineResult = IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
         }
-        return teaMachineResult;
+        return iceMachineResult;
     }
 }

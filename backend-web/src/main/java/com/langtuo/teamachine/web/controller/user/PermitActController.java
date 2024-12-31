@@ -1,8 +1,6 @@
 package com.langtuo.teamachine.web.controller.user;
 
-import com.langtuo.teamachine.api.model.user.PermitActGroupDTO;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
-import com.langtuo.teamachine.api.service.user.PermitActMgtService;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +22,8 @@ public class PermitActController {
      * @return
      */
     @GetMapping(value = "/list")
-    public TeaMachineResult<List<PermitActGroupDTO>> list() {
-        TeaMachineResult<List<PermitActGroupDTO>> rtn = service.listPermitActGroup();
+    public IceMachineResult<List<PermitActGroupDTO>> list() {
+        IceMachineResult<List<PermitActGroupDTO>> rtn = service.listPermitActGroup();
         return rtn;
     }
 }

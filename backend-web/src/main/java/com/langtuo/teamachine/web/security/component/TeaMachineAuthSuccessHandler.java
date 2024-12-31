@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.web.security.component;
 
 import com.alibaba.fastjson.JSON;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.web.constant.WebConsts;
 import com.langtuo.teamachine.web.security.model.AdminDetails;
 import com.langtuo.teamachine.web.helper.JwtTokenHelper;
@@ -48,7 +48,7 @@ public class TeaMachineAuthSuccessHandler implements AuthenticationSuccessHandle
             dto.setPermitActCodeList(authAdmin.getPermitActCodeList());
         }
 
-        TeaMachineResult<LoginSuccessDTO> result = TeaMachineResult.success(dto);
+        IceMachineResult<LoginSuccessDTO> result = IceMachineResult.success(dto);
         response.getWriter().println(JSON.toJSONString(result));
         response.getWriter().flush();
     }

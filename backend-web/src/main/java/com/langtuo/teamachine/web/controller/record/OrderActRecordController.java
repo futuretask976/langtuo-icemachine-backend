@@ -1,9 +1,7 @@
 package com.langtuo.teamachine.web.controller.record;
 
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.record.OrderActRecordDTO;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
-import com.langtuo.teamachine.api.service.record.OrderActRecordMgtService;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.mqtt.consume.MqttConsumer;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,28 +20,28 @@ public class OrderActRecordController {
     private MqttConsumer mqttConsumer;
     
     @GetMapping(value = "/get")
-    public TeaMachineResult<OrderActRecordDTO> get(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("shopGroupCode") String shopGroupCode,
-            @RequestParam("idempotentMark") String idempotentMark) {
-        TeaMachineResult<OrderActRecordDTO> rtn = service.get(tenantCode, shopGroupCode, idempotentMark);
+    public IceMachineResult<OrderActRecordDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                                   @RequestParam("shopGroupCode") String shopGroupCode,
+                                                   @RequestParam("idempotentMark") String idempotentMark) {
+        IceMachineResult<OrderActRecordDTO> rtn = service.get(tenantCode, shopGroupCode, idempotentMark);
         return rtn;
     }
     
     @GetMapping(value = "/search")
-    public TeaMachineResult<PageDTO<OrderActRecordDTO>> search(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("shopGroupCode") String shopGroupCode,
-            @RequestParam(name = "shopCode", required = false) String shopCode,
-            @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        TeaMachineResult<PageDTO<OrderActRecordDTO>> rtn = service.search(tenantCode, shopGroupCode, shopCode,
+    public IceMachineResult<PageDTO<OrderActRecordDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                               @RequestParam("shopGroupCode") String shopGroupCode,
+                                                               @RequestParam(name = "shopCode", required = false) String shopCode,
+                                                               @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<OrderActRecordDTO>> rtn = service.search(tenantCode, shopGroupCode, shopCode,
                 pageNum, pageSize);
         return rtn;
     }
 
     @DeleteMapping(value = "/delete")
-    public TeaMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("shopGroupCode") String shopGroupCode,
-            @RequestParam("idempotentMark") String idempotentMark) {
-        TeaMachineResult<Void> rtn = service.delete(tenantCode, shopGroupCode, idempotentMark);
+    public IceMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
+                                         @RequestParam("shopGroupCode") String shopGroupCode,
+                                         @RequestParam("idempotentMark") String idempotentMark) {
+        IceMachineResult<Void> rtn = service.delete(tenantCode, shopGroupCode, idempotentMark);
         return rtn;
     }
 
@@ -52,7 +50,7 @@ public class OrderActRecordController {
      * @return
      */
     @GetMapping(value = "/test")
-    public TeaMachineResult<Void> test() {
+    public IceMachineResult<Void> test() {
         String str = "{\n" +
                 "  \"bizCode\": \"orderActRecord\",\n" +
                 "  \"list\": [\n" +
@@ -100,6 +98,6 @@ public class OrderActRecordController {
                 "  ]\n" +
                 "}";
         mqttConsumer.dispatch(str);
-        return TeaMachineResult.success();
+        return IceMachineResult.success();
     }
 }

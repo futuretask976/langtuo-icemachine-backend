@@ -2,8 +2,6 @@ package com.langtuo.teamachine.biz.aync.worker.rule;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.langtuo.teamachine.api.model.rule.WarningRuleDTO;
-import com.langtuo.teamachine.biz.convertor.rule.WarningRuleMgtConvertor;
 import com.langtuo.teamachine.biz.manager.MachineManager;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
 import com.langtuo.teamachine.biz.manager.ShopManager;

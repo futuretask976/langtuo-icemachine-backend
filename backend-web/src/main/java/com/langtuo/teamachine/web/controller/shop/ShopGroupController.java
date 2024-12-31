@@ -1,10 +1,10 @@
 package com.langtuo.teamachine.web.controller.shop;
 
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.shop.ShopGroupDTO;
-import com.langtuo.teamachine.api.request.shop.ShopGroupPutRequest;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
-import com.langtuo.teamachine.api.service.shop.ShopGroupMgtService;
+import com.langtuo.teamachine.api.model.device.ShopGroupDTO;
+import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
+import com.langtuo.teamachine.api.result.IceMachineResult;
+import com.langtuo.teamachine.api.service.device.ShopGroupMgtService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,36 +20,36 @@ public class ShopGroupController {
     private ShopGroupMgtService service;
     
     @GetMapping(value = "/get")
-    public TeaMachineResult<ShopGroupDTO> get(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("shopGroupCode") String shopGroupCode) {
-        TeaMachineResult<ShopGroupDTO> rtn = service.getByShopGroupCode(tenantCode, shopGroupCode);
+    public IceMachineResult<ShopGroupDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                              @RequestParam("shopGroupCode") String shopGroupCode) {
+        IceMachineResult<ShopGroupDTO> rtn = service.getByShopGroupCode(tenantCode, shopGroupCode);
         return rtn;
     }
     
     @GetMapping(value = "/list")
-    public TeaMachineResult<List<ShopGroupDTO>> list(@RequestParam("tenantCode") String tenantCode) {
-        TeaMachineResult<List<ShopGroupDTO>> rtn = service.list(tenantCode);
+    public IceMachineResult<List<ShopGroupDTO>> list(@RequestParam("tenantCode") String tenantCode) {
+        IceMachineResult<List<ShopGroupDTO>> rtn = service.list(tenantCode);
         return rtn;
     }
     
     @GetMapping(value = "/search")
-    public TeaMachineResult<PageDTO<ShopGroupDTO>> search(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam(name = "shopGroupName", required = false) String shopGroupName,
-            @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        TeaMachineResult<PageDTO<ShopGroupDTO>> rtn = service.search(tenantCode, shopGroupName, pageNum, pageSize);
+    public IceMachineResult<PageDTO<ShopGroupDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                          @RequestParam(name = "shopGroupName", required = false) String shopGroupName,
+                                                          @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<ShopGroupDTO>> rtn = service.search(tenantCode, shopGroupName, pageNum, pageSize);
         return rtn;
     }
 
     @PutMapping(value = "/put")
-    public TeaMachineResult<Void> put(@RequestBody ShopGroupPutRequest request) {
-        TeaMachineResult<Void> rtn = service.put(request);
+    public IceMachineResult<Void> put(@RequestBody ShopGroupPutRequest request) {
+        IceMachineResult<Void> rtn = service.put(request);
         return rtn;
     }
     
     @DeleteMapping(value = "/delete")
-    public TeaMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
-            @RequestParam("shopGroupCode") String shopGroupCode) {
-        TeaMachineResult<Void> rtn = service.deleteByShopGroupCode(tenantCode, shopGroupCode);
+    public IceMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
+                                         @RequestParam("shopGroupCode") String shopGroupCode) {
+        IceMachineResult<Void> rtn = service.deleteByShopGroupCode(tenantCode, shopGroupCode);
         return rtn;
     }
 }

@@ -3,7 +3,7 @@ package com.langtuo.teamachine.api.service.user;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.user.TenantDTO;
 import com.langtuo.teamachine.api.request.user.TenantPutRequest;
-import com.langtuo.teamachine.api.result.TeaMachineResult;
+import com.langtuo.teamachine.api.result.IceMachineResult;
 
 import java.util.List;
 
@@ -13,31 +13,31 @@ public interface TenantMgtService {
      * @param tenantCode
      * @return
      */
-    TeaMachineResult<TenantDTO> get(String tenantCode);
+    IceMachineResult<TenantDTO> get(String tenantCode);
 
     /**
      *
      * @return
      */
-    TeaMachineResult<PageDTO<TenantDTO>> search(String tenantCode, String contactPerson, int pageNum, int pageSize);
+    IceMachineResult<PageDTO<TenantDTO>> search(String tenantCode, String contactPerson, int pageNum, int pageSize);
 
     /**
      *
      * @return
      */
-    TeaMachineResult<List<TenantDTO>> list();
+    IceMachineResult<List<TenantDTO>> list();
 
     /**
      *
      * @param request
      * @return
      */
-    TeaMachineResult<Void> put(TenantPutRequest request);
+    IceMachineResult<Void> put(TenantPutRequest request);
 
     /**
      *
      * @param tenantCode
      * @return
      */
-    TeaMachineResult<Void> delete(String tenantCode);
+    IceMachineResult<Void> delete(String tenantCode);
 }
