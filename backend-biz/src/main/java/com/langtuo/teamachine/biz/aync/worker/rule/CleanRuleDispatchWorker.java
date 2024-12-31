@@ -11,7 +11,7 @@ import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleDispatchAccessor;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleDispatchPO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -93,17 +93,17 @@ public class CleanRuleDispatchWorker implements Runnable {
         List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginName(tenantCode, loginName);
 
         CleanRuleDispatchAccessor cleanRuleDispatchAccessor = SpringAccessorUtils.getCleanRuleDispatchAccessor();
-        List<CleanRuleDispatchPO> cleanRuleDispatchPOList = cleanRuleDispatchAccessor.listByCleanRuleCode(
+        List<ConfigRuleDispatchPO> configRuleDispatchPOList = cleanRuleDispatchAccessor.listByCleanRuleCode(
                 tenantCode, cleanRuleCode, shopGroupCodeList);
-        if (CollectionUtils.isEmpty(cleanRuleDispatchPOList)) {
+        if (CollectionUtils.isEmpty(configRuleDispatchPOList)) {
             log.error("getDispatchPOList|error|tenantCode=" + tenantCode + ";cleanRuleCode=" + cleanRuleCode);
             return null;
         }
 
         ShopManager shopManager = SpringManagerUtils.getShopManager();
         List<String> shopCodeList = shopManager.getShopCodeListByShopGroupCodeList(tenantCode,
-                cleanRuleDispatchPOList.stream()
-                        .map(CleanRuleDispatchPO::getShopGroupCode)
+                configRuleDispatchPOList.stream()
+                        .map(ConfigRuleDispatchPO::getShopGroupCode)
                         .collect(Collectors.toList()));
 
         MachineManager machineManager = SpringManagerUtils.getMachineManager();

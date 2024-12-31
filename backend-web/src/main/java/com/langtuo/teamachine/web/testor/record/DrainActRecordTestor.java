@@ -3,9 +3,9 @@ package com.langtuo.teamachine.web.testor.record;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.dao.helper.SqlSessionFactoryHelper;
-import com.langtuo.teamachine.dao.mapper.record.DrainActRecordMapper;
+import com.langtuo.teamachine.dao.mapper.record.ActRecordMapper;
 import com.langtuo.teamachine.dao.mapper.record.InvalidActRecordMapper;
-import com.langtuo.teamachine.dao.po.record.DrainActRecordPO;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.dao.po.record.InvalidActRecordPO;
 import com.langtuo.teamachine.mqtt.request.record.DrainActRecordPutRequest;
 import org.apache.ibatis.session.SqlSession;
@@ -20,7 +20,7 @@ public class DrainActRecordTestor {
 
     public static void insert() {
         SqlSession sqlSession = SqlSessionFactoryHelper.getSqlSession();
-        DrainActRecordMapper mapper = sqlSession.getMapper(DrainActRecordMapper.class);
+        ActRecordMapper mapper = sqlSession.getMapper(ActRecordMapper.class);
 
         DrainActRecordPutRequest request = new DrainActRecordPutRequest();
         request.setTenantCode("tenant_001");
@@ -65,12 +65,12 @@ public class DrainActRecordTestor {
         sqlSession.close();
     }
 
-    private static DrainActRecordPO convert(DrainActRecordPutRequest request) {
+    private static ActRecordPO convert(DrainActRecordPutRequest request) {
         if (request == null) {
             return null;
         }
 
-        DrainActRecordPO po = new DrainActRecordPO();
+        ActRecordPO po = new ActRecordPO();
         po.setTenantCode(request.getTenantCode());
         po.setExtraInfo(request.getExtraInfo());
         po.setIdempotentMark(request.getIdempotentMark());

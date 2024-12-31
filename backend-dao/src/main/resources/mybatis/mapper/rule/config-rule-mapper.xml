@@ -9,89 +9,84 @@
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
-        <result property="cleanRuleCode" column="clean_rule_code"/>
-        <result property="cleanRuleName" column="clean_rule_name"/>
-        <result property="permitBatch" column="permit_batch"/>
         <result property="tenantCode" column="tenant_code"/>
-        <result property="comment" column="comment"/>
         <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="comment" column="comment"/>
+        <result property="configRuleCode" column="config_rule_code"/>
+        <result property="configRuleName" column="config_rule_name"/>
     </resultMap>
 
     <select id="selectOne" resultMap="cleanRulePOMap">
-        SELECT * FROM clean_rule
+        SELECT * FROM config_rule
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            <if test="cleanRuleCode != null">
-                AND clean_rule_code = #{cleanRuleCode}
+            <if test="configRuleCode != null">
+                AND config_rule_code = #{configRuleCode}
             </if>
     </select>
 
     <select id="selectList" resultMap="cleanRulePOMap">
-        SELECT * FROM clean_rule
+        SELECT * FROM config_rule
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            <if test="cleanRuleCodeList != null and cleanRuleCodeList.size() > 0">
-                AND clean_rule_code IN
-                <foreach item="cleanRuleCode" collection="cleanRuleCodeList" open="(" separator="," close=")">
-                    #{cleanRuleCode}
+            <if test="configRuleCodeList != null and configRuleCodeList.size() > 0">
+                AND config_rule_code IN
+                <foreach item="configRuleCode" collection="configRuleCodeList" open="(" separator="," close=")">
+                    #{configRuleCode}
                 </foreach>
             </if>
     </select>
 
     <select id="search" resultMap="cleanRulePOMap">
-        SELECT * FROM clean_rule
+        SELECT * FROM config_rule
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            <if test="cleanRuleCode != null">
-                AND clean_rule_code = #{cleanRuleCode}
+            <if test="configRuleCode != null">
+                AND config_rule_code = #{configRuleCode}
             </if>
-            <if test="cleanRuleName != null">
-                AND clean_rule_name = #{cleanRuleName}
+            <if test="configRuleName != null">
+                AND config_rule_name = #{configRuleName}
             </if>
     </select>
 
     <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.rule.CleanRulePO">
-        INSERT INTO clean_rule (
+        INSERT INTO config_rule (
             gmt_created
             , gmt_modified
-            , clean_rule_code
-            , clean_rule_name
-            , permit_batch
             , tenant_code
             , extra_info
+            , config_rule_code
+            , config_rule_name
+            
         ) VALUES (
             now()
             , now()
-            , #{cleanRuleCode}
-            , #{cleanRuleName}
-            , #{permitBatch}
             , #{tenantCode}
             , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            , #{configRuleCode}
+            , #{configRuleName}
         )
     </insert>
 
     <update id="update" parameterType="com.langtuo.teamachine.dao.po.rule.CleanRulePO">
-        UPDATE clean_rule
+        UPDATE config_rule
         SET
             gmt_modified = now()
-            <if test="cleanRuleName != null">
-                , clean_rule_name = #{cleanRuleName}
-            </if>
-            <if test="permitBatch != null">
-                , permit_batch = #{permitBatch}
-            </if>
             <if test="extraInfo != null">
                 , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             </if>
+            <if test="configRuleName != null">
+                , config_rule_name = #{configRuleName}
+            </if>
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            AND clean_rule_code = #{cleanRuleCode}
+            AND config_rule_code = #{configRuleCode}
     </update>
 
     <delete id="delete">
-        DELETE FROM clean_rule
+        DELETE FROM config_rule
         WHERE 1 = 1
             AND tenant_code = #{tenantCode}
-            AND clean_rule_code = #{cleanRuleCode}
+            AND config_rule_code = #{configRuleCode}
     </delete>
 </mapper>

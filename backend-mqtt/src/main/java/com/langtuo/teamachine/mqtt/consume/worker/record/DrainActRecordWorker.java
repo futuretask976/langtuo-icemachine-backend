@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.langtuo.teamachine.api.utils.CollectionUtils;
 import com.langtuo.teamachine.dao.accessor.record.DrainActRecordAccessor;
-import com.langtuo.teamachine.dao.po.record.DrainActRecordPO;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import com.langtuo.teamachine.internal.constant.AliyunConsts;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -62,13 +62,13 @@ public class DrainActRecordWorker implements Runnable {
             return;
         }
 
-        DrainActRecordPO po = convert(request);
+        ActRecordPO po = convert(request);
         transactionTemplate.execute(new TransactionCallback<Void>() {
             @Override
             public Void doInTransaction(TransactionStatus status) {
                 try {
                     DrainActRecordAccessor drainActRecordAccessor = SpringAccessorUtils.getDrainActRecordAccessor();
-                    DrainActRecordPO exist = drainActRecordAccessor.getByIdempotentMark(po.getTenantCode(), po.getIdempotentMark());
+                    ActRecordPO exist = drainActRecordAccessor.getByIdempotentMark(po.getTenantCode(), po.getIdempotentMark());
                     if (exist == null) {
                         int inserted = drainActRecordAccessor.insert(po);
                         if (CommonConsts.DB_INSERTED_ONE_ROW != inserted) {
@@ -84,12 +84,12 @@ public class DrainActRecordWorker implements Runnable {
         });
     }
 
-    private DrainActRecordPO convert(DrainActRecordPutRequest request) {
+    private ActRecordPO convert(DrainActRecordPutRequest request) {
         if (request == null) {
             return null;
         }
 
-        DrainActRecordPO po = new DrainActRecordPO();
+        ActRecordPO po = new ActRecordPO();
         po.setTenantCode(request.getTenantCode());
         po.setExtraInfo(request.getExtraInfo());
         po.setIdempotentMark(request.getIdempotentMark());

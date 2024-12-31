@@ -2,8 +2,8 @@ package com.langtuo.teamachine.dao.accessor.record;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.langtuo.teamachine.dao.mapper.record.DrainActRecordMapper;
-import com.langtuo.teamachine.dao.po.record.DrainActRecordPO;
+import com.langtuo.teamachine.dao.mapper.record.ActRecordMapper;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.dao.query.record.DrainActRecordQuery;
 import org.springframework.stereotype.Component;
 
@@ -13,39 +13,39 @@ import java.util.List;
 @Component
 public class DrainActRecordAccessor {
     @Resource
-    private DrainActRecordMapper mapper;
+    private ActRecordMapper mapper;
 
-    public DrainActRecordPO getByIdempotentMark(String tenantCode, String idempotentMark) {
+    public ActRecordPO getByIdempotentMark(String tenantCode, String idempotentMark) {
         return mapper.selectOne(tenantCode, idempotentMark);
     }
 
-    public PageInfo<DrainActRecordPO> searchByShopGroupCodeList(String tenantCode, List<String> shopGroupCodeList,
-            int pageNum, int pageSize) {
+    public PageInfo<ActRecordPO> searchByShopGroupCodeList(String tenantCode, List<String> shopGroupCodeList,
+                                                           int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         DrainActRecordQuery query = new DrainActRecordQuery();
         query.setTenantCode(tenantCode);
         query.addAllShopGroupCode(shopGroupCodeList);
-        List<DrainActRecordPO> list = mapper.search(query);
+        List<ActRecordPO> list = mapper.search(query);
 
-        PageInfo<DrainActRecordPO> pageInfo = new PageInfo(list);
+        PageInfo<ActRecordPO> pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
-    public PageInfo<DrainActRecordPO> searchByShopCodeList(String tenantCode, List<String> shopCodeList,
-            int pageNum, int pageSize) {
+    public PageInfo<ActRecordPO> searchByShopCodeList(String tenantCode, List<String> shopCodeList,
+                                                      int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         DrainActRecordQuery query = new DrainActRecordQuery();
         query.setTenantCode(tenantCode);
         query.addAllShopCode(shopCodeList);
-        List<DrainActRecordPO> list = mapper.search(query);
+        List<ActRecordPO> list = mapper.search(query);
 
-        PageInfo<DrainActRecordPO> pageInfo = new PageInfo(list);
+        PageInfo<ActRecordPO> pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
-    public int insert(DrainActRecordPO po) {
+    public int insert(ActRecordPO po) {
         return mapper.insert(po);
     }
 

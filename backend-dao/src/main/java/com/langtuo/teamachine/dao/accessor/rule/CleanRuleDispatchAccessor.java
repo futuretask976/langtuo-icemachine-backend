@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.dao.accessor.rule;
 
-import com.langtuo.teamachine.dao.mapper.rule.CleanRuleDispatchMapper;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleDispatchPO;
+import com.langtuo.teamachine.dao.mapper.rule.ConfigRuleDispatchMapper;
+import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -10,20 +10,20 @@ import java.util.List;
 @Component
 public class CleanRuleDispatchAccessor {
     @Resource
-    private CleanRuleDispatchMapper mapper;
+    private ConfigRuleDispatchMapper mapper;
 
-    public List<CleanRuleDispatchPO> listByCleanRuleCode(String tenantCode, String cleanRuleCode,
-            List<String> shopGroupCodeList) {
-        List<CleanRuleDispatchPO> list = mapper.selectList(tenantCode, cleanRuleCode, shopGroupCodeList);
+    public List<ConfigRuleDispatchPO> listByCleanRuleCode(String tenantCode, String cleanRuleCode,
+                                                          List<String> shopGroupCodeList) {
+        List<ConfigRuleDispatchPO> list = mapper.selectList(tenantCode, cleanRuleCode, shopGroupCodeList);
         return list;
     }
 
-    public List<CleanRuleDispatchPO> listByShopGroupCode(String tenantCode, String shopGroupCode) {
-        List<CleanRuleDispatchPO> list = mapper.selectListByShopGroupCode(tenantCode, shopGroupCode);
+    public List<ConfigRuleDispatchPO> listByShopGroupCode(String tenantCode, String shopGroupCode) {
+        List<ConfigRuleDispatchPO> list = mapper.selectListByShopGroupCode(tenantCode, shopGroupCode);
         return list;
     }
 
-    public int insertBatch(List<CleanRuleDispatchPO> poList) {
+    public int insertBatch(List<ConfigRuleDispatchPO> poList) {
         int inserted = mapper.insertBatch(poList);
         return inserted;
     }

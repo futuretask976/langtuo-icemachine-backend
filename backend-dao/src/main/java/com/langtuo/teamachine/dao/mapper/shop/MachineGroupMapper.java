@@ -1,7 +1,6 @@
 package com.langtuo.teamachine.dao.mapper.shop;
 
-import com.langtuo.teamachine.dao.annotation.TeaMachineTableShard;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.dao.query.shop.ShopGroupQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,41 +10,41 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ShopGroupMapper {
+public interface MachineGroupMapper {
     /**
      *
      * @param tenantCode
      * @return
      */
-    ShopGroupPO selectOne(@Param("tenantCode") String tenantCode, @Param("shopGroupCode") String shopGroupCode);
+    MachineGroupPO selectOne(@Param("tenantCode") String tenantCode, @Param("shopGroupCode") String shopGroupCode);
 
     /**
      *
      * @return
      */
-    List<ShopGroupPO> selectListByOrgNameList(@Param("tenantCode") String tenantCode,
-            @Param("orgNameList") List<String> orgNameList);
+    List<MachineGroupPO> selectListByOrgNameList(@Param("tenantCode") String tenantCode,
+                                                 @Param("orgNameList") List<String> orgNameList);
 
     /**
      *
      * @param query
      * @return
      */
-    List<ShopGroupPO> search(ShopGroupQuery query);
+    List<MachineGroupPO> search(ShopGroupQuery query);
 
     /**
      *
      * @param po
      * @return
      */
-    int insert(ShopGroupPO po);
+    int insert(MachineGroupPO po);
 
     /**
      *
      * @param po
      * @return
      */
-    int update(ShopGroupPO po);
+    int update(MachineGroupPO po);
 
     /**
      *

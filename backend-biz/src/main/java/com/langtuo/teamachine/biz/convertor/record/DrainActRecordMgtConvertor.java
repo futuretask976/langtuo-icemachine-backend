@@ -5,8 +5,8 @@ import com.langtuo.teamachine.dao.accessor.drink.ToppingAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
 import com.langtuo.teamachine.dao.po.drink.ToppingPO;
-import com.langtuo.teamachine.dao.po.record.DrainActRecordPO;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DrainActRecordMgtConvertor {
-    public static List<DrainActRecordDTO> convertToDrainActRecordDTO(List<DrainActRecordPO> poList, boolean fillDetail) {
+    public static List<DrainActRecordDTO> convertToDrainActRecordDTO(List<ActRecordPO> poList, boolean fillDetail) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
@@ -27,7 +27,7 @@ public class DrainActRecordMgtConvertor {
         return list;
     }
 
-    public static DrainActRecordDTO convertToDrainActRecordDTO(DrainActRecordPO po, boolean fillDetail) {
+    public static DrainActRecordDTO convertToDrainActRecordDTO(ActRecordPO po, boolean fillDetail) {
         if (po == null) {
             return null;
         }
@@ -56,9 +56,9 @@ public class DrainActRecordMgtConvertor {
             }
 
             ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-            ShopGroupPO shopGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
-            if (shopGroupPO != null) {
-                dto.setShopGroupName(shopGroupPO.getShopGroupName());
+            MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            if (machineGroupPO != null) {
+                dto.setShopGroupName(machineGroupPO.getShopGroupName());
             }
 
             ShopAccessor shopAccessor = SpringAccessorUtils.getShopAccessor();

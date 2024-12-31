@@ -9,13 +9,11 @@
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="comment" column="comment"/>
         <result property="loginName" column="login_name"/>
         <result property="loginPass" column="login_pass"/>
-        <result property="roleCode" column="role_code"/>
-        <result property="orgName" column="org_name"/>
-        <result property="tenantCode" column="tenant_code"/>
-        <result property="comment" column="comment"/>
-        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="selectOne" resultMap="adminPOMap">
@@ -40,56 +38,25 @@
             <if test="loginName != null">
                 AND login_name = #{loginName}
             </if>
-            <if test="roleCode != null">
-                AND role_code = #{roleCode}
-            </if>
-            <if test="orgNameList != null and orgNameList.size() > 0">
-                AND org_name IN
-                <foreach item="orgName" collection="orgNameList" open="(" separator="," close=")">
-                    #{orgName}
-                </foreach>
-            </if>
-    </select>
-
-    <select id="countByRoleCode" resultType="int">
-        SELECT COUNT(1) FROM admin
-        WHERE 1 = 1
-            AND tenant_code = #{tenantCode}
-            <if test="roleCode != null">
-                AND role_code = #{roleCode}
-            </if>
-    </select>
-
-    <select id="countByOrgName" resultType="int">
-        SELECT COUNT(1) FROM admin
-        WHERE 1 = 1
-        AND tenant_code = #{tenantCode}
-        <if test="orgName != null">
-            AND org_name = #{orgName}
-        </if>
     </select>
 
     <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.user.AdminPO">
         INSERT INTO admin (
             gmt_created
             , gmt_modified
+            , tenant_code
+            , extra_info
+            , comment
             , login_name
             , login_pass
-            , role_code
-            , org_name
-            , tenant_code
-            , comment
-            , extra_info
         ) VALUES (
             now()
             , now()
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            , #{comment}
             , #{loginName}
             , #{loginPass}
-            , #{roleCode}
-            , #{orgName}
-            , #{tenantCode}
-            , #{comment}
-            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
         )
     </insert>
 
@@ -97,20 +64,14 @@
         UPDATE admin
         SET
             gmt_modified = now()
-            <if test="loginPass != null">
-                , login_pass = #{loginPass}
-            </if>
-            <if test="roleCode != null">
-                , role_code = #{roleCode}
-            </if>
-            <if test="orgName != null">
-                , org_name = #{orgName}
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             </if>
             <if test="comment != null">
                 , comment = #{comment}
             </if>
-            <if test="extraInfo != null">
-                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            <if test="loginPass != null">
+                , login_pass = #{loginPass}
             </if>
         WHERE 1 = 1
             and tenant_code = #{tenantCode}

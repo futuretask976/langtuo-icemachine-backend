@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Data
-public class ShopGroupPO {
+public class MachineGroupPO {
     /**
      * 数据表id
      */

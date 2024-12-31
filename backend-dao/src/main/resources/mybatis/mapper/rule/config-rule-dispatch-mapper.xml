@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.rule.ConfigRuleDispatchMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO" id="configRuleDispatchPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="configRuleCode" column="config_rule_code"/>
+        <result property="machineGroupCode" column="machine_group_code"/>
+        <result property="tenantCode" column="tenant_code"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="configRuleDispatchPOMap">
+        SELECT * FROM config_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="configRuleCode != null">
+                AND config_rule_code = #{configRuleCode}
+            </if>
+            <if test="machineGroupCodeList != null and machineGroupCodeList.size() > 0">
+                AND machine_group_code IN
+                <foreach item="machineGroupCode" collection="machineGroupCodeList" open="(" separator="," close=")">
+                    #{machineGroupCode}
+                </foreach>
+            </if>
+    </select>
+
+    <select id="selectListByMachineGroupCode" resultMap="configRuleDispatchPOMap">
+        SELECT * FROM config_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="machineGroupCode != null">
+                AND machine_group_code = #{machineGroupCode}
+            </if>
+    </select>
+
+    <insert id="insertBatch">
+        INSERT INTO config_rule_dispatch (
+            gmt_created
+            , gmt_modified
+            , config_rule_code
+            , machine_group_code
+            , tenant_code
+        ) VALUES
+        <foreach collection="poList" item="po" index="index" separator=",">
+            (
+                now()
+                , now()
+                , #{po.configRuleCode}
+                , #{po.machineGroupCode}
+                , #{po.tenantCode}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM config_rule_dispatch
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="configRuleCode != null">
+                AND config_rule_code = #{configRuleCode}
+            </if>
+            <if test="machineGroupCodeList != null and machineGroupCodeList.size() > 0">
+                AND machine_group_code IN
+                <foreach item="machineGroupCode" collection="machineGroupCodeList" open="(" separator="," close=")">
+                    #{machineGroupCode}
+                </foreach>
+            </if>
+    </delete>
+</mapper>

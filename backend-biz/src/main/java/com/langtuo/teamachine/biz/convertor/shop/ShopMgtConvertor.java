@@ -3,7 +3,7 @@ package com.langtuo.teamachine.biz.convertor.shop;
 import com.langtuo.teamachine.api.model.shop.ShopDTO;
 import com.langtuo.teamachine.api.request.shop.ShopPutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.dao.po.shop.ShopPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
@@ -38,10 +38,10 @@ public class ShopMgtConvertor {
         dto.setExtraInfo(po.getExtraInfo());
 
         ShopGroupAccessor shopGroupAccessor = SpringAccessorUtils.getShopGroupAccessor();
-        ShopGroupPO shopGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
-        if (shopGroupPO != null) {
-            dto.setShopGroupCode(shopGroupPO.getShopGroupCode());
-            dto.setShopGroupName(shopGroupPO.getShopGroupName());
+        MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+        if (machineGroupPO != null) {
+            dto.setShopGroupCode(machineGroupPO.getShopGroupCode());
+            dto.setShopGroupName(machineGroupPO.getShopGroupName());
         }
 
         return dto;

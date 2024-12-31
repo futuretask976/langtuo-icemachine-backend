@@ -3,8 +3,8 @@ package com.langtuo.teamachine.dao.accessor.shop;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.dao.cache.RedisManager4Accessor;
-import com.langtuo.teamachine.dao.mapper.shop.ShopGroupMapper;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.mapper.shop.MachineGroupMapper;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.dao.query.shop.ShopGroupQuery;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import org.apache.commons.lang3.StringUtils;
@@ -16,45 +16,45 @@ import java.util.List;
 @Component
 public class ShopGroupAccessor {
     @Resource
-    private ShopGroupMapper mapper;
+    private MachineGroupMapper mapper;
 
     @Resource
     private RedisManager4Accessor redisManager4Accessor;
 
-    public ShopGroupPO getByShopGroupCode(String tenantCode, String shopGroupCode) {
+    public MachineGroupPO getByShopGroupCode(String tenantCode, String shopGroupCode) {
         // 首先访问缓存
-        ShopGroupPO cached = getCache(tenantCode, shopGroupCode);
+        MachineGroupPO cached = getCache(tenantCode, shopGroupCode);
         if (cached != null) {
             return cached;
         }
 
-        ShopGroupPO po = mapper.selectOne(tenantCode, shopGroupCode);
+        MachineGroupPO po = mapper.selectOne(tenantCode, shopGroupCode);
 
         // 设置缓存
         setCache(tenantCode, shopGroupCode, po);
         return po;
     }
 
-    public List<ShopGroupPO> list(String tenantCode, List<String> orgNameList) {
-        List<ShopGroupPO> list = mapper.selectListByOrgNameList(tenantCode, orgNameList);
+    public List<MachineGroupPO> list(String tenantCode, List<String> orgNameList) {
+        List<MachineGroupPO> list = mapper.selectListByOrgNameList(tenantCode, orgNameList);
         return list;
     }
 
-    public PageInfo<ShopGroupPO> search(String tenantCode, String shopGroupName, int pageNum, int pageSize,
-            List<String> orgNameList) {
+    public PageInfo<MachineGroupPO> search(String tenantCode, String shopGroupName, int pageNum, int pageSize,
+                                           List<String> orgNameList) {
         PageHelper.startPage(pageNum, pageSize);
 
         ShopGroupQuery shopGroupQuery = new ShopGroupQuery();
         shopGroupQuery.setTenantCode(tenantCode);
         shopGroupQuery.setShopGroupName(StringUtils.isBlank(shopGroupName) ? null : shopGroupName);
         shopGroupQuery.setOrgNameList(orgNameList);
-        List<ShopGroupPO> list = mapper.search(shopGroupQuery);
+        List<MachineGroupPO> list = mapper.search(shopGroupQuery);
 
-        PageInfo<ShopGroupPO> pageInfo = new PageInfo(list);
+        PageInfo<MachineGroupPO> pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
-    public int insert(ShopGroupPO po) {
+    public int insert(MachineGroupPO po) {
         int inserted = mapper.insert(po);
         if (inserted == CommonConsts.DB_INSERTED_ONE_ROW) {
             deleteCacheOne(po.getTenantCode(), po.getShopGroupCode());
@@ -63,8 +63,8 @@ public class ShopGroupAccessor {
         return inserted;
     }
 
-    public int update(ShopGroupPO po) {
-        ShopGroupPO exist = mapper.selectOne(po.getTenantCode(), po.getShopGroupCode());
+    public int update(MachineGroupPO po) {
+        MachineGroupPO exist = mapper.selectOne(po.getTenantCode(), po.getShopGroupCode());
         if (exist == null) {
             return CommonConsts.DB_UPDATED_ZERO_ROW;
         }
@@ -79,7 +79,7 @@ public class ShopGroupAccessor {
     }
 
     public int deleteByShopGroupCode(String tenantCode, String shopGroupCode) {
-        ShopGroupPO po = getByShopGroupCode(tenantCode, shopGroupCode);
+        MachineGroupPO po = getByShopGroupCode(tenantCode, shopGroupCode);
         if (po == null) {
             return CommonConsts.DB_DELETED_ZERO_ROW;
         }
@@ -117,14 +117,14 @@ public class ShopGroupAccessor {
         return "shopGroupAcc-" + tenantCode + "-" + shopGroupCode;
     }
 
-    private ShopGroupPO getCache(String tenantCode, String shopGroupCode) {
+    private MachineGroupPO getCache(String tenantCode, String shopGroupCode) {
         String key = getCacheKey(tenantCode, shopGroupCode);
         Object cached = redisManager4Accessor.getValue(key);
-        ShopGroupPO po = (ShopGroupPO) cached;
+        MachineGroupPO po = (MachineGroupPO) cached;
         return po;
     }
 
-    private void setCache(String tenantCode, String shopGroupCode, ShopGroupPO po) {
+    private void setCache(String tenantCode, String shopGroupCode, MachineGroupPO po) {
         String key = getCacheKey(tenantCode, shopGroupCode);
         redisManager4Accessor.setValue(key, po);
     }

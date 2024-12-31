@@ -7,7 +7,7 @@ import com.langtuo.teamachine.api.result.TeaMachineResult;
 import com.langtuo.teamachine.api.service.record.DrainActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
 import com.langtuo.teamachine.dao.accessor.record.DrainActRecordAccessor;
-import com.langtuo.teamachine.dao.po.record.DrainActRecordPO;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -36,7 +36,7 @@ public class DrainActRecordMgtServiceImpl implements DrainActRecordMgtService {
     @Transactional(readOnly = true)
     public TeaMachineResult<DrainActRecordDTO> get(String tenantCode, String idempotentMark) {
         try {
-            DrainActRecordPO po = drainActRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
+            ActRecordPO po = drainActRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
             DrainActRecordDTO dto = convertToDrainActRecordDTO(po, true);
             return TeaMachineResult.success(dto);
         } catch (Exception e) {
@@ -53,7 +53,7 @@ public class DrainActRecordMgtServiceImpl implements DrainActRecordMgtService {
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
         try {
-            PageInfo<DrainActRecordPO> pageInfo = null;
+            PageInfo<ActRecordPO> pageInfo = null;
             if (!StringUtils.isBlank(shopCode)) {
                 pageInfo = drainActRecordAccessor.searchByShopCodeList(tenantCode, Lists.newArrayList(shopCode),
                         pageNum, pageSize);

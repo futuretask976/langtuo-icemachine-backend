@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 一个namespace对应一个Mapper类（原来的dao） -->
+<mapper namespace="com.langtuo.teamachine.dao.mapper.record.ActRecordMapper">
+    <resultMap type="com.langtuo.teamachine.dao.po.record.ActRecordPO" id="actRecordPOMap">
+        <result property="id" column="id"/>
+        <result property="gmtCreated" column="gmt_created"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="tenantCode" column="tenant_code"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
+        <result property="idempotentMark" column="idempotent_mark"/>
+        <result property="machineCode" column="machine_code"/>
+        <result property="machineGroupCode" column="machine_group_code"/>
+    </resultMap>
+
+    <select id="selectOne" resultMap="actRecordPOMap">
+        SELECT * FROM act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </select>
+
+    <select id="selectList" resultMap="actRecordPOMap">
+        SELECT * FROM act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <select id="search" resultMap="actRecordPOMap">
+        SELECT * FROM act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            <if test="machineGroupCodeList != null and machineGroupCodeList.size() > 0">
+                AND machine_group_code IN
+                <foreach item="machineGroupCode" collection="machineGroupCodeList" open="(" separator="," close=")">
+                    #{machineGroupCode}
+                </foreach>
+            </if>
+        ORDER BY gmt_modified DESC
+    </select>
+
+    <insert id="insert" parameterType="com.langtuo.teamachine.dao.po.record.ActRecordPO">
+        INSERT INTO drain_act_record (
+            gmt_created
+            , gmt_modified
+            , tenant_code
+            , extra_info
+            , idempotent_mark
+            , machine_code
+            , machine_group_code
+        ) VALUES (
+            now()
+            , now()
+            , #{tenantCode}
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            , #{idempotentMark}
+            , #{machineCode}
+            , #{machineGroupCode}
+        )
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM act_record
+        WHERE 1 = 1
+            AND tenant_code = #{tenantCode}
+            AND idempotent_mark = #{idempotentMark}
+    </delete>
+</mapper>

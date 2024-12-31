@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Data
-public class DrainActRecordPO {
+public class ActRecordPO {
     /**
      * 数据表id
      */

@@ -17,7 +17,7 @@ import com.langtuo.teamachine.dao.accessor.rule.CleanRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleExceptAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleStepAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleDispatchPO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.CleanRuleExceptPO;
 import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
 import com.langtuo.teamachine.dao.po.rule.CleanRuleStepPO;
@@ -107,14 +107,14 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
                 return TeaMachineResult.success();
             }
 
-            List<CleanRuleDispatchPO> cleanRuleDispatchPOList = cleanRuleDispatchAccessor.listByShopGroupCode(
+            List<ConfigRuleDispatchPO> configRuleDispatchPOList = cleanRuleDispatchAccessor.listByShopGroupCode(
                     tenantCode, shopPO.getShopGroupCode());
-            if (CollectionUtils.isEmpty(cleanRuleDispatchPOList)) {
+            if (CollectionUtils.isEmpty(configRuleDispatchPOList)) {
                 return TeaMachineResult.success();
             }
 
-            List<String> cleanRuleCodeList = cleanRuleDispatchPOList.stream()
-                    .map(CleanRuleDispatchPO::getCleanRuleCode)
+            List<String> cleanRuleCodeList = configRuleDispatchPOList.stream()
+                    .map(ConfigRuleDispatchPO::getCleanRuleCode)
                     .collect(Collectors.toList());
             List<CleanRulePO> cleanRulePOList = cleanRuleAccessor.selectListByCleanRuleCode(tenantCode,
                     cleanRuleCodeList);
@@ -188,7 +188,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
-        List<CleanRuleDispatchPO> poList = convertToCleanRuleStepDTO(request);
+        List<ConfigRuleDispatchPO> poList = convertToCleanRuleStepDTO(request);
         try {
             TeaMachineResult<Void> result = doPutDispatch(request.getTenantCode(), request.getCleanRuleCode(), poList);
 
@@ -211,11 +211,11 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
             dto.setCleanRuleCode(cleanRuleCode);
 
             List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
-            List<CleanRuleDispatchPO> poList = cleanRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
+            List<ConfigRuleDispatchPO> poList = cleanRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
                     shopGroupCodeList);
             if (!CollectionUtils.isEmpty(poList)) {
                 dto.setShopGroupCodeList(poList.stream()
-                        .map(CleanRuleDispatchPO::getShopGroupCode)
+                        .map(ConfigRuleDispatchPO::getShopGroupCode)
                         .collect(Collectors.toList()));
             }
             return TeaMachineResult.success(dto);
@@ -297,7 +297,7 @@ public class CleanRuleMgtServiceImpl implements CleanRuleMgtService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private TeaMachineResult<Void> doPutDispatch(String tenantCode, String cleanRuleCode,
-            List<CleanRuleDispatchPO> poList) {
+            List<ConfigRuleDispatchPO> poList) {
         List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
         cleanRuleDispatchAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode, shopGroupCodeList);
         int inserted = cleanRuleDispatchAccessor.insertBatch(poList);

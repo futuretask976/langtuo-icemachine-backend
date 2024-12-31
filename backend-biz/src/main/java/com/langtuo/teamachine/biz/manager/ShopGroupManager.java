@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.biz.manager;
 
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -24,13 +24,13 @@ public class ShopGroupManager {
     private ShopGroupAccessor shopGroupAccessor;
 
     public List<String> getShopGroupCodeListByOrgNameList(String tenantCode, List<String> orgNameList) {
-        List<ShopGroupPO> shopGroupPOList = shopGroupAccessor.list(tenantCode, orgNameList);
-        if (CollectionUtils.isEmpty(shopGroupPOList)) {
+        List<MachineGroupPO> machineGroupPOList = shopGroupAccessor.list(tenantCode, orgNameList);
+        if (CollectionUtils.isEmpty(machineGroupPOList)) {
             return null;
         }
 
-        List<String> shopGroupCodeList = shopGroupPOList.stream()
-                .map(ShopGroupPO::getShopGroupCode)
+        List<String> shopGroupCodeList = machineGroupPOList.stream()
+                .map(MachineGroupPO::getShopGroupCode)
                 .collect(Collectors.toList());
         return shopGroupCodeList;
     }

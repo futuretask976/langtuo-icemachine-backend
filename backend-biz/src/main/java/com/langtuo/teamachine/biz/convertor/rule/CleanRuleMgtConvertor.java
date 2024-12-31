@@ -6,7 +6,7 @@ import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleExceptAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.CleanRuleStepAccessor;
-import com.langtuo.teamachine.dao.po.rule.CleanRuleDispatchPO;
+import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
 import com.langtuo.teamachine.dao.po.rule.CleanRuleExceptPO;
 import com.langtuo.teamachine.dao.po.rule.CleanRulePO;
 import com.langtuo.teamachine.dao.po.rule.CleanRuleStepPO;
@@ -132,13 +132,13 @@ public class CleanRuleMgtConvertor {
         return list;
     }
 
-    public static List<CleanRuleDispatchPO> convertToCleanRuleStepDTO(CleanRuleDispatchPutRequest request) {
+    public static List<ConfigRuleDispatchPO> convertToCleanRuleStepDTO(CleanRuleDispatchPutRequest request) {
         String tenantCode = request.getTenantCode();
         String cleanRuleCode = request.getCleanRuleCode();
 
         return request.getShopGroupCodeList().stream()
                 .map(shopGroupCode -> {
-                    CleanRuleDispatchPO po = new CleanRuleDispatchPO();
+                    ConfigRuleDispatchPO po = new ConfigRuleDispatchPO();
                     po.setTenantCode(tenantCode);
                     po.setCleanRuleCode(cleanRuleCode);
                     po.setShopGroupCode(shopGroupCode);

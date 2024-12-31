@@ -9,7 +9,7 @@ import com.langtuo.teamachine.api.service.shop.ShopGroupMgtService;
 import com.langtuo.teamachine.biz.manager.OrgManager;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopGroupAccessor;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -39,8 +39,8 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     @Override
     @Transactional(readOnly = true)
     public TeaMachineResult<ShopGroupDTO> getByShopGroupCode(String tenantCode, String shopGroupCode) {
-        ShopGroupPO shopGroupPO = shopGroupAccessor.getByShopGroupCode(tenantCode, shopGroupCode);
-        ShopGroupDTO shopGroupDTO = convert(shopGroupPO);
+        MachineGroupPO machineGroupPO = shopGroupAccessor.getByShopGroupCode(tenantCode, shopGroupCode);
+        ShopGroupDTO shopGroupDTO = convert(machineGroupPO);
         return TeaMachineResult.success(shopGroupDTO);
     }
 
@@ -53,7 +53,7 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
 
         try {
             List<String> orgNameList = orgManager.getOrgNameListByLoginSession(tenantCode);
-            PageInfo<ShopGroupPO> pageInfo = shopGroupAccessor.search(tenantCode, shopGroupName,
+            PageInfo<MachineGroupPO> pageInfo = shopGroupAccessor.search(tenantCode, shopGroupName,
                     pageNum, pageSize, orgNameList);
 
             return TeaMachineResult.success(new PageDTO<>(
@@ -69,7 +69,7 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     public TeaMachineResult<List<ShopGroupDTO>> list(String tenantCode) {
         try {
             List<String> orgNameList = orgManager.getOrgNameListByLoginSession(tenantCode);
-            List<ShopGroupPO> list = shopGroupAccessor.list(tenantCode, orgNameList);
+            List<MachineGroupPO> list = shopGroupAccessor.list(tenantCode, orgNameList);
             return TeaMachineResult.success(convert(list));
         } catch (Exception e) {
             log.error("list|fatal|e=" + e.getMessage(), e);
@@ -83,12 +83,12 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
             return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
-        ShopGroupPO shopGroupPO = convert(request);
+        MachineGroupPO machineGroupPO = convert(request);
         try {
             if (request.isPutNew()) {
-                return doPutNew(shopGroupPO);
+                return doPutNew(machineGroupPO);
             } else {
-                return doPutUpdate(shopGroupPO);
+                return doPutUpdate(machineGroupPO);
             }
         } catch (Exception e) {
             log.error("put|fatal|e=" + e.getMessage(), e);
@@ -98,9 +98,9 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    private TeaMachineResult<Void> doPutNew(ShopGroupPO po) {
+    private TeaMachineResult<Void> doPutNew(MachineGroupPO po) {
         try {
-            ShopGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
             if (exist != null) {
                 return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_CODE_DUPLICATED));
             }
@@ -118,9 +118,9 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    private TeaMachineResult<Void> doPutUpdate(ShopGroupPO po) {
+    private TeaMachineResult<Void> doPutUpdate(MachineGroupPO po) {
         try {
-            ShopGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
+            MachineGroupPO exist = shopGroupAccessor.getByShopGroupCode(po.getTenantCode(), po.getShopGroupCode());
             if (exist == null) {
                 return TeaMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_OBJECT_NOT_FOUND));
             }

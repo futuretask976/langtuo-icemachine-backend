@@ -3,7 +3,7 @@ package com.langtuo.teamachine.biz.convertor.shop;
 import com.langtuo.teamachine.api.model.shop.ShopGroupDTO;
 import com.langtuo.teamachine.api.request.shop.ShopGroupPutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
-import com.langtuo.teamachine.dao.po.shop.ShopGroupPO;
+import com.langtuo.teamachine.dao.po.shop.MachineGroupPO;
 import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShopGroupMgtConvertor {
-    public static List<ShopGroupDTO> convert(List<ShopGroupPO> poList) {
+    public static List<ShopGroupDTO> convert(List<MachineGroupPO> poList) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
@@ -22,7 +22,7 @@ public class ShopGroupMgtConvertor {
         return list;
     }
 
-    public static ShopGroupDTO convert(ShopGroupPO po) {
+    public static ShopGroupDTO convert(MachineGroupPO po) {
         if (po == null) {
             return null;
         }
@@ -43,12 +43,12 @@ public class ShopGroupMgtConvertor {
         return dto;
     }
 
-    public static ShopGroupPO convert(ShopGroupPutRequest request) {
+    public static MachineGroupPO convert(ShopGroupPutRequest request) {
         if (request == null) {
             return null;
         }
 
-        ShopGroupPO po = new ShopGroupPO();
+        MachineGroupPO po = new MachineGroupPO();
         po.setShopGroupName(request.getShopGroupName());
         po.setShopGroupCode(request.getShopGroupCode());
         po.setComment(request.getComment());

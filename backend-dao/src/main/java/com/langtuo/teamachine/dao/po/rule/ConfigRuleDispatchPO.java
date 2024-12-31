@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class CleanRuleDispatchPO {
+public class ConfigRuleDispatchPO {
     /**
      * 数据表id
      */
