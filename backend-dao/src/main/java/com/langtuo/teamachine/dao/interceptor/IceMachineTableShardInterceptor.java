@@ -31,7 +31,7 @@ import static com.langtuo.teamachine.internal.constant.CommonConsts.MAP_KEY_PO_L
     args = {Connection.class, Integer.class}
 )})
 @Slf4j
-public class TeaMachineTableShardInterceptor implements Interceptor {
+public class IceMachineTableShardInterceptor implements Interceptor {
     /**
      *
      */

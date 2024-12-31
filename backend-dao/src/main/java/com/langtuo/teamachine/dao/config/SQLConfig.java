@@ -1,6 +1,6 @@
 package com.langtuo.teamachine.dao.config;
 
-import com.langtuo.teamachine.dao.interceptor.TeaMachineTableShardInterceptor;
+import com.langtuo.teamachine.dao.interceptor.IceMachineTableShardInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,7 +18,7 @@ public class SQLConfig {
 
     @Bean(name = TABLE_SHARD_INTERCEPTOR_NAME)
     public Interceptor getTableShardInterceptor() {
-        return new TeaMachineTableShardInterceptor();
+        return new IceMachineTableShardInterceptor();
     }
 }
 
