@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.web.controller.shop;
 
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.device.ShopGroupDTO;
+import com.langtuo.teamachine.api.model.device.MachineGroupDTO;
 import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.device.ShopGroupMgtService;
@@ -20,23 +20,23 @@ public class ShopGroupController {
     private ShopGroupMgtService service;
     
     @GetMapping(value = "/get")
-    public IceMachineResult<ShopGroupDTO> get(@RequestParam("tenantCode") String tenantCode,
-                                              @RequestParam("shopGroupCode") String shopGroupCode) {
-        IceMachineResult<ShopGroupDTO> rtn = service.getByShopGroupCode(tenantCode, shopGroupCode);
+    public IceMachineResult<MachineGroupDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                                 @RequestParam("shopGroupCode") String shopGroupCode) {
+        IceMachineResult<MachineGroupDTO> rtn = service.getByShopGroupCode(tenantCode, shopGroupCode);
         return rtn;
     }
     
     @GetMapping(value = "/list")
-    public IceMachineResult<List<ShopGroupDTO>> list(@RequestParam("tenantCode") String tenantCode) {
-        IceMachineResult<List<ShopGroupDTO>> rtn = service.list(tenantCode);
+    public IceMachineResult<List<MachineGroupDTO>> list(@RequestParam("tenantCode") String tenantCode) {
+        IceMachineResult<List<MachineGroupDTO>> rtn = service.list(tenantCode);
         return rtn;
     }
     
     @GetMapping(value = "/search")
-    public IceMachineResult<PageDTO<ShopGroupDTO>> search(@RequestParam("tenantCode") String tenantCode,
-                                                          @RequestParam(name = "shopGroupName", required = false) String shopGroupName,
-                                                          @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        IceMachineResult<PageDTO<ShopGroupDTO>> rtn = service.search(tenantCode, shopGroupName, pageNum, pageSize);
+    public IceMachineResult<PageDTO<MachineGroupDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                             @RequestParam(name = "shopGroupName", required = false) String shopGroupName,
+                                                             @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<MachineGroupDTO>> rtn = service.search(tenantCode, shopGroupName, pageNum, pageSize);
         return rtn;
     }
 

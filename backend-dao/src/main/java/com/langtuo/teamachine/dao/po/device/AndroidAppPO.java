@@ -23,6 +23,11 @@ public class AndroidAppPO {
     private Date gmtModified;
 
     /**
+     * 额外信息，格式：a:b;c:d
+     */
+    private Map<String, String> extraInfo;
+
+    /**
      * 版本号
      */
     private String version;
@@ -36,9 +41,4 @@ public class AndroidAppPO {
      * 备注信息
      */
     private String comment;
-
-    /**
-     * 额外信息，格式：a:b;c:d
-     */
-    private Map<String, String> extraInfo;
 }

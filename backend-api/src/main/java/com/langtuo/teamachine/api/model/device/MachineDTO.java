@@ -39,59 +39,14 @@ public class MachineDTO implements Serializable {
     private String machineName;
 
     /**
-     * 屏幕编码
+     * 分组编码
      */
-    private String screenCode;
-
-    /**
-     * 电控板编码
-     */
-    private String elecBoardCode;
-
-    /**
-     *　店铺编码
-     */
-    private String shopCode;
-
-    /**
-     * 店铺名称
-     */
-    private String shopName;
-
-    /**
-     * 店铺组编码
-     */
-    private String shopGroupCode;
-
-    /**
-     * 店铺组名称
-     */
-    private String shopGroupName;
-
-    /**
-     * 型号编码
-     */
-    private String modelCode;
-
-    /**
-     * 型号名称
-     */
-    private String modelName;
+    private String machineGroupCode;
 
     /**
      * 机器状态，0：禁用，1：启用
      */
     private int state;
-
-    /**
-     * 有效期
-     */
-    private Date validUntil;
-
-    /**
-     * 保修期
-     */
-    private Date maintainUntil;
 
     /**
      * 在线状态，0：离线，1：在线

@@ -9,10 +9,10 @@
         <result property="id" column="id"/>
         <result property="gmtCreated" column="gmt_created"/>
         <result property="gmtModified" column="gmt_modified"/>
+        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
         <result property="version" column="version"/>
         <result property="ossPath" column="oss_path"/>
         <result property="comment" column="comment"/>
-        <result property="extraInfo" column="extra_info" typeHandler="com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="listByLimit" resultMap="androidAppPOMap">
@@ -49,17 +49,17 @@
         INSERT INTO android_app_version (
             gmt_created
             , gmt_modified
+            , extra_info
             , version
             , oss_path
             , comment
-            , extra_info
         ) VALUES (
             now()
             , now()
+            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             , #{version}
             , #{ossPath}
             , #{comment}
-            , #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
         )
     </insert>
 
@@ -67,14 +67,14 @@
         UPDATE android_app_version
         SET
             gmt_modified = now()
+            <if test="extraInfo != null">
+                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
+            </if>
             <if test="ossPath != null">
                 , oss_path = #{ossPath}
             </if>
             <if test="comment != null">
                 , comment = #{comment}
-            </if>
-            <if test="extraInfo != null">
-                , extra_info = #{extraInfo, jdbcType=VARCHAR, typeHandler=com.langtuo.teamachine.dao.typehandler.MapStringTypeHandler}
             </if>
         WHERE 1 = 1
             <if test="version != null">

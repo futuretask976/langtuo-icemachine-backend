@@ -2,7 +2,7 @@ package com.langtuo.teamachine.biz.service.device;
 
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.device.ShopGroupDTO;
+import com.langtuo.teamachine.api.model.device.MachineGroupDTO;
 import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.device.ShopGroupMgtService;
@@ -38,16 +38,16 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<ShopGroupDTO> getByShopGroupCode(String tenantCode, String shopGroupCode) {
+    public IceMachineResult<MachineGroupDTO> getByShopGroupCode(String tenantCode, String shopGroupCode) {
         MachineGroupPO machineGroupPO = machineGroupAccessor.getByShopGroupCode(tenantCode, shopGroupCode);
-        ShopGroupDTO shopGroupDTO = convert(machineGroupPO);
-        return IceMachineResult.success(shopGroupDTO);
+        MachineGroupDTO machineGroupDTO = convert(machineGroupPO);
+        return IceMachineResult.success(machineGroupDTO);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<PageDTO<ShopGroupDTO>> search(String tenantCode, String shopGroupName,
-                                                          int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<MachineGroupDTO>> search(String tenantCode, String shopGroupName,
+                                                             int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
@@ -66,7 +66,7 @@ public class ShopGroupMgtServiceImpl implements ShopGroupMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<List<ShopGroupDTO>> list(String tenantCode) {
+    public IceMachineResult<List<MachineGroupDTO>> list(String tenantCode) {
         try {
             List<String> orgNameList = orgManager.getOrgNameListByLoginSession(tenantCode);
             List<MachineGroupPO> list = machineGroupAccessor.list(tenantCode, orgNameList);

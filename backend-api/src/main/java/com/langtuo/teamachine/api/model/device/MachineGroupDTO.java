@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Data
-public class ShopGroupDTO implements Serializable {
+public class MachineGroupDTO implements Serializable {
     /**
      * 数据表记录插入时间
      */
@@ -19,9 +19,9 @@ public class ShopGroupDTO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 备注
+     * 租户编码
      */
-    private String comment;
+    private String tenantCode;
 
     /**
      * 额外信息，格式：a:b;c:d
@@ -29,22 +29,17 @@ public class ShopGroupDTO implements Serializable {
     private Map<String, String> extraInfo;
 
     /**
-     * 店铺组编码
+     * 备注
      */
-    private String shopGroupCode;
+    private String comment;
 
     /**
-     * 店铺组名称
+     * 机器分组编码
      */
-    private String shopGroupName;
+    private String machineGroupCode;
 
     /**
-     * 归属的组织名称
+     * 机器分组名称
      */
-    private String orgName;
-
-    /**
-     * 关联当前类型的店铺数量
-     */
-    private int shopCount;
+    private String machineGroupName;
 }

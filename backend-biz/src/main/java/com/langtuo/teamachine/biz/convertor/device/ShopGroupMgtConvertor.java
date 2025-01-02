@@ -1,6 +1,6 @@
 package com.langtuo.teamachine.biz.convertor.device;
 
-import com.langtuo.teamachine.api.model.device.ShopGroupDTO;
+import com.langtuo.teamachine.api.model.device.MachineGroupDTO;
 import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.po.device.MachineGroupPO;
@@ -11,27 +11,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShopGroupMgtConvertor {
-    public static List<ShopGroupDTO> convert(List<MachineGroupPO> poList) {
+    public static List<MachineGroupDTO> convert(List<MachineGroupPO> poList) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
 
-        List<ShopGroupDTO> list = poList.stream()
+        List<MachineGroupDTO> list = poList.stream()
                 .map(po -> convert(po))
                 .collect(Collectors.toList());
         return list;
     }
 
-    public static ShopGroupDTO convert(MachineGroupPO po) {
+    public static MachineGroupDTO convert(MachineGroupPO po) {
         if (po == null) {
             return null;
         }
 
-        ShopGroupDTO dto = new ShopGroupDTO();
+        MachineGroupDTO dto = new MachineGroupDTO();
         dto.setGmtCreated(po.getGmtCreated());
         dto.setGmtModified(po.getGmtModified());
-        dto.setShopGroupCode(po.getMachineGroupCode());
-        dto.setShopGroupName(po.getMachineGroupName());
+        dto.setMachineGroupCode(po.getMachineGroupCode());
+        dto.setMachineGroupName(po.getMachineGroupName());
         dto.setComment(po.getComment());
         dto.setExtraInfo(po.getExtraInfo());
         dto.setOrgName(po.getOrgName());

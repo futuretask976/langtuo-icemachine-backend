@@ -32,7 +32,7 @@ public class AndroidAppDispatchPO {
     private String version;
 
     /**
-     * 店铺组编码
+     * 机器分组编码
      */
-    private String shopGroupCode;
+    private String machineGroupCode;
 }
