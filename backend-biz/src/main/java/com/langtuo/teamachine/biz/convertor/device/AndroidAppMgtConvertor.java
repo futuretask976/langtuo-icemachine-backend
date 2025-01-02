@@ -57,12 +57,12 @@ public class AndroidAppMgtConvertor {
         String tenantCode = request.getTenantCode();
         String version = request.getVersion();
 
-        return request.getShopGroupCodeList().stream()
-                .map(shopGroupCode -> {
+        return request.getMachineGroupCodeList().stream()
+                .map(machineGroupCode -> {
                     AndroidAppDispatchPO po = new AndroidAppDispatchPO();
                     po.setTenantCode(tenantCode);
                     po.setVersion(version);
-                    po.setShopGroupCode(shopGroupCode);
+                    po.setMachineGroupCode(machineGroupCode);
                     return po;
                 }).collect(Collectors.toList());
     }

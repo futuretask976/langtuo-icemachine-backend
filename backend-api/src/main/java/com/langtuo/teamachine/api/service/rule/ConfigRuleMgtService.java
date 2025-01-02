@@ -3,8 +3,8 @@ package com.langtuo.teamachine.api.service.rule;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDispatchDTO;
-import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
-import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRuleDispatchPutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRulePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 
 import java.util.List;
@@ -36,14 +36,14 @@ public interface ConfigRuleMgtService {
      * @param tenantCode
      * @return
      */
-    IceMachineResult<List<ConfigRuleDTO>> listByShopCode(String tenantCode, String shopCode);
+    IceMachineResult<List<ConfigRuleDTO>> listByMachineGroupCode(String tenantCode, String shopCode);
 
     /**
      *
      * @param request
      * @return
      */
-    IceMachineResult<Void> put(CleanRulePutRequest request);
+    IceMachineResult<Void> put(ConfigRulePutRequest request);
 
     /**
      *
@@ -58,7 +58,7 @@ public interface ConfigRuleMgtService {
      * @param request
      * @return
      */
-    IceMachineResult<Void> putDispatch(CleanRuleDispatchPutRequest request);
+    IceMachineResult<Void> putDispatch(ConfigRuleDispatchPutRequest request);
 
     /**
      *

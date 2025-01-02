@@ -13,7 +13,7 @@ public class AndroidAppDispatchDTO implements Serializable {
     private String version;
 
     /**
-     * 分组编码
+     * 机器分组编码
      */
     private List<String> machineGroupCodeList;
 }

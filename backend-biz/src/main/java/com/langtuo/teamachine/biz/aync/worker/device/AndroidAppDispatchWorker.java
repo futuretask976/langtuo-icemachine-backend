@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.api.model.device.AndroidAppDTO;
 import com.langtuo.teamachine.biz.convertor.device.AndroidAppMgtConvertor;
 import com.langtuo.teamachine.biz.manager.MachineManager;
-import com.langtuo.teamachine.biz.manager.ShopManager;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.device.AndroidAppAccessor;

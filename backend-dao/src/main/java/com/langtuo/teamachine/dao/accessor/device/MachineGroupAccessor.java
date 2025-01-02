@@ -21,22 +21,22 @@ public class MachineGroupAccessor {
     @Resource
     private RedisManager4Accessor redisManager4Accessor;
 
-    public MachineGroupPO getByShopGroupCode(String tenantCode, String shopGroupCode) {
+    public MachineGroupPO getByMachineGroupCode(String tenantCode, String shopGroupCode) {
         MachineGroupPO po = mapper.selectOne(tenantCode, shopGroupCode);
         return po;
     }
 
-    public List<MachineGroupPO> list(String tenantCode, List<String> orgNameList) {
+    public List<MachineGroupPO> list(String tenantCode) {
         List<MachineGroupPO> list = mapper.selectList(tenantCode);
         return list;
     }
 
-    public PageInfo<MachineGroupPO> search(String tenantCode, String shopGroupName, int pageNum, int pageSize) {
+    public PageInfo<MachineGroupPO> search(String tenantCode, String machineGroupName, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         MachineGroupQuery machineGroupQuery = new MachineGroupQuery();
         machineGroupQuery.setTenantCode(tenantCode);
-        machineGroupQuery.setMachineGroupName(StringUtils.isBlank(shopGroupName) ? null : shopGroupName);
+        machineGroupQuery.setMachineGroupName(StringUtils.isBlank(machineGroupName) ? null : machineGroupName);
         List<MachineGroupPO> list = mapper.search(machineGroupQuery);
 
         PageInfo<MachineGroupPO> pageInfo = new PageInfo(list);
@@ -59,7 +59,7 @@ public class MachineGroupAccessor {
     }
 
     public int deleteByShopGroupCode(String tenantCode, String shopGroupCode) {
-        MachineGroupPO po = getByShopGroupCode(tenantCode, shopGroupCode);
+        MachineGroupPO po = getByMachineGroupCode(tenantCode, shopGroupCode);
         if (po == null) {
             return CommonConsts.DB_DELETED_ZERO_ROW;
         }

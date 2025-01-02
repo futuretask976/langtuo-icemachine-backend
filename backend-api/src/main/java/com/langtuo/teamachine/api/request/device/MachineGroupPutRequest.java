@@ -6,16 +6,11 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class ShopGroupPutRequest {
+public class MachineGroupPutRequest {
     /**
      * 租户编码
      */
     private String tenantCode;
-
-    /**
-     * 备注
-     */
-    private String comment;
 
     /**
      * 额外信息，格式：a:b;c:d
@@ -23,19 +18,19 @@ public class ShopGroupPutRequest {
     private Map<String, String> extraInfo;
 
     /**
-     * 店铺组编码
+     * 备注
      */
-    private String shopGroupCode;
+    private String comment;
 
     /**
-     * 店铺组名称
+     * 机器分组编码
      */
-    private String shopGroupName;
+    private String machineGroupCode;
 
     /**
-     * 归属的组织名称
+     * 机器分组名称
      */
-    private String orgName;
+    private String machineGroupName;
 
     /**
      * 是否新建
@@ -53,13 +48,10 @@ public class ShopGroupPutRequest {
         if (!RegexUtils.isValidComment(comment, false)) {
             return false;
         }
-        if (!RegexUtils.isValidCode(shopGroupCode, true)) {
+        if (!RegexUtils.isValidCode(machineGroupCode, true)) {
             return false;
         }
-        if (!RegexUtils.isValidName(shopGroupName, true)) {
-            return false;
-        }
-        if (!RegexUtils.isValidName(orgName, true)) {
+        if (!RegexUtils.isValidName(machineGroupName, true)) {
             return false;
         }
         return true;

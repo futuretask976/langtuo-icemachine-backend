@@ -7,21 +7,21 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CleanRuleDispatchPutRequest {
+public class ConfigRuleDispatchPutRequest {
     /**
      * 租户编码
      */
     private String tenantCode;
 
     /**
-     * 清洁规则编码
+     * 配置规则编码
      */
-    private String cleanRuleCode;
+    private String configRuleCode;
 
     /**
-     * 店铺组编码列表
+     * 机器分组编码列表
      */
-    private List<String> shopGroupCodeList;
+    private List<String> machineGroupCodeList;
 
     /**
      *
@@ -31,7 +31,7 @@ public class CleanRuleDispatchPutRequest {
         if (!RegexUtils.isValidCode(tenantCode, true)) {
             return false;
         }
-        if (!RegexUtils.isValidCode(cleanRuleCode, true)) {
+        if (!RegexUtils.isValidCode(configRuleCode, true)) {
             return false;
         }
         if (!isValidShopGroupCodeList()) {
@@ -41,10 +41,10 @@ public class CleanRuleDispatchPutRequest {
     }
 
     private boolean isValidShopGroupCodeList() {
-        if (CollectionUtils.isEmpty(shopGroupCodeList)) {
+        if (CollectionUtils.isEmpty(machineGroupCodeList)) {
             return false;
         }
-        for (String m : shopGroupCodeList) {
+        for (String m : machineGroupCodeList) {
             if (!RegexUtils.isValidCode(m, true)) {
                 return false;
             }

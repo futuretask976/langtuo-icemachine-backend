@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDispatchDTO;
-import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
-import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRuleDispatchPutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRulePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.rule.ConfigRuleMgtService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class CleanRuleController {
     public IceMachineResult<List<ConfigRuleDTO>> listByShop(@RequestParam("tenantCode") String tenantCode,
                                                             @RequestParam("shopCode") String shopCode) {
         log.debug("listByShop|entering|tenantCode=" +  tenantCode + ";shopCode=" + shopCode);
-        IceMachineResult<List<ConfigRuleDTO>> rtn = service.listByShopCode(tenantCode, shopCode);
+        IceMachineResult<List<ConfigRuleDTO>> rtn = service.listByMachineGroupCode(tenantCode, shopCode);
         log.debug("listByShop|exiting|rtn=" +  (rtn == null ? null : JSON.toJSONString(rtn)));
         return rtn;
     }
@@ -57,7 +57,7 @@ public class CleanRuleController {
     }
 
     @PutMapping(value = "/put")
-    public IceMachineResult<Void> put(@RequestBody CleanRulePutRequest request) {
+    public IceMachineResult<Void> put(@RequestBody ConfigRulePutRequest request) {
         IceMachineResult<Void> rtn = service.put(request);
         return rtn;
     }
@@ -70,7 +70,7 @@ public class CleanRuleController {
     }
     
     @PutMapping(value = "/dispatch/put")
-    public IceMachineResult<Void> putDispatch(@RequestBody CleanRuleDispatchPutRequest request) {
+    public IceMachineResult<Void> putDispatch(@RequestBody ConfigRuleDispatchPutRequest request) {
         IceMachineResult<Void> rtn = service.putDispatch(request);
         return rtn;
     }

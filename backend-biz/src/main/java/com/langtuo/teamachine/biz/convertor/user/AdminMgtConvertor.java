@@ -3,7 +3,6 @@ package com.langtuo.teamachine.biz.convertor.user;
 import com.langtuo.teamachine.api.model.user.AdminDTO;
 import com.langtuo.teamachine.api.request.user.AdminPutRequest;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
-import com.langtuo.teamachine.dao.util.SpringAccessorUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -33,14 +32,6 @@ public class AdminMgtConvertor {
         dto.setExtraInfo(adminPO.getExtraInfo());
         dto.setLoginName(adminPO.getLoginName());
         dto.setLoginPass(adminPO.getLoginPass());
-        dto.setOrgName(adminPO.getOrgName());
-
-        RoleAccessor roleAccessor = SpringAccessorUtils.getRoleAccessor();
-        RolePO rolePO = roleAccessor.getByRoleCode(adminPO.getTenantCode(), adminPO.getRoleCode());
-        if (rolePO != null) {
-            dto.setRoleCode(rolePO.getRoleCode());
-            dto.setRoleName(rolePO.getRoleName());
-        }
         return dto;
     }
 
@@ -52,8 +43,6 @@ public class AdminMgtConvertor {
         AdminPO po = new AdminPO();
         po.setLoginName(request.getLoginName());
         po.setLoginPass(request.getLoginPass());
-        po.setRoleCode(request.getRoleCode());
-        po.setOrgName(request.getOrgName());
         po.setComment(request.getComment());
         po.setTenantCode(request.getTenantCode());
         po.setExtraInfo(request.getExtraInfo());

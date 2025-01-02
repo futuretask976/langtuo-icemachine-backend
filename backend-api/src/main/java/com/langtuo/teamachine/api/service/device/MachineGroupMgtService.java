@@ -2,12 +2,12 @@ package com.langtuo.teamachine.api.service.device;
 
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.device.MachineGroupDTO;
-import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
+import com.langtuo.teamachine.api.request.device.MachineGroupPutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 
 import java.util.List;
 
-public interface ShopGroupMgtService {
+public interface MachineGroupMgtService {
     /**
      *
      * @param tenantCode
@@ -33,7 +33,7 @@ public interface ShopGroupMgtService {
      * @param request
      * @return
      */
-    IceMachineResult<Void> put(ShopGroupPutRequest request);
+    IceMachineResult<Void> put(MachineGroupPutRequest request);
 
     /**
      *
@@ -41,5 +41,5 @@ public interface ShopGroupMgtService {
      * @param shopGroupCode
      * @return
      */
-    IceMachineResult<Void> deleteByShopGroupCode(String tenantCode, String shopGroupCode);
+    IceMachineResult<Void> deleteByMachineGroupCode(String tenantCode, String shopGroupCode);
 }

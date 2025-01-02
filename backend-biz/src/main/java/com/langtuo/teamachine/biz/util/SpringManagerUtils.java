@@ -17,27 +17,9 @@ public class SpringManagerUtils {
         return manager;
     }
 
-    public static MenuManager getMenuManager() {
+    public static MachineGroupManager getMachineGroupManager() {
         ApplicationContext appContext = SpringUtil.getApplicationContext();
-        MenuManager manager = appContext.getBean(MenuManager.class);
-        return manager;
-    }
-
-    public static OrgManager getOrgManager() {
-        ApplicationContext appContext = SpringUtil.getApplicationContext();
-        OrgManager manager = appContext.getBean(OrgManager.class);
-        return manager;
-    }
-
-    public static ShopGroupManager getShopGroupManager() {
-        ApplicationContext appContext = SpringUtil.getApplicationContext();
-        ShopGroupManager manager = appContext.getBean(ShopGroupManager.class);
-        return manager;
-    }
-
-    public static ShopManager getShopManager() {
-        ApplicationContext appContext = SpringUtil.getApplicationContext();
-        ShopManager manager = appContext.getBean(ShopManager.class);
+        MachineGroupManager manager = appContext.getBean(MachineGroupManager.class);
         return manager;
     }
 

@@ -5,8 +5,9 @@ import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.record.ActRecordDTO;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.record.ActRecordMgtService;
-import com.langtuo.teamachine.biz.manager.ShopGroupManager;
+import com.langtuo.teamachine.biz.manager.MachineGroupManager;
 import com.langtuo.teamachine.dao.accessor.record.ActRecordAccessor;
+import com.langtuo.teamachine.dao.po.record.ActRecordPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
 import com.langtuo.teamachine.internal.constant.ErrorCodeEnum;
 import com.langtuo.teamachine.internal.util.LocaleUtils;
@@ -26,7 +27,7 @@ import static com.langtuo.teamachine.biz.convertor.record.ActRecordMgtConvertor.
 @Slf4j
 public class ActRecordMgtServiceImpl implements ActRecordMgtService {
     @Resource
-    private ShopGroupManager shopGroupManager;
+    private MachineGroupManager machineGroupManager;
 
     @Resource
     private ActRecordAccessor actRecordAccessor;
@@ -35,7 +36,7 @@ public class ActRecordMgtServiceImpl implements ActRecordMgtService {
     @Transactional(readOnly = true)
     public IceMachineResult<ActRecordDTO> get(String tenantCode, String idempotentMark) {
         try {
-            CleanActRecordPO po = actRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
+            ActRecordPO po = actRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
             return IceMachineResult.success(convertToCleanActRecordDTO(po, true));
         } catch (Exception e) {
             log.error("get|fatal|e=" + e.getMessage(), e);
@@ -45,21 +46,18 @@ public class ActRecordMgtServiceImpl implements ActRecordMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<PageDTO<ActRecordDTO>> search(String tenantCode, String shopGroupCode,
-                                                          String shopCode, int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<ActRecordDTO>> search(String tenantCode, String machineGroupCode,
+            int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
         try {
-            PageInfo<CleanActRecordPO> pageInfo = null;
-            if (!StringUtils.isBlank(shopCode)) {
-                pageInfo = actRecordAccessor.searchByShopCodeList(tenantCode, Lists.newArrayList(shopCode),
-                        pageNum, pageSize);
-            } else if (!StringUtils.isBlank(shopGroupCode)) {
-                pageInfo = actRecordAccessor.searchByShopGroupCodeList(tenantCode, Lists.newArrayList(shopGroupCode),
+            PageInfo<ActRecordPO> pageInfo = null;
+            if (!StringUtils.isBlank(machineGroupCode)) {
+                pageInfo = actRecordAccessor.searchByShopCodeList(tenantCode, Lists.newArrayList(machineGroupCode),
                         pageNum, pageSize);
             } else {
-                List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
+                List<String> shopGroupCodeList = machineGroupManager.getMachineGroupCodeList(tenantCode);
                 pageInfo = actRecordAccessor.searchByShopGroupCodeList(tenantCode, shopGroupCodeList,
                         pageNum, pageSize);
             }

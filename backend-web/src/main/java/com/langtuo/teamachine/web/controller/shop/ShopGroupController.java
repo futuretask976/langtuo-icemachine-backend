@@ -2,9 +2,9 @@ package com.langtuo.teamachine.web.controller.shop;
 
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.device.MachineGroupDTO;
-import com.langtuo.teamachine.api.request.device.ShopGroupPutRequest;
+import com.langtuo.teamachine.api.request.device.MachineGroupPutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
-import com.langtuo.teamachine.api.service.device.ShopGroupMgtService;
+import com.langtuo.teamachine.api.service.device.MachineGroupMgtService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/shopset/group")
 public class ShopGroupController {
     @Resource
-    private ShopGroupMgtService service;
+    private MachineGroupMgtService service;
     
     @GetMapping(value = "/get")
     public IceMachineResult<MachineGroupDTO> get(@RequestParam("tenantCode") String tenantCode,
@@ -41,7 +41,7 @@ public class ShopGroupController {
     }
 
     @PutMapping(value = "/put")
-    public IceMachineResult<Void> put(@RequestBody ShopGroupPutRequest request) {
+    public IceMachineResult<Void> put(@RequestBody MachineGroupPutRequest request) {
         IceMachineResult<Void> rtn = service.put(request);
         return rtn;
     }
@@ -49,7 +49,7 @@ public class ShopGroupController {
     @DeleteMapping(value = "/delete")
     public IceMachineResult<Void> delete(@RequestParam("tenantCode") String tenantCode,
                                          @RequestParam("shopGroupCode") String shopGroupCode) {
-        IceMachineResult<Void> rtn = service.deleteByShopGroupCode(tenantCode, shopGroupCode);
+        IceMachineResult<Void> rtn = service.deleteByMachineGroupCode(tenantCode, shopGroupCode);
         return rtn;
     }
 }

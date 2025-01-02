@@ -180,11 +180,10 @@ public class AndroidAppMgtServiceImpl implements AndroidAppMgtService {
         AndroidAppDispatchDTO dto = new AndroidAppDispatchDTO();
         dto.setVersion(version);
         if (!CollectionUtils.isEmpty(poList)) {
-            dto.setShopGroupCodeList(poList.stream()
-                    .map(po -> po.getShopGroupCode())
+            dto.setMachineGroupCodeList(poList.stream()
+                    .map(po -> po.getMachineGroupCode())
                     .collect(Collectors.toList()));
         }
-
         return IceMachineResult.success(dto);
     }
 

@@ -37,7 +37,7 @@ public class MachineAccessor {
     }
 
     public PageInfo<MachinePO> search(String tenantCode, String machineCode, List<String> machineGroupCodeList,
-                                      int pageNum, int pageSize) {
+                int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
 
         MachineQuery machineQuery = new MachineQuery();

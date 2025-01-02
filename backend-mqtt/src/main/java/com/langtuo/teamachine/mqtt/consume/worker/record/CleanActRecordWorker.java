@@ -65,7 +65,7 @@ public class CleanActRecordWorker implements Runnable {
             @Override
             public Void doInTransaction(TransactionStatus status) {
                 try {
-                    ActRecordAccessor actRecordAccessor = SpringAccessorUtils.getCleanActRecordAccessor();
+                    ActRecordAccessor actRecordAccessor = SpringAccessorUtils.getActRecordAccessor();
                     CleanActRecordPO exist = actRecordAccessor.getByIdempotentMark(po.getTenantCode(),
                             po.getIdempotentMark());
                     if (exist == null) {

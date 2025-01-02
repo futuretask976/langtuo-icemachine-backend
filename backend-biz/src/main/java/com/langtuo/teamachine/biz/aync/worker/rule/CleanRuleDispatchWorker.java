@@ -5,8 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
 import com.langtuo.teamachine.biz.convertor.rule.ConfigRuleMgtConvertor;
 import com.langtuo.teamachine.biz.manager.MachineManager;
-import com.langtuo.teamachine.biz.manager.ShopGroupManager;
-import com.langtuo.teamachine.biz.manager.ShopManager;
+import com.langtuo.teamachine.biz.manager.MachineGroupManager;
 import com.langtuo.teamachine.biz.util.SpringManagerUtils;
 import com.langtuo.teamachine.biz.util.SpringServiceUtils;
 import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleAccessor;
@@ -76,7 +75,7 @@ public class CleanRuleDispatchWorker implements Runnable {
     }
 
     private JSONObject getDispatchCont() {
-        ConfigRuleAccessor configRuleAccessor = SpringAccessorUtils.getCleanRuleAccessor();
+        ConfigRuleAccessor configRuleAccessor = SpringAccessorUtils.getConfigRuleAccessor();
         ConfigRulePO po = configRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
         ConfigRuleDTO dto = ConfigRuleMgtConvertor.convertToCleanRuleStepDTO(po);
         if (dto == null) {
@@ -89,10 +88,10 @@ public class CleanRuleDispatchWorker implements Runnable {
     }
 
     private List<String> getMachineCodeList() {
-        ShopGroupManager shopGroupManager = SpringManagerUtils.getShopGroupManager();
-        List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginName(tenantCode, loginName);
+        MachineGroupManager machineGroupManager = SpringManagerUtils.getMachineGroupManager();
+        List<String> shopGroupCodeList = machineGroupManager.getShopGroupCodeListByLoginName(tenantCode, loginName);
 
-        ConfigRuleDispatchAccessor configRuleDispatchAccessor = SpringAccessorUtils.getCleanRuleDispatchAccessor();
+        ConfigRuleDispatchAccessor configRuleDispatchAccessor = SpringAccessorUtils.getConfigRuleDispatchAccessor();
         List<ConfigRuleDispatchPO> configRuleDispatchPOList = configRuleDispatchAccessor.listByCleanRuleCode(
                 tenantCode, cleanRuleCode, shopGroupCodeList);
         if (CollectionUtils.isEmpty(configRuleDispatchPOList)) {

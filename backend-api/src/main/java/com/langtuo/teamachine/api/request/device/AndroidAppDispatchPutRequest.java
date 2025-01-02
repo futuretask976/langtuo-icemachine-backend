@@ -19,9 +19,9 @@ public class AndroidAppDispatchPutRequest {
     private String version;
 
     /**
-     * 店铺编码
+     * 机器分组编码
      */
-    private List<String> shopGroupCodeList;
+    private List<String> machineGroupCodeList;
 
     /**
      *
@@ -41,10 +41,10 @@ public class AndroidAppDispatchPutRequest {
     }
 
     private boolean isValidShopGroupList() {
-        if (CollectionUtils.isEmpty(shopGroupCodeList)) {
+        if (CollectionUtils.isEmpty(machineGroupCodeList)) {
             return false;
         }
-        for (String m : shopGroupCodeList) {
+        for (String m : machineGroupCodeList) {
             if (!RegexUtils.isValidCode(m, true)) {
                 return false;
             }

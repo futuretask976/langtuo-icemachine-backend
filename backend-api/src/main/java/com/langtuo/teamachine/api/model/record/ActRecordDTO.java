@@ -42,4 +42,9 @@ public class ActRecordDTO implements Serializable  {
      * 机器分组编码
      */
     private String machineGroupCode;
+
+    /**
+     * 机器分组名称
+     */
+    private String machineGroupName;
 }

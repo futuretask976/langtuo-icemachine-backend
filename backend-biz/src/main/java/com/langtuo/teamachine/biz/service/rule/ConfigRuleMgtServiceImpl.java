@@ -7,11 +7,11 @@ import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
 import com.langtuo.teamachine.api.model.PageDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
 import com.langtuo.teamachine.api.model.rule.ConfigRuleDispatchDTO;
-import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
-import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRuleDispatchPutRequest;
+import com.langtuo.teamachine.api.request.rule.ConfigRulePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.biz.manager.AdminManager;
-import com.langtuo.teamachine.biz.manager.ShopGroupManager;
+import com.langtuo.teamachine.biz.manager.MachineGroupManager;
 import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleAccessor;
 import com.langtuo.teamachine.dao.accessor.rule.ConfigRuleDispatchAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
@@ -41,22 +41,13 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
     private AdminManager adminManager;
 
     @Resource
-    private ShopGroupManager shopGroupManager;
+    private MachineGroupManager machineGroupManager;
 
     @Resource
     private ConfigRuleAccessor configRuleAccessor;
 
     @Resource
-    private CleanRuleStepAccessor cleanRuleStepAccessor;
-
-    @Resource
     private ConfigRuleDispatchAccessor configRuleDispatchAccessor;
-
-    @Resource
-    private CleanRuleExceptAccessor cleanRuleExceptAccessor;
-
-    @Resource
-    private ShopAccessor shopAccessor;
 
     @Resource
     private AsyncDispatcher asyncDispatcher;
@@ -96,9 +87,9 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<List<ConfigRuleDTO>> listByShopCode(String tenantCode, String shopCode) {
+    public IceMachineResult<List<ConfigRuleDTO>> listByMachineGroupCode(String tenantCode, String machineGroupCode) {
         try {
-            ShopPO shopPO = shopAccessor.getByShopCode(tenantCode, shopCode);
+            ShopPO shopPO = shopAccessor.getByShopCode(tenantCode, machineGroupCode);
             if (shopPO == null) {
                 return IceMachineResult.success();
             }
@@ -144,7 +135,7 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
     }
 
     @Override
-    public IceMachineResult<Void> put(CleanRulePutRequest request) {
+    public IceMachineResult<Void> put(ConfigRulePutRequest request) {
         if (request == null || !request.isValid()) {
             return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
@@ -179,17 +170,17 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
     }
 
     @Override
-    public IceMachineResult<Void> putDispatch(CleanRuleDispatchPutRequest request) {
+    public IceMachineResult<Void> putDispatch(ConfigRuleDispatchPutRequest request) {
         if (request == null) {
             return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
         List<ConfigRuleDispatchPO> poList = convertToCleanRuleStepDTO(request);
         try {
-            IceMachineResult<Void> result = doPutDispatch(request.getTenantCode(), request.getCleanRuleCode(), poList);
+            IceMachineResult<Void> result = doPutDispatch(request.getTenantCode(), request.getConfigRuleCode(), poList);
 
             // 异步发送消息准备配置信息分发
-            JSONObject jsonPayload = getAsyncDispatchMsg(request.getTenantCode(), request.getCleanRuleCode());
+            JSONObject jsonPayload = getAsyncDispatchMsg(request.getTenantCode(), request.getConfigRuleCode());
             asyncDispatcher.dispatch(jsonPayload);
 
             return result;
@@ -206,7 +197,7 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
             ConfigRuleDispatchDTO dto = new ConfigRuleDispatchDTO();
             dto.setConfigRuleCode(cleanRuleCode);
 
-            List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
+            List<String> shopGroupCodeList = machineGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
             List<ConfigRuleDispatchPO> poList = configRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
                     shopGroupCodeList);
             if (!CollectionUtils.isEmpty(poList)) {
@@ -294,7 +285,7 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private IceMachineResult<Void> doPutDispatch(String tenantCode, String cleanRuleCode,
                                                  List<ConfigRuleDispatchPO> poList) {
-        List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
+        List<String> shopGroupCodeList = machineGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
         configRuleDispatchAccessor.deleteByCleanRuleCode(tenantCode, cleanRuleCode, shopGroupCodeList);
         int inserted = configRuleDispatchAccessor.insertBatch(poList);
         if (inserted != poList.size()) {

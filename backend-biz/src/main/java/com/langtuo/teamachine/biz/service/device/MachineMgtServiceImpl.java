@@ -9,9 +9,8 @@ import com.langtuo.teamachine.api.request.device.MachineUpdatePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.device.MachineMgtService;
 import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
-import com.langtuo.teamachine.biz.manager.ShopManager;
+import com.langtuo.teamachine.biz.manager.MachineGroupManager;
 import com.langtuo.teamachine.dao.accessor.device.MachineAccessor;
-import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
 import com.langtuo.teamachine.dao.po.device.MachinePO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;
@@ -28,13 +27,12 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.langtuo.teamachine.biz.convertor.device.MachineMgtConvertor.convert;
-import static com.langtuo.teamachine.biz.convertor.device.MachineMgtConvertor.convertToMachinePO;
 
 @Component
 @Slf4j
 public class MachineMgtServiceImpl implements MachineMgtService {
     @Resource
-    private ShopManager shopManager;
+    private MachineGroupManager machineGroupManager;
 
     @Resource
     private MachineAccessor machineAccessor;
@@ -65,21 +63,21 @@ public class MachineMgtServiceImpl implements MachineMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<PageDTO<MachineDTO>> search(String tenantCode, String machineCode, String screenCode,
-                                                        String elecBoardCode, String shopCode, int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<MachineDTO>> search(String tenantCode, String machineCode, String machineGroupCode,
+            int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
         try {
-            List<String> shopCodeList = Lists.newArrayList();
-            if (StringUtils.isBlank(shopCode)) {
-                shopCodeList.addAll(shopManager.getShopCodeListByLoginSession(tenantCode));
+            List<String> machineGroupCodeList = Lists.newArrayList();
+            if (StringUtils.isBlank(machineGroupCode)) {
+                machineGroupCodeList.addAll(machineGroupManager.getMachineGroupCodeList(tenantCode));
             } else {
-                shopCodeList.add(shopCode);
+                machineGroupCodeList.add(machineGroupCode);
             }
 
-            PageInfo<MachinePO> pageInfo = machineAccessor.search(tenantCode, machineCode, screenCode, elecBoardCode,
-                    shopCodeList, pageNum, pageSize);
+            PageInfo<MachinePO> pageInfo = machineAccessor.search(tenantCode, machineCode,
+                    machineGroupCodeList, pageNum, pageSize);
             List<MachineDTO> dtoList = convert(pageInfo.getList());
 
             return IceMachineResult.success(new PageDTO<>(dtoList, pageInfo.getTotal(),
@@ -110,13 +108,13 @@ public class MachineMgtServiceImpl implements MachineMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<List<MachineDTO>> listByShopCode(String tenantCode, String shopCode) {
-        if (StringUtils.isBlank(tenantCode) || StringUtils.isBlank(shopCode)) {
+    public IceMachineResult<List<MachineDTO>> listByMachineGroupCode(String tenantCode, String machineGroupCode) {
+        if (StringUtils.isBlank(tenantCode) || StringUtils.isBlank(machineGroupCode)) {
             return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_ILLEGAL_ARGUMENT));
         }
 
         try {
-            List<MachinePO> poList = machineAccessor.listByShopCode(tenantCode, shopCode);
+            List<MachinePO> poList = machineAccessor.listByShopCode(tenantCode, machineGroupCode);
             List<MachineDTO> dtoList = convert(poList);
 
             return IceMachineResult.success(dtoList);
@@ -180,33 +178,34 @@ public class MachineMgtServiceImpl implements MachineMgtService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     private IceMachineResult<MachineDTO> doActivate(MachineActivatePutRequest request) {
-        // 激活时，设备端是不知道 tenantCode 的，只能通过 deployCode 查找和更新
-        DeployPO existDeployPO = deployAccessor.getByDeployCode(request.getDeployCode());
-        if (existDeployPO == null) {
-            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
-        }
-        if (!existDeployPO.getMachineCode().equals(request.getMachineCode())) {
-            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_DEPLOY_MACHINE_NOT_MATCH));
-        }
-
-        existDeployPO.setState(1);
-        int updated = deployAccessor.update(existDeployPO);
-        if (updated != 1) {
-            return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
-        }
-
-        MachinePO existMachinePO = machineAccessor.getByMachineCode(existDeployPO.getTenantCode(),
-                existDeployPO.getMachineCode());
-        if (existMachinePO == null) {
-            MachinePO machinePO = convertToMachinePO(request, existDeployPO);
-            int inserted = machineAccessor.insert(machinePO);
-            if (inserted != 1) {
-                return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
-            }
-            return IceMachineResult.success(convert(machinePO));
-        } else {
-            return IceMachineResult.success(convert(existMachinePO));
-        }
+        //// 激活时，设备端是不知道 tenantCode 的，只能通过 deployCode 查找和更新
+        //DeployPO existDeployPO = deployAccessor.getByDeployCode(request.getDeployCode());
+        //if (existDeployPO == null) {
+        //    return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
+        //}
+        //if (!existDeployPO.getMachineCode().equals(request.getMachineCode())) {
+        //    return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.BIZ_ERR_DEPLOY_MACHINE_NOT_MATCH));
+        //}
+        //
+        //existDeployPO.setState(1);
+        //int updated = deployAccessor.update(existDeployPO);
+        //if (updated != 1) {
+        //    return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_UPDATE_FAIL));
+        //}
+        //
+        //MachinePO existMachinePO = machineAccessor.getByMachineCode(existDeployPO.getTenantCode(),
+        //        existDeployPO.getMachineCode());
+        //if (existMachinePO == null) {
+        //    MachinePO machinePO = convertToMachinePO(request, existDeployPO);
+        //    int inserted = machineAccessor.insert(machinePO);
+        //    if (inserted != 1) {
+        //        return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_INSERT_FAIL));
+        //    }
+        //    return IceMachineResult.success(convert(machinePO));
+        //} else {
+        //    return IceMachineResult.success(convert(existMachinePO));
+        //}
+        return null;
     }
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)

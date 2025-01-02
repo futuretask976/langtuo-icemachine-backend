@@ -44,6 +44,11 @@ public class MachineDTO implements Serializable {
     private String machineGroupCode;
 
     /**
+     * 分组名称
+     */
+    private String machineGroupName;
+
+    /**
      * 机器状态，0：禁用，1：启用
      */
     private int state;

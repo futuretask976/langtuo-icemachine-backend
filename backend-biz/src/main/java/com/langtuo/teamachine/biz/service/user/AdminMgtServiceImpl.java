@@ -7,7 +7,6 @@ import com.langtuo.teamachine.api.request.user.AdminPutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.user.AdminMgtService;
 import com.langtuo.teamachine.biz.manager.AdminManager;
-import com.langtuo.teamachine.biz.manager.OrgManager;
 import com.langtuo.teamachine.dao.accessor.user.AdminAccessor;
 import com.langtuo.teamachine.dao.po.user.AdminPO;
 import com.langtuo.teamachine.internal.constant.CommonConsts;

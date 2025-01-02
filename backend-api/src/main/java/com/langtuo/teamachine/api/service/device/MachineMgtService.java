@@ -20,8 +20,8 @@ public interface MachineMgtService {
      *
      * @return
      */
-    IceMachineResult<PageDTO<MachineDTO>> search(String tenantCode, String machineCode, String screenCode,
-                                                 String elecBoardCode, String shopCode, int pageNum, int pageSize);
+    IceMachineResult<PageDTO<MachineDTO>> search(String tenantCode, String machineCode, String machineGroupCode,
+            int pageNum, int pageSize);
 
     /**
      *
@@ -35,7 +35,7 @@ public interface MachineMgtService {
      * @param tenantCode
      * @return
      */
-    IceMachineResult<List<MachineDTO>> listByShopCode(String tenantCode, String shopCode);
+    IceMachineResult<List<MachineDTO>> listByMachineGroupCode(String tenantCode, String shopCode);
 
     /**
      *
