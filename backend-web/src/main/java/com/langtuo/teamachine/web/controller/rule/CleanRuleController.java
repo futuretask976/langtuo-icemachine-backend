@@ -2,8 +2,8 @@ package com.langtuo.teamachine.web.controller.rule;
 
 import com.alibaba.fastjson.JSON;
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.rule.CleanRuleDTO;
-import com.langtuo.teamachine.api.model.rule.CleanRuleDispatchDTO;
+import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
+import com.langtuo.teamachine.api.model.rule.ConfigRuleDispatchDTO;
 import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
@@ -25,33 +25,33 @@ public class CleanRuleController {
     private ConfigRuleMgtService service;
     
     @GetMapping(value = "/get")
-    public IceMachineResult<CleanRuleDTO> get(@RequestParam("tenantCode") String tenantCode,
-                                              @RequestParam("cleanRuleCode") String cleanRuleCode) {
-        IceMachineResult<CleanRuleDTO> rtn = service.getByCleanRuleCode(tenantCode, cleanRuleCode);
+    public IceMachineResult<ConfigRuleDTO> get(@RequestParam("tenantCode") String tenantCode,
+                                               @RequestParam("cleanRuleCode") String cleanRuleCode) {
+        IceMachineResult<ConfigRuleDTO> rtn = service.getByCleanRuleCode(tenantCode, cleanRuleCode);
         return rtn;
     }
     
     @GetMapping(value = "/list")
-    public IceMachineResult<List<CleanRuleDTO>> list(@RequestParam("tenantCode") String tenantCode) {
-        IceMachineResult<List<CleanRuleDTO>> rtn = service.list(tenantCode);
+    public IceMachineResult<List<ConfigRuleDTO>> list(@RequestParam("tenantCode") String tenantCode) {
+        IceMachineResult<List<ConfigRuleDTO>> rtn = service.list(tenantCode);
         return rtn;
     }
     
     @GetMapping(value = "/listbyshop")
-    public IceMachineResult<List<CleanRuleDTO>> listByShop(@RequestParam("tenantCode") String tenantCode,
-                                                           @RequestParam("shopCode") String shopCode) {
+    public IceMachineResult<List<ConfigRuleDTO>> listByShop(@RequestParam("tenantCode") String tenantCode,
+                                                            @RequestParam("shopCode") String shopCode) {
         log.debug("listByShop|entering|tenantCode=" +  tenantCode + ";shopCode=" + shopCode);
-        IceMachineResult<List<CleanRuleDTO>> rtn = service.listByShopCode(tenantCode, shopCode);
+        IceMachineResult<List<ConfigRuleDTO>> rtn = service.listByShopCode(tenantCode, shopCode);
         log.debug("listByShop|exiting|rtn=" +  (rtn == null ? null : JSON.toJSONString(rtn)));
         return rtn;
     }
     
     @GetMapping(value = "/search")
-    public IceMachineResult<PageDTO<CleanRuleDTO>> search(@RequestParam("tenantCode") String tenantCode,
-                                                          @RequestParam(name = "cleanRuleCode", required = false) String cleanRuleCode,
-                                                          @RequestParam(name = "cleanRuleName", required = false) String cleanRuleName,
-                                                          @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
-        IceMachineResult<PageDTO<CleanRuleDTO>> rtn = service.search(tenantCode, cleanRuleCode, cleanRuleName,
+    public IceMachineResult<PageDTO<ConfigRuleDTO>> search(@RequestParam("tenantCode") String tenantCode,
+                                                           @RequestParam(name = "cleanRuleCode", required = false) String cleanRuleCode,
+                                                           @RequestParam(name = "cleanRuleName", required = false) String cleanRuleName,
+                                                           @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize) {
+        IceMachineResult<PageDTO<ConfigRuleDTO>> rtn = service.search(tenantCode, cleanRuleCode, cleanRuleName,
                 pageNum, pageSize);
         return rtn;
     }
@@ -76,9 +76,9 @@ public class CleanRuleController {
     }
     
     @GetMapping(value = "/dispatch/get")
-    public IceMachineResult<CleanRuleDispatchDTO> getDispatchByMenuCode(@RequestParam("tenantCode") String tenantCode,
-                                                                        @RequestParam("cleanRuleCode") String cleanRuleCode) {
-        IceMachineResult<CleanRuleDispatchDTO> rtn = service.getDispatchByCleanRuleCode(tenantCode, cleanRuleCode);
+    public IceMachineResult<ConfigRuleDispatchDTO> getDispatchByMenuCode(@RequestParam("tenantCode") String tenantCode,
+                                                                         @RequestParam("cleanRuleCode") String cleanRuleCode) {
+        IceMachineResult<ConfigRuleDispatchDTO> rtn = service.getDispatchByCleanRuleCode(tenantCode, cleanRuleCode);
         return rtn;
     }
 }

@@ -5,8 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.api.service.rule.ConfigRuleMgtService;
 import com.langtuo.teamachine.biz.aync.AsyncDispatcher;
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.rule.CleanRuleDTO;
-import com.langtuo.teamachine.api.model.rule.CleanRuleDispatchDTO;
+import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
+import com.langtuo.teamachine.api.model.rule.ConfigRuleDispatchDTO;
 import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
 import com.langtuo.teamachine.api.result.IceMachineResult;
@@ -63,10 +63,10 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<CleanRuleDTO> getByCleanRuleCode(String tenantCode, String cleanRuleCode) {
+    public IceMachineResult<ConfigRuleDTO> getByCleanRuleCode(String tenantCode, String cleanRuleCode) {
         try {
             ConfigRulePO po = configRuleAccessor.getByCleanRuleCode(tenantCode, cleanRuleCode);
-            CleanRuleDTO dto = convertToCleanRuleStepDTO(po);
+            ConfigRuleDTO dto = convertToCleanRuleStepDTO(po);
             return IceMachineResult.success(dto);
         } catch (Exception e) {
             log.error("getByCode|fatal|e=" + e.getMessage(), e);
@@ -76,10 +76,10 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<List<CleanRuleDTO>> list(String tenantCode) {
+    public IceMachineResult<List<ConfigRuleDTO>> list(String tenantCode) {
         try {
             List<ConfigRulePO> poList = configRuleAccessor.selectList(tenantCode);
-            List<CleanRuleDTO> dtoList = convertToCleanRuleDTO(poList);
+            List<ConfigRuleDTO> dtoList = convertToCleanRuleDTO(poList);
 
             // 根据 gmtModified 倒排
             if (!CollectionUtils.isEmpty(dtoList)) {
@@ -96,7 +96,7 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<List<CleanRuleDTO>> listByShopCode(String tenantCode, String shopCode) {
+    public IceMachineResult<List<ConfigRuleDTO>> listByShopCode(String tenantCode, String shopCode) {
         try {
             ShopPO shopPO = shopAccessor.getByShopCode(tenantCode, shopCode);
             if (shopPO == null) {
@@ -114,10 +114,10 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
                     .collect(Collectors.toList());
             List<ConfigRulePO> configRulePOList = configRuleAccessor.selectListByCleanRuleCode(tenantCode,
                     cleanRuleCodeList);
-            List<CleanRuleDTO> cleanRuleDTOList = convertToCleanRuleDTO(configRulePOList);
-            cleanRuleDTOList.sort((o1, o2) -> o1.getGmtModified().equals(o2.getGmtModified()) ?
+            List<ConfigRuleDTO> configRuleDTOList = convertToCleanRuleDTO(configRulePOList);
+            configRuleDTOList.sort((o1, o2) -> o1.getGmtModified().equals(o2.getGmtModified()) ?
                     0 : o1.getGmtModified().before(o2.getGmtModified()) ? 1 : -1);
-            return IceMachineResult.success(cleanRuleDTOList);
+            return IceMachineResult.success(configRuleDTOList);
         } catch (Exception e) {
             log.error("listByShopCode|fatal|e=" + e.getMessage(), e);
             return IceMachineResult.error(LocaleUtils.getErrorMsgDTO(ErrorCodeEnum.DB_ERR_SELECT_FAIL));
@@ -126,15 +126,15 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<PageDTO<CleanRuleDTO>> search(String tenantCode, String cleanRuleCode, String cleanRuleName,
-                                                          int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<ConfigRuleDTO>> search(String tenantCode, String cleanRuleCode, String cleanRuleName,
+                                                           int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 
         try {
             PageInfo<ConfigRulePO> pageInfo = configRuleAccessor.search(tenantCode, cleanRuleCode, cleanRuleName,
                     pageNum, pageSize);
-            List<CleanRuleDTO> dtoList = convertToCleanRuleDTO(pageInfo.getList());
+            List<ConfigRuleDTO> dtoList = convertToCleanRuleDTO(pageInfo.getList());
             return IceMachineResult.success(new PageDTO<>(dtoList, pageInfo.getTotal(),
                     pageNum, pageSize));
         } catch (Exception e) {
@@ -201,16 +201,16 @@ public class ConfigRuleMgtServiceImpl implements ConfigRuleMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<CleanRuleDispatchDTO> getDispatchByCleanRuleCode(String tenantCode, String cleanRuleCode) {
+    public IceMachineResult<ConfigRuleDispatchDTO> getDispatchByCleanRuleCode(String tenantCode, String cleanRuleCode) {
         try {
-            CleanRuleDispatchDTO dto = new CleanRuleDispatchDTO();
-            dto.setCleanRuleCode(cleanRuleCode);
+            ConfigRuleDispatchDTO dto = new ConfigRuleDispatchDTO();
+            dto.setConfigRuleCode(cleanRuleCode);
 
             List<String> shopGroupCodeList = shopGroupManager.getShopGroupCodeListByLoginSession(tenantCode);
             List<ConfigRuleDispatchPO> poList = configRuleDispatchAccessor.listByCleanRuleCode(tenantCode, cleanRuleCode,
                     shopGroupCodeList);
             if (!CollectionUtils.isEmpty(poList)) {
-                dto.setShopGroupCodeList(poList.stream()
+                dto.setMachineGroupCodeList(poList.stream()
                         .map(ConfigRuleDispatchPO::getMachineGroupCode)
                         .collect(Collectors.toList()));
             }

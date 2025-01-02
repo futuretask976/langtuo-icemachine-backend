@@ -4,11 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Data
-public class CleanRuleDTO implements Serializable {
+public class ConfigRuleDTO implements Serializable {
     /**
      * 数据表记录插入时间
      */
@@ -20,37 +19,27 @@ public class CleanRuleDTO implements Serializable {
     private Date gmtModified;
 
     /**
+     * 租户编码
+     */
+    private String tenantCode;
+
+    /**
      * 额外信息，格式：a:b;c:d
      */
     private Map<String, String> extraInfo;
 
     /**
-     * 清洁规则编码
+     * 备注
      */
-    private String cleanRuleCode;
+    private String comment;
 
     /**
-     * 清洁规则名称
+     * 配置规则编码
      */
-    private String cleanRuleName;
+    private String configRuleCode;
 
     /**
-     * 是否允许提醒，0：不允许，1：允许
+     * 配置规则名称
      */
-    private Integer permitRemind;
-
-    /**
-     * 是否允许批量，0：不允许，1：允许
-     */
-    private Integer permitBatch;
-
-    /**
-     * 排除物料编码列表
-     */
-    private List<String> exceptToppingCodeList;
-
-    /**
-     * 清洁步骤列表
-     */
-    private List<CleanRuleStepDTO> cleanRuleStepList;
+    private String configRuleName;
 }

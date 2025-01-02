@@ -24,14 +24,14 @@ public class AdminDTO implements Serializable {
     private String tenantCode;
 
     /**
-     * 备注
-     */
-    private String comment;
-
-    /**
      * 额外信息，格式：a:b;c:d
      */
     private Map<String, String> extraInfo;
+
+    /**
+     * 备注
+     */
+    private String comment;
 
     /**
      * 管理员登录名称
@@ -42,19 +42,4 @@ public class AdminDTO implements Serializable {
      * 管理员登录密码
      */
     private String loginPass;
-
-    /**
-     * 角色编码
-     */
-    private String roleCode;
-
-    /**
-     * 角色名称
-     */
-    private String roleName;
-
-    /**
-     * 组织名称
-     */
-    private String orgName;
 }

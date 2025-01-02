@@ -42,17 +42,17 @@
         INSERT INTO config_rule_dispatch (
             gmt_created
             , gmt_modified
+            , tenant_code
             , config_rule_code
             , machine_group_code
-            , tenant_code
         ) VALUES
         <foreach collection="poList" item="po" index="index" separator=",">
             (
                 now()
                 , now()
+                , #{po.tenantCode}
                 , #{po.configRuleCode}
                 , #{po.machineGroupCode}
-                , #{po.tenantCode}
             )
         </foreach>
     </insert>

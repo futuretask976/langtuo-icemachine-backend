@@ -38,12 +38,12 @@ public class ConfigRulePO {
     private String comment;
 
     /**
-     * 清洁规则编码
+     * 配置规则编码
      */
     private String configRuleCode;
 
     /**
-     * 清洁规则名称
+     * 配置规则名称
      */
     private String configRuleName;
 }

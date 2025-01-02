@@ -1,6 +1,6 @@
 package com.langtuo.teamachine.biz.convertor.record;
 
-import com.langtuo.teamachine.api.model.record.CleanActRecordDTO;
+import com.langtuo.teamachine.api.model.record.ActRecordDTO;
 import com.langtuo.teamachine.dao.accessor.drink.ToppingAccessor;
 import com.langtuo.teamachine.dao.accessor.shop.ShopAccessor;
 import com.langtuo.teamachine.dao.accessor.device.MachineGroupAccessor;
@@ -14,23 +14,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ActRecordMgtConvertor {
-    public static List<CleanActRecordDTO> convertToCleanActRecordDTO(List<CleanActRecordPO> poList, boolean fillDetail) {
+    public static List<ActRecordDTO> convertToCleanActRecordDTO(List<CleanActRecordPO> poList, boolean fillDetail) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
 
-        List<CleanActRecordDTO> list = poList.stream()
+        List<ActRecordDTO> list = poList.stream()
                 .map(po -> convertToCleanActRecordDTO(po, fillDetail))
                 .collect(Collectors.toList());
         return list;
     }
 
-    public static CleanActRecordDTO convertToCleanActRecordDTO(CleanActRecordPO po, boolean fillDetail) {
+    public static ActRecordDTO convertToCleanActRecordDTO(CleanActRecordPO po, boolean fillDetail) {
         if (po == null) {
             return null;
         }
 
-        CleanActRecordDTO dto = new CleanActRecordDTO();
+        ActRecordDTO dto = new ActRecordDTO();
         dto.setExtraInfo(po.getExtraInfo());
         dto.setIdempotentMark(po.getIdempotentMark());
         dto.setMachineCode(po.getMachineCode());

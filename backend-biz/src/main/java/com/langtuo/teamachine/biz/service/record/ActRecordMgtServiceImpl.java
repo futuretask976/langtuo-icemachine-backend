@@ -2,7 +2,7 @@ package com.langtuo.teamachine.biz.service.record;
 
 import com.github.pagehelper.PageInfo;
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.record.CleanActRecordDTO;
+import com.langtuo.teamachine.api.model.record.ActRecordDTO;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 import com.langtuo.teamachine.api.service.record.ActRecordMgtService;
 import com.langtuo.teamachine.biz.manager.ShopGroupManager;
@@ -33,7 +33,7 @@ public class ActRecordMgtServiceImpl implements ActRecordMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<CleanActRecordDTO> get(String tenantCode, String idempotentMark) {
+    public IceMachineResult<ActRecordDTO> get(String tenantCode, String idempotentMark) {
         try {
             CleanActRecordPO po = actRecordAccessor.getByIdempotentMark(tenantCode, idempotentMark);
             return IceMachineResult.success(convertToCleanActRecordDTO(po, true));
@@ -45,8 +45,8 @@ public class ActRecordMgtServiceImpl implements ActRecordMgtService {
 
     @Override
     @Transactional(readOnly = true)
-    public IceMachineResult<PageDTO<CleanActRecordDTO>> search(String tenantCode, String shopGroupCode,
-                                                               String shopCode, int pageNum, int pageSize) {
+    public IceMachineResult<PageDTO<ActRecordDTO>> search(String tenantCode, String shopGroupCode,
+                                                          String shopCode, int pageNum, int pageSize) {
         pageNum = pageNum < CommonConsts.MIN_PAGE_NUM ? CommonConsts.MIN_PAGE_NUM : pageNum;
         pageSize = pageSize < CommonConsts.MIN_PAGE_SIZE ? CommonConsts.MIN_PAGE_SIZE : pageSize;
 

@@ -6,14 +6,19 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class CleanRuleDispatchDTO implements Serializable {
+public class ConfigRuleDispatchDTO implements Serializable {
     /**
-     * 清洁规则编码
+     * 租户编码
      */
-    private String cleanRuleCode;
+    private String tenantCode;
 
     /**
-     * 店铺组编码列表
+     * 配置规则编码
      */
-    private List<String> shopGroupCodeList;
+    private String configRuleCode;
+
+    /**
+     * 机器分组编码列表
+     */
+    private List<String> machineGroupCodeList;
 }

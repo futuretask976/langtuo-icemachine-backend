@@ -1,7 +1,7 @@
 package com.langtuo.teamachine.api.service.record;
 
 import com.langtuo.teamachine.api.model.PageDTO;
-import com.langtuo.teamachine.api.model.record.CleanActRecordDTO;
+import com.langtuo.teamachine.api.model.record.ActRecordDTO;
 import com.langtuo.teamachine.api.result.IceMachineResult;
 
 public interface ActRecordMgtService {
@@ -11,14 +11,14 @@ public interface ActRecordMgtService {
      * @param idempotentMark
      * @return
      */
-    IceMachineResult<CleanActRecordDTO> get(String tenantCode, String idempotentMark);
+    IceMachineResult<ActRecordDTO> get(String tenantCode, String idempotentMark);
 
     /**
      *
      * @return
      */
-    IceMachineResult<PageDTO<CleanActRecordDTO>> search(String tenantCode, String shopGroupCode, String shopCode,
-                                                        int pageNum, int pageSize);
+    IceMachineResult<PageDTO<ActRecordDTO>> search(String tenantCode, String shopGroupCode, String shopCode,
+                                                   int pageNum, int pageSize);
 
     /**
      *

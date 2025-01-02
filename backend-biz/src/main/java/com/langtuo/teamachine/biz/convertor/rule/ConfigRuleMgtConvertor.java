@@ -1,6 +1,6 @@
 package com.langtuo.teamachine.biz.convertor.rule;
 
-import com.langtuo.teamachine.api.model.rule.CleanRuleDTO;
+import com.langtuo.teamachine.api.model.rule.ConfigRuleDTO;
 import com.langtuo.teamachine.api.request.rule.CleanRuleDispatchPutRequest;
 import com.langtuo.teamachine.api.request.rule.CleanRulePutRequest;
 import com.langtuo.teamachine.dao.po.rule.ConfigRuleDispatchPO;
@@ -13,41 +13,41 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ConfigRuleMgtConvertor {
-    public static List<CleanRuleDTO> convertToCleanRuleDTO(List<ConfigRulePO> poList) {
+    public static List<ConfigRuleDTO> convertToCleanRuleDTO(List<ConfigRulePO> poList) {
         if (CollectionUtils.isEmpty(poList)) {
             return null;
         }
 
-        List<CleanRuleDTO> list = poList.stream()
+        List<ConfigRuleDTO> list = poList.stream()
                 .map(po -> convertToCleanRuleStepDTO(po))
                 .collect(Collectors.toList());
         return list;
     }
 
-    public static CleanRuleDTO convertToCleanRuleStepDTO(ConfigRulePO po) {
+    public static ConfigRuleDTO convertToCleanRuleStepDTO(ConfigRulePO po) {
         if (po == null) {
             return null;
         }
 
-        CleanRuleDTO dto = new CleanRuleDTO();
+        ConfigRuleDTO dto = new ConfigRuleDTO();
         dto.setGmtCreated(po.getGmtCreated());
         dto.setGmtModified(po.getGmtModified());
         dto.setExtraInfo(po.getExtraInfo());
-        dto.setCleanRuleCode(po.getConfigRuleCode());
-        dto.setCleanRuleName(po.getConfigRuleName());
+        dto.setConfigRuleCode(po.getConfigRuleCode());
+        dto.setConfigRuleName(po.getConfigRuleName());
         dto.setPermitBatch(po.getPermitBatch());
         dto.setPermitRemind(po.getPermitRemind());
 
         CleanRuleStepAccessor cleanRuleStepAccessor = SpringAccessorUtils.getCleanRuleStepAccessor();
         List<CleanRuleStepPO> cleanRuleStepPOList = cleanRuleStepAccessor.listByCleanRuleCode(
-                po.getTenantCode(), dto.getCleanRuleCode());
+                po.getTenantCode(), dto.getConfigRuleCode());
         if (!CollectionUtils.isEmpty(cleanRuleStepPOList)) {
             dto.setCleanRuleStepList(convertToCleanRuleStepDTO(cleanRuleStepPOList));
         }
 
         CleanRuleExceptAccessor cleanRuleExceptAccessor = SpringAccessorUtils.getCleanRuleExceptAccessor();
         List<CleanRuleExceptPO> cleanRuleExceptPOList = cleanRuleExceptAccessor.listByCleanRuleCode(
-                po.getTenantCode(), dto.getCleanRuleCode());
+                po.getTenantCode(), dto.getConfigRuleCode());
         if (!CollectionUtils.isEmpty(cleanRuleExceptPOList)) {
             dto.setExceptToppingCodeList(cleanRuleExceptPOList.stream()
                     .map(cleanRuleExceptPO -> cleanRuleExceptPO.getExceptToppingCode())

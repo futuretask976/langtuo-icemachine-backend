@@ -19,16 +19,6 @@ public class TenantDTO implements Serializable {
     private Date gmtModified;
 
     /**
-     * 备注
-     */
-    private String comment;
-
-    /**
-     * 额外信息，格式：a:b;c:d
-     */
-    private Map<String, String> extraInfo;
-
-    /**
      * 租户编码
      */
     private String tenantCode;
@@ -47,4 +37,14 @@ public class TenantDTO implements Serializable {
      * 联系电话
      */
     private String contactPhone;
+
+    /**
+     * 备注
+     */
+    private String comment;
+
+    /**
+     * 额外信息，格式：a:b;c:d
+     */
+    private Map<String, String> extraInfo;
 }
